@@ -1,38 +1,45 @@
 const {pool} = require('../utils/db');
 const {v4: uuid} = require('uuid');
 
-class BookingRecord {
+class PlaceRecord {
     constructor(obj) { //przechowywanie lokalne
-        if(obj.title.trim() < 5) { // jesli tytuł po usunieciu spacji z kazdej strony jest mniejszy niz 5 znakow
-            throw new Error('Todo title should be at least 5 characters.')
-        }
-
-        if (obj.title.length > 150) {
-            throw new Error('Todo title should be')
-        }
-
-
         this.id = obj.id;
-        this.title = obj.title;
-        this.createdAt = obj.createdAt;
+        this.name = obj.name;
+        this.address = obj.address;
     }
+
     // utworzenie metody, która dodawac bedzie dane do bazy danych
-    async insert(){
+    async create(){
         if (typeof this.id === "undefined") {
             this.id = uuid();
         }
-        if (typeof this.createdAt === "undefined") {
-            this.createdAt = new Date();
-        }
-        await pool.execute('INSERT INTO `todos` VALUES(:id, :title, :createdAt)', {
+        await pool.execute('INSERT INTO `places` VALUES(:id, :name, :address,)', {
             id: this.id,
-            title: this.title,
-            createdAt: this.createdAt,
+            name: this.name,
+            address: this.address,
+
         });
+    }
+
+    async delete(){
+        if (!this.id){
+            throw new Error('There is no such user')
+        }
+        await pool.execute('DELETE FROM `places` WHERE `id` = :id', {
+            id: this.id,
+            name: this.name,
+            address: this.address,
+        });
+
+    }
+
+    static  async listAll() {
+        const [results] = await pool.execute('SELECT * FROM `places`');
+        return results;
     }
 }
 
 module.exports = {
-    BookingRecord,
+    PlaceRecord,
 }
 

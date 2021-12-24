@@ -1,0 +1,23 @@
+
+    <div class="container">
+        <h2> Places list</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+            </tr>
+            </thead>
+            <tbody>
+                {{#each placesList}}
+                    <tr>
+                        <th scope="row">{{number}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.address}}</td>
+                    </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+    </div>
