@@ -8,19 +8,25 @@ class UserRecord {
         this.surname = obj.surname;
         this.email = obj.email;
         this.admin = obj.admin;
+        this.password = obj.password;
     }
 
-    // utworzenie metody, która dodawac bedzie dane do bazy danych
-    async create(){
+    // static  async getUser() {
+    //     const [results] = await pool.execute('SELECT * FROM `users`');
+    //     return results;
+    // }
+
+    async insert(){
         if (typeof this.id === "undefined") {
             this.id = uuid();
         }
-        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin)', {
+        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password)', {
             id: this.id,
             name: this.name,
             surname: this.surname,
             email: this.email,
             admin: 0,
+            password: this.password,
         });
     }
 

@@ -37,6 +37,20 @@ class PlaceRecord {
         const [results] = await pool.execute('SELECT * FROM `places`');
         return results;
     }
+
+    async insert(){
+        if (typeof this.id === "undefined") {
+            this.id = uuid();
+        }
+
+        await pool.execute('INSERT INTO `places` VALUES(:id, :name, :address)', {
+            id: this.id,
+            name: this.name,
+            address: this.address,
+        });
+
+        return this.id;
+    }
 }
 
 module.exports = {

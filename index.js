@@ -44,13 +44,13 @@ app.get('/', (req, res) => {
     res.redirect('/user')
     });
 
-app.all('/', (req, res) => {
-    if (req.cookies['logged'] === 'false') {
-        res.redirect('/login')
-    } else {
-        res.redirect('/dashboard')
-    }
-})
+// app.all('/', (req, res) => {
+//     if (req.cookies['logged'] === 'false') {
+//         res.redirect('/login')
+//     } else {
+//         res.redirect('/dashboard')
+//     }
+// })
 
 app.use('/place', placeRouter);
 app.use('/user', userRouter);

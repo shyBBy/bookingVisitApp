@@ -13,6 +13,12 @@ placeRouter
         });
     });
 
+placeRouter.post('/add', async (req, res) => {
+    const newPlace = new PlaceRecord(req.body);
+    await newPlace.insert();
+    res.redirect('/place/list');
+})
+
 module.exports = {
     placeRouter,
 };
