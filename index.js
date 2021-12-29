@@ -9,6 +9,7 @@ const {UserRecord} = require("./records/user.record");
 // const {BookingRecord} = require("./records/booking.record");
 const {placeRouter} = require('./routers/place');
 const {userRouter} = require('./routers/user');
+const {dashboardRouter} = require("./routers/dashboard");
 
 
 const app = express();
@@ -43,9 +44,17 @@ app.get('/', (req, res) => {
     res.redirect('/user')
     });
 
+app.all('/', (req, res) => {
+    if (req.cookies['logged'] === 'false') {
+        res.redirect('/login')
+    } else {
+        res.redirect('/dashboard')
+    }
+})
 
 app.use('/place', placeRouter);
 app.use('/user', userRouter);
+app.use('/dashboard', dashboardRouter);
 
 app.use(handleError);
 

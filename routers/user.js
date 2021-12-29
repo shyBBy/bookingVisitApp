@@ -8,7 +8,7 @@ userRouter
     .get('/', (req, res) => {
         res
 
-            .cookie('logged', 'false', {
+            .cookie('logged', 'true', {
             maxAge: 24 * 60 * 60 * 1000, // 24h
             httpOnly: true,
         });
@@ -18,6 +18,8 @@ userRouter
 
         if (req.cookies['logged'] === 'false') {
             res.redirect('/login')
+        } else {
+            res.redirect('/dashboard')
         }
     });
 
