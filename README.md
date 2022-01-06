@@ -15,4 +15,24 @@ It's........
 4. Navigate to downloaded folder (bookingVisitApp)
 5. Type: ``` npm i ```
 6. Type: ``` node index.js ```
-7. 
+
+
+**change in /utils/db.js** 
+host: localhost,
+
+user: root,
+
+database: booking_visit_app,
+
+**and in index.js**
+app.use(cookieSession({
+
+   name: 'session',
+
+   keys: ['**TYPE_HERE_YOUR_SECRET_KEY**'],
+   
+   and restart 
+
+
+
+
