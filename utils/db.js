@@ -1,9 +1,10 @@
+require('dotenv').config();
 const mysql = require('mysql2/promise');
 
     const pool = mysql.createPool({
-        host: 'localhost',
-        user: 'root',
-        database: 'booking_visit_app',
+        host: process.env.DB_HOST,
+        user: process.env.DB_USERNAME,
+        database: process.env.DB_NAME,
         decimalNumbers: true,
         namedPlaceholders: true,
         bigNumberStrings: false,

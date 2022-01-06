@@ -9,24 +9,32 @@ class UserRecord {
         this.email = obj.email;
         this.admin = obj.admin;
         this.password = obj.password;
+        this.registered = obj.registered;
+        this.last_login = obj.last_login
     }
 
-    // static  async getUser() {
-    //     const [results] = await pool.execute('SELECT * FROM `users`');
-    //     return results;
-    // }
+    static  async loginCheck(email) {
+        const [results] = await pool.execute('SELECT * FROM `users` WHERE `email`= :email', {
+            email,
+        });
+        return results;
+    }
 
-    async insert(){
+    async insert(hash){
         if (typeof this.id === "undefined") {
             this.id = uuid();
+            this.registered = new Date();
+
         }
-        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password)', {
+        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password, :registered, :last_login)', {
             id: this.id,
             name: this.name,
             surname: this.surname,
             email: this.email,
             admin: 0,
-            password: this.password,
+            password: hash,
+            registered: this.registered,
+            last_login: this.registered,
         });
     }
 
