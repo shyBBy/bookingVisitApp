@@ -18,9 +18,9 @@ It's........
 
 
 # **change in /utils/db.js** 
-host: localhost,
-user: root,
-database: booking_visit_app,
+1. host: localhost,
+2. user: root,
+3. database: booking_visit_app,
 
 
 # **and in index.js**
