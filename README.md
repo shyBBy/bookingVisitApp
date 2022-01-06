@@ -17,20 +17,21 @@ It's........
 6. Type: ``` node index.js ```
 
 
-**change in /utils/db.js** 
-1. host: localhost,
-2. user: root,
-3. database: booking_visit_app,
+# **change in /utils/db.js** 
+host: localhost,
+user: root,
+database: booking_visit_app,
 
 
-**and in index.js**
+# **and in index.js**
 app.use(cookieSession({
 
    name: 'session',
 
    keys: ['**TYPE_HERE_YOUR_SECRET_KEY**'],
    
-   and restart 
+# and restart via
+Type: ``` node index.js ```
 
 
 
