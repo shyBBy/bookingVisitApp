@@ -18,11 +18,10 @@ It's........
 
 
 **change in /utils/db.js** 
-host: localhost,
+1. host: localhost,
+2. user: root,
+3. database: booking_visit_app,
 
-user: root,
-
-database: booking_visit_app,
 
 **and in index.js**
 app.use(cookieSession({
