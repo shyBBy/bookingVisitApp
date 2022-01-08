@@ -1,5 +1,4 @@
 const {pool} = require('../utils/db');
-const {UserRecord} = require("../records/user.record");
 const bcrypt = require("bcrypt");
 
 class Validation {

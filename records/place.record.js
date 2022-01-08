@@ -2,13 +2,12 @@ const {pool} = require('../utils/db');
 const {v4: uuid} = require('uuid');
 
 class PlaceRecord {
-    constructor(obj) { //przechowywanie lokalne
+    constructor(obj) {
         this.id = obj.id;
         this.name = obj.name;
         this.address = obj.address;
     }
 
-    // utworzenie metody, która dodawac bedzie dane do bazy danych
     async create(){
         if (typeof this.id === "undefined") {
             this.id = uuid();
