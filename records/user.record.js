@@ -51,6 +51,16 @@ class UserRecord {
         });
 
     }
+
+    async listAll() {
+        const [results] = await pool.execute('SELECT * FROM `users`');
+        return results;
+    }
+
+    async getOne() {
+        const [results] = await pool.execute('SELECT * FROM `users`');
+        return results;
+    }
 }
 
 module.exports = {

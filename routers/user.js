@@ -3,6 +3,7 @@ const {UserRecord} = require("../records/user.record");
 const {Validation} = require("../middleware/validation");
 const bcrypt = require("bcrypt");
 const userRouter = Router();
+const flash = require('connect-flash');
 
 userRouter
     .get('/', (req, res) => {
@@ -10,11 +11,19 @@ userRouter
     });
 
 userRouter.get('/login', (req, res) => {
-    res.render('user/login');
+    if (req.session.login) {
+        res.redirect('/dashboard');
+    }
+    res.render('user/login', {
+        message: req.flash('message')
+    });
 });
 
 
 userRouter.get('/register', (req, res) => {
+    if (req.session.login) {
+        res.redirect('/dashboard');
+    }
     res.render('user/register');
 });
 
@@ -31,13 +40,17 @@ userRouter.post('/login', async (req, res, next) => {
     const validPassword = await userData.loginCheck(req.body.email);
     if (validPassword) {
         req.session.login = 1;
+        req.session.userId =
         // req.session.login = null
-        res.status(200);
+        res.status(200)
+        req.flash('message', 'Login Succes');
         res.redirect('/dashboard');
         console.log(req.session.login)
 
     } else{
-        res.status(400);
+        res.status(400)
+        req.flash('message', 'Wrong e-mail or password');
+        res.redirect('/user/login');
     }
 
 });

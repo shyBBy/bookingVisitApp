@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const dashboardRouter = Router();
+const {UserRecord} = require("../records/user.record");
 
 dashboardRouter.get('/', (req, res, next) => {
     if (!req.session.login) {

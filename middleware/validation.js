@@ -9,6 +9,8 @@ class Validation {
         this.password = obj.password;
     }
     async loginCheck(email){
+        console.log(email);
+        console.log(this.email)
         try {
             const [results] = await pool.execute('SELECT `password`, `email` FROM `users` WHERE `email` = :email', {
                 email: email,
@@ -18,10 +20,10 @@ class Validation {
             console.log(userEmail);
             console.log(this.email);
             const check = await bcrypt.compare(this.password, userHash);
-            if (userEmail == email) {
+            console.log(this.email);
+            if (userEmail == this.email) {
                 if (check) {
                     console.log('z vallidation.js OK')
-                    // res.status(200).json('Valid Email and pass!');
                 } else{
                     console.log('z vallidation.js NOPE')
                 }
@@ -31,7 +33,9 @@ class Validation {
             } return check
         } catch(e) {
             console.log('cos nie tak')
+            console.log(this.email)
             console.log(e)
+
         }
     }
 }
