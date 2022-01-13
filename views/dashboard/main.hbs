@@ -31,8 +31,8 @@
             </button>
 
             <!-- Brand -->
-            <a class="navbar-brand" href="#">
-                <img src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png" height="25" alt="" loading="lazy" />
+            <a class="navbar-brand" href="/user/{{userData.id}}">
+                {{userData.name}} {{userData.surname}}
             </a>
             <!-- Right links -->
             <ul class="navbar-nav ms-auto d-flex flex-row">
@@ -46,7 +46,7 @@
                              alt="" loading="lazy" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">My profile</a></li>
+                        <li><a class="dropdown-item" href="/user/{{userData.id}}">My profile</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
                     </ul>

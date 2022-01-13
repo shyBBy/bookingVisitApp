@@ -57,8 +57,10 @@ class UserRecord {
         return results;
     }
 
-    async getOne() {
-        const [results] = await pool.execute('SELECT * FROM `users`');
+    static async getOne(id) {
+        const [results] = await pool.execute('SELECT * FROM `users` WHERE `id` = :id', {
+            id: id,
+        });
         return results;
     }
 }

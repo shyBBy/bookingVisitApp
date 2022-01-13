@@ -12,7 +12,7 @@ class Validation {
         console.log(email);
         console.log(this.email)
         try {
-            const [results] = await pool.execute('SELECT `password`, `email` FROM `users` WHERE `email` = :email', {
+            const [results] = await pool.execute('SELECT `password`, `email`, `id` FROM `users` WHERE `email` = :email', {
                 email: email,
             });
             const userHash = results[0].password
@@ -30,7 +30,7 @@ class Validation {
 
             } else {
                 console.log('User not found!');
-            } return check
+            } return [check, results[0].id];
         } catch(e) {
             console.log('cos nie tak')
             console.log(this.email)

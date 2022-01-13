@@ -19,6 +19,17 @@ userRouter.get('/login', (req, res) => {
     });
 });
 
+userRouter.get('/:id', async (req, res) => {
+    if (!req.session.login) {
+        res.redirect('/user/login');
+    }
+    const data = await UserRecord.getOne(req.session.userId);
+    const userData = data[0]
+    res.render('user/profile', {
+        userData,
+    });
+})
+
 
 userRouter.get('/register', (req, res) => {
     if (req.session.login) {
@@ -38,14 +49,15 @@ userRouter.post('/add', async  (req, res, next) => {
 userRouter.post('/login', async (req, res, next) => {
     const userData = new Validation(req.body);
     const validPassword = await userData.loginCheck(req.body.email);
-    if (validPassword) {
+    const userId = validPassword[1];
+    if (validPassword[0]) {
         req.session.login = 1;
-        req.session.userId =
-        // req.session.login = null
+        req.session.userId = userId;
         res.status(200)
         req.flash('message', 'Login Succes');
         res.redirect('/dashboard');
-        console.log(req.session.login)
+        console.log(req.session.login);
+        console.log(`z users.js ${req.session.userId}`);
 
     } else{
         res.status(400)
