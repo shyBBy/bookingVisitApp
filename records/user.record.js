@@ -63,6 +63,13 @@ class UserRecord {
         });
         return results;
     }
+
+    static async getOneByEmail(email) {
+        const [results] = await pool.execute('SELECT `password`, `email`, `id` FROM `users` WHERE `email` = :email', {
+            email: email,
+        });
+        return results;
+    }
 }
 
 module.exports = {

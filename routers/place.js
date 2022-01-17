@@ -4,10 +4,6 @@ const placeRouter = Router();
 
 placeRouter
     .get('/list',  async (req, res) => {
-        if (!req.session.login) {
-            res.redirect('/user/login');
-            console.log(req.session.login);
-        }
         const placesList = await PlaceRecord.listAll();
         console.log(placesList);
         res.render('places/list', {

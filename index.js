@@ -7,6 +7,7 @@ const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const session = require('express-session')
 const flash = require('connect-flash');
+const cors = require('cors');
 // ******* UTILS *******
 const {handleError} = require("./utils/errors");
 // ******* ROUTERS *******
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
+app.use(cors());
 app.use(cookieSession({
     name: 'session',
     keys: ['process.env.COOKIE_SESSION_SECRET'],
@@ -42,16 +44,16 @@ app.use('/place', placeRouter);
 app.use('/user', userRouter);
 app.use('/dashboard', dashboardRouter);
 // app.use(handleError);
-app.use(session({
-    secret: 'process.env.EXPRESS_SESSION_SECRET',
-    cookie: { maxAge : 60000},
-    resave: false,
-    saveUninitialized: false,
-}))
+// app.use(session({
+//     secret: 'process.env.EXPRESS_SESSION_SECRET',
+//     cookie: { maxAge : 60000},
+//     resave: false,
+//     saveUninitialized: false,
+// }))
 
 
 
-app.get('/',sessionChecker, (req, res) => {
+app.get('/', (req, res) => {
     res.redirect('/dashboard')
 });
 
