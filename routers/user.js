@@ -22,6 +22,7 @@ userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next
         res.render('user/profile', {
             user,
         });
+        return
     }
     const results = await UserRecord.getOneById(req.session.user.id);
     const user = results[0]
