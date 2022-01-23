@@ -52,20 +52,20 @@ class UserRecord {
 
     }
 
-    async listAll() {
+    static async listAll() {
         const [results] = await pool.execute('SELECT * FROM `users`');
         return results;
     }
 
-    static async getOne(id) {
-        const [results] = await pool.execute('SELECT * FROM `users` WHERE `id` = :id', {
+    static async getOneById(id) {
+        const [results] = await pool.execute('SELECT `id`, `name`, `surname`, `email`, `admin`, `registered`, `last_login` FROM `users` WHERE `id` = :id', {
             id: id,
         });
         return results;
     }
 
     static async getOneByEmail(email) {
-        const [results] = await pool.execute('SELECT `password`, `email`, `id` FROM `users` WHERE `email` = :email', {
+        const [results] = await pool.execute('SELECT `password`, `email`, `id`, `admin` FROM `users` WHERE `email` = :email', {
             email: email,
         });
         return results;
