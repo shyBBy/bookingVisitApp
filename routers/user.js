@@ -12,7 +12,9 @@ userRouter
     });
 
 userRouter.get('/login', (req, res) => {
-    res.render('user/login');
+    res.render('user/login', {
+        message: req.flash('message'),
+    });
 });
 
 userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next) => {
@@ -46,7 +48,12 @@ userRouter.post('/add', async  (req, res) => {
 
 userRouter.post('/login',  async (req, res,) => {
     if (req.body.email.length <= 0 || req.body.password.length <= 0) {
-        console.log('Fields are empty');
+        req.session.message = {
+            type: 'danger',
+            intro: 'Empty fields! ',
+            message: 'Please insert the requested information.'
+        }
+        console.log(req.session.message.message);
         return res.redirect('/user/login');
     }
     const results = await UserRecord.getOneByEmail(req.body.email);
@@ -58,10 +65,6 @@ userRouter.post('/login',  async (req, res,) => {
             isAdmin: user.admin,
             isActive: user.active,
         }
-        console.log('Succes');
-        console.log(req.session);
-        console.log('S321321s');
-        console.log(req.session.user);
         res.redirect('/dashboard');
     } else {
         console.log('Wrong password or e-mail');

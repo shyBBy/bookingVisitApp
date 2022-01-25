@@ -9,7 +9,7 @@
                 </a>
                 <a href="#" class="list-group-item list-group-item-action py-2 ripple active"><i
                         class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
-                <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+                <a href="/booking/" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-calendar-day fa-fw me-3"></i><span>Booking</span></a>
                 <a href="/place/list" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-map-marker fa-fw me-3"></i><span>Places</span></a>
@@ -64,34 +64,57 @@
 <!--Main Navigation-->
 
 <!--Main layout-->
-<main style="margin-top: 58px">
-    <div class="container pt-4">
-        <!--Section: Sales Performance KPIs-->
-        <section class="mb-4">
-            <div class="card">
-                <div class="card-header text-center py-3">
-                    <h5 class="mb-0 text-center">
-                        <strong>Users list</strong>
-                    </h5>
-                </div>
-                <div class="card-body">
+<div class="container bootstrap snippets bootdey" style="padding-top: 50px; padding-left: 10px">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box no-header clearfix">
+                <div class="main-box-body clearfix">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table user-list">
                             <thead>
                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Surname</th>
-                                <th scope="col">More</th>
-                                <th scope="col">Role</th>
+                                <th><span>User</span></th>
+                                <th><span>Created</span></th>
+                                <th class="text-center"><span>Active</span></th>
+                                <th><span>Email</span></th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             {{#each usersList}}
                                 <tr>
-                                    <td>{{this.name}}</td>
-                                    <td>{{this.surname}}</td>
-                                    <td><a class="dropdown-item" href="/user/profile/{{this.id}}">More</a> </td>
-                                    <td>{{this.admin}}</td>
+                                    <td>
+                                        <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
+                                        <a href="/user/profile/{{this.id}}" class="user-link">{{this.name}} {{this.surname}}</a>
+                                        <span class="user-subhead">Admin: {{this.admin}}</span>
+                                    </td>
+                                    <td>{{this.registered}}</td>
+                                    <td class="text-center">
+                                        <span class="label label-default">{{this.active}}</span>
+                                    </td>
+                                    <td>
+                                        <a href="#">{{this.email}}</a>
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <a href="#" class="table-link text-warning">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="table-link text-info">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                    </td>
                                 </tr>
                             {{/each}}
 
@@ -100,7 +123,6 @@
                     </div>
                 </div>
             </div>
-        </section>
-
+        </div>
     </div>
-</main>
+</div>

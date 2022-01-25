@@ -15,6 +15,7 @@ const {handleError} = require("./utils/errors");
 const {placeRouter} = require('./routers/place');
 const {userRouter} = require('./routers/user');
 const {dashboardRouter} = require("./routers/dashboard");
+const {bookingRouter} = require("./routers/booking");
 // ******* MIDDLEWARES *******
 // ******* EXPRESS CFG *******
 const app = express();
@@ -24,7 +25,6 @@ const hbs = exphbs.create({
 });
 // ******* APP.USE *******
 
-app.use(flash());
 app.use(express.urlencoded({
     extended: true,
 }));
@@ -62,11 +62,13 @@ app.use(session({
 
 
 // ******* EXPRESS-MYSQL-SESSION END *******
+app.use(flash());
 
 
 app.use('/place', placeRouter);
 app.use('/user',userRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/booking', bookingRouter);
 
 
 app.get('/', (req, res) => {
