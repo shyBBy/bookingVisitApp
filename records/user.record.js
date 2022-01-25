@@ -22,11 +22,13 @@ class UserRecord {
 
     async insert(hash){
         if (typeof this.id === "undefined") {
+            const date = new Date();
+            let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate());
             this.id = uuid();
-            this.registered = new Date();
+            this.registered = myDate;
 
         }
-        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password, :registered, :last_login)', {
+        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password, :registered, :last_login, :active,)', {
             id: this.id,
             name: this.name,
             surname: this.surname,
@@ -35,6 +37,7 @@ class UserRecord {
             password: hash,
             registered: this.registered,
             last_login: this.registered,
+            active: 'false',
         });
     }
 
@@ -65,8 +68,14 @@ class UserRecord {
     }
 
     static async getOneByEmail(email) {
-        const [results] = await pool.execute('SELECT `password`, `email`, `id`, `admin` FROM `users` WHERE `email` = :email', {
+        const date = new Date();
+        let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate()+ "  " + (date.getHours())+ ":" + (date.getMinutes()));
+        const [results] = await pool.execute('SELECT `password`, `email`, `id`, `admin`, `active` FROM `users` WHERE `email` = :email', {
             email: email,
+        });
+        await pool.execute('UPDATE `users` SET `last_login` = :last_login WHERE `email` = :email', {
+            email: email,
+            last_login: myDate,
         });
         return results;
     }

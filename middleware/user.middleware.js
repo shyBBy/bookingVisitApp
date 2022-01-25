@@ -8,6 +8,13 @@ module.exports = {
             return res.redirect('/user/login');
         }
         next();
+    },
+    checkUserIsActive: async (req,res,next) => {
+        if(req.session.user.isActive === "false") {
+            console.log('Account is not active, check your e-mail box')
+            return res.render('dashboard/main')
+        }
+        next();
     }
 };
 

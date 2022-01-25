@@ -56,6 +56,7 @@ userRouter.post('/login',  async (req, res,) => {
         req.session.user = {
             id: user.id,
             isAdmin: user.admin,
+            isActive: user.active,
         }
         console.log('Succes');
         console.log(req.session);
@@ -79,8 +80,9 @@ userRouter.get('/user/logout', async(req, res) => {
     })
 })
 
-userRouter.get('/list', userMiddleware.checkSession, async (req, res, next) => {
+userRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsActive, async (req, res, next) => {
     const results = await UserRecord.getOneById(req.session.user.id);
+    console.log(req.session.user.isActive);
     const user = results[0]
     const usersList = await UserRecord.listAll();
     res.render('user/list', {
