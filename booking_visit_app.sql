@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2022 at 02:45 PM
+-- Generation Time: Jan 25, 2022 at 09:19 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -69,7 +69,27 @@ INSERT INTO `places` (`id`, `name`, `address`) VALUES
 ('a44c8e7a-fe7b-4b55-a45a-fe081985ab85', 'test', '3232'),
 ('b0246b0b-d9e2-4e78-8acd-ef5cd24c69d6', 'Super szpital', 'Kochanowskiego 23'),
 ('b69cbc7e-c4fa-4588-a09d-4491bd7bb30f', 'Testowy szpital', 'Ulica.jana 2'),
-('e343a9f5-64a0-11ec-a96f-d8cb8ae59a7b', 'Wojewódzki Specjalistyczny Szpital im. Mikołaja Pirogowa', 'Wólczańska 191/195, 90-001 Łódź');
+('e343a9f5-64a0-11ec-a96f-d8cb8ae59a7b', 'Wojewódzki Specjalistyczny Szpital im. Mikołaja Pirogowa', 'Wólczańska 191/195, 90-001 Łódź'),
+('e4810731-ca2c-4fdf-973f-b2c154cc3ae5', 'antekZmienNazwe', '231321dsa das dsad saasdd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sessiontbl`
+--
+
+CREATE TABLE `sessiontbl` (
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `expires` int(11) UNSIGNED NOT NULL,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sessiontbl`
+--
+
+INSERT INTO `sessiontbl` (`session_id`, `expires`, `data`) VALUES
+('lDpd5k_GgSgweyjFMRQzp6cKwKncaPKd', 1643228226, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{},\"message\":{\"type\":\"danger\",\"intro\":\"Empty fields! \",\"message\":\"Please insert the requested information.\"},\"user\":{\"id\":\"9f5dddb9-0a97-4810-998e-5fa56467b884\",\"isAdmin\":1,\"isActive\":\"true\"}}');
 
 -- --------------------------------------------------------
 
@@ -97,17 +117,19 @@ CREATE TABLE `users` (
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin` int(2) NOT NULL DEFAULT 0,
   `password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `registered` datetime NOT NULL,
-  `last_login` datetime DEFAULT NULL
+  `registered` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `last_login` varchar(70) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinytext COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `email`, `admin`, `password`, `registered`, `last_login`) VALUES
-('77f093d5-b43a-4521-99d7-a567d8cd2d86', 'Bezpieczny', 'User', '31dadsc@dat.com', 0, '$2b$10$Jv7jEjfRyx6chDl.d.Bxe.cMwr1LNVLHIJh0Hg/GNNxIwlYawI5Bi', '2022-01-02 14:30:23', '2022-01-02 14:30:23'),
-('9f5dddb9-0a97-4810-998e-5fa56467b884', 'Jackowski', 'Jacek', 'gcc22525@cuoly.com', 0, '$2b$10$0xRry9JbtWFqvYXnu/8TM.kcpkTbQxnV7aos8PJgU0DIVViTasRaS', '2022-01-02 19:28:50', '2022-01-02 19:28:50');
+INSERT INTO `users` (`id`, `name`, `surname`, `email`, `admin`, `password`, `registered`, `last_login`, `active`) VALUES
+('4d5b48c7-2612-4aa2-87ae-058cd4af22ca', 'Super', 'Super', 'super@super.com', 0, '$2b$10$1WVtsOUeGd4hNsDhnipameCcdF5QhRS9GNtrlBKqxZej4P3TQMNWi', '2022-01-08', '2022-01-08', 'true'),
+('77f093d5-b43a-4521-99d7-a567d8cd2d86', 'Bezpieczny', 'User', '31dadsc@dat.com', 0, '$2b$10$Jv7jEjfRyx6chDl.d.Bxe.cMwr1LNVLHIJh0Hg/GNNxIwlYawI5Bi', '2022-01-02', '2022-01-02', 'true'),
+('9f5dddb9-0a97-4810-998e-5fa56467b884', 'Jackowski', 'Jacek', 'gcc22525@cuoly.com', 1, '$2b$10$0xRry9JbtWFqvYXnu/8TM.kcpkTbQxnV7aos8PJgU0DIVViTasRaS', '2022-01-02', '2022/1/25  20:37', 'true');
 
 -- --------------------------------------------------------
 
@@ -145,6 +167,12 @@ ALTER TABLE `bookings`
 --
 ALTER TABLE `places`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sessiontbl`
+--
+ALTER TABLE `sessiontbl`
+  ADD PRIMARY KEY (`session_id`);
 
 --
 -- Indexes for table `staff`
