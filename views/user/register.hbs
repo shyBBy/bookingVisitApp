@@ -1,6 +1,16 @@
 <div id="main-wrapper" class="container">
     <div class="row justify-content-center">
         <div class="col-xl-10">
+            {{#if message.emptyField}}
+            <div class="alert alert-warning" role="alert">
+                {{message.emptyField}}
+            </div>
+            {{/if}}
+            {{#if message.successRegister}}
+                <div class="alert alert-succes" role="alert">
+                    {{message.successRegister}}
+                </div>
+            {{/if}}
             <div class="card border-0">
                 <div class="card-body p-0">
                     <div class="row no-gutters">

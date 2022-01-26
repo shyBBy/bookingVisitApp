@@ -1,6 +1,31 @@
 <div id="main-wrapper" class="container">
     <div class="row justify-content-center">
         <div class="col-xl-10">
+            {{#if message.emptyField}}
+                <div class="alert alert-warning" role="alert">
+                    {{message.emptyField}}
+                </div>
+            {{/if}}
+            {{#if message.succesLogin}}
+                <div class="alert alert-succes" role="alert">
+                    {{message.succesLogin}}
+                </div>
+            {{/if}}
+            {{#if message.inActiveAccount}}
+                <div class="alert alert-warning" role="alert">
+                    {{message.inActiveAccount}}
+                </div>
+            {{/if}}
+            {{#if message.wrongInformation}}
+                <div class="alert alert-danger" role="alert">
+                    {{message.wrongInformation}}
+                </div>
+            {{/if}}
+            {{#if message.userNotExist}}
+                <div class="alert alert-danger" role="alert">
+                    {{message.userNotExist}}
+                </div>
+            {{/if}}
             <div class="card border-0">
                 <div class="card-body p-0">
                     <div class="row no-gutters">

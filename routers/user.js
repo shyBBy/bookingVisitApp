@@ -13,7 +13,13 @@ userRouter
 
 userRouter.get('/login', (req, res) => {
     res.render('user/login', {
-        message: req.flash('message'),
+        message: {
+            emptyField: req.flash('emptyField'),
+            successLogin: req.flash('successLogin'),
+            inActiveAccount: req.flash('inActiveAccount'),
+            wrongInformation: req.flash('wrongInformation'),
+            userNotExist: req.flash('userNotExist'),
+        }
     });
 });
 
@@ -35,42 +41,59 @@ userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next
 
 
 userRouter.get('/register', (req, res) => {
-    res.render('user/register');
+    res.render('user/register', {
+        message: {
+            emptyField: req.flash('emptyField'),
+            successRegister: req.flash('successRegister')
+        }
+    });
 });
 
 userRouter.post('/add', async  (req, res) => {
+    if (req.body.email.length <= 0 || req.body.password.length <= 0 || req.body.name.length <= 0 || req.body.surname.length <= 0){
+        req.flash('emptyField', 'Please insert the requested information.');
+        return res.redirect('/user/register');
+    }
     const newUser = new UserRecord(req.body);
     const hash = await bcrypt.hash(req.body.password, 10);
     await newUser.insert(hash);
+    req.flash('successRegister', 'Account was created. Please confirm your e-mail.');
     res.redirect('/user/login');
 
 });
 
 userRouter.post('/login',  async (req, res,) => {
     if (req.body.email.length <= 0 || req.body.password.length <= 0) {
-        req.session.message = {
-            type: 'danger',
-            intro: 'Empty fields! ',
-            message: 'Please insert the requested information.'
-        }
-        console.log(req.session.message.message);
+        req.flash('emptyField', 'Please insert the requested information.');
         return res.redirect('/user/login');
     }
     const results = await UserRecord.getOneByEmail(req.body.email);
     const user = results[0];
-    const check = await bcrypt.compare(req.body.password, results[0].password);
-    if (check) {
-        req.session.user = {
-            id: user.id,
-            isAdmin: user.admin,
-            isActive: user.active,
+    try {
+        const check = await bcrypt.compare(req.body.password, results[0].password);
+        if (check) {
+            if (user.active === 'false') {
+                req.flash('inActiveAccount', 'Your account was not activated yet. Please check your e-mail box.');
+                return res.redirect('/user/login');
+            }
+            req.session.user = {
+                id: user.id,
+                isAdmin: user.admin,
+                isActive: user.active,
+            }
+            req.flash('successLogin', 'Success Login, welcome!');
+            res.redirect('/dashboard');
+        } else {
+            req.flash('wrongInformation', 'Wrong password or e-mail');
+            console.log('Wrong password or e-mail');
+            return res.redirect('/user/login');
         }
-        res.redirect('/dashboard');
-    } else {
-        console.log('Wrong password or e-mail');
+    } catch(e){
+        req.flash('userNotExist', 'The user does not exist');
         return res.redirect('/user/login');
     }
 });
+
 
 userRouter.get('/user/logout', async(req, res) => {
     req.session.destroy(function(err){
