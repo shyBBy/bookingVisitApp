@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2022 at 09:19 PM
+-- Generation Time: Jan 29, 2022 at 11:12 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -44,6 +44,13 @@ CREATE TABLE `bookings` (
   `userId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `placeId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `bookedAt`, `userId`, `placeId`) VALUES
+('87ee66c6-8146-11ec-832c-d8cb8ae59a7b', '0000-00-00 00:00:00', '9f5dddb9-0a97-4810-998e-5fa56467b884', '2944a567-64a1-11ec-a96f-d8cb8ae59a7b');
 
 -- --------------------------------------------------------
 
@@ -89,7 +96,9 @@ CREATE TABLE `sessiontbl` (
 --
 
 INSERT INTO `sessiontbl` (`session_id`, `expires`, `data`) VALUES
-('lDpd5k_GgSgweyjFMRQzp6cKwKncaPKd', 1643228226, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{},\"message\":{\"type\":\"danger\",\"intro\":\"Empty fields! \",\"message\":\"Please insert the requested information.\"},\"user\":{\"id\":\"9f5dddb9-0a97-4810-998e-5fa56467b884\",\"isAdmin\":1,\"isActive\":\"true\"}}');
+('Qlcdq-YKk59zU3EFW9GiisIrdTZG8uL4', 1643309938, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{\"test\":[\"teeest\",\"teeest\",\"teeest\",\"teeest\",\"teeest\",\"teeest\"],\"successLogin\":[\"Success Login, welcome!\"]},\"user\":{\"id\":\"9f5dddb9-0a97-4810-998e-5fa56467b884\",\"isAdmin\":1,\"isActive\":\"true\"}}'),
+('TkSpG5rOsIWM_K8pLs7xcKQcxTinWtrq', 1643580321, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{}}'),
+('b7BbSBSo-YqMvRwBPzTRS7X8LmcPfH-g', 1643474671, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{\"successRegister\":[\"Account was created. Please confirm your e-mail.\"]}}');
 
 -- --------------------------------------------------------
 
@@ -119,17 +128,19 @@ CREATE TABLE `users` (
   `password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `registered` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `last_login` varchar(70) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `active` tinytext COLLATE utf8mb4_unicode_ci NOT NULL
+  `active` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activation_code` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `email`, `admin`, `password`, `registered`, `last_login`, `active`) VALUES
-('4d5b48c7-2612-4aa2-87ae-058cd4af22ca', 'Super', 'Super', 'super@super.com', 0, '$2b$10$1WVtsOUeGd4hNsDhnipameCcdF5QhRS9GNtrlBKqxZej4P3TQMNWi', '2022-01-08', '2022-01-08', 'true'),
-('77f093d5-b43a-4521-99d7-a567d8cd2d86', 'Bezpieczny', 'User', '31dadsc@dat.com', 0, '$2b$10$Jv7jEjfRyx6chDl.d.Bxe.cMwr1LNVLHIJh0Hg/GNNxIwlYawI5Bi', '2022-01-02', '2022-01-02', 'true'),
-('9f5dddb9-0a97-4810-998e-5fa56467b884', 'Jackowski', 'Jacek', 'gcc22525@cuoly.com', 1, '$2b$10$0xRry9JbtWFqvYXnu/8TM.kcpkTbQxnV7aos8PJgU0DIVViTasRaS', '2022-01-02', '2022/1/25  20:37', 'true');
+INSERT INTO `users` (`id`, `name`, `surname`, `email`, `admin`, `password`, `registered`, `last_login`, `active`, `activation_code`) VALUES
+('4d5b48c7-2612-4aa2-87ae-058cd4af22ca', 'Super', 'Super', 'super@super.com', 0, '$2b$10$1WVtsOUeGd4hNsDhnipameCcdF5QhRS9GNtrlBKqxZej4P3TQMNWi', '2022-01-08', '2022-01-08', 'true', NULL),
+('77f093d5-b43a-4521-99d7-a567d8cd2d86', 'Bezpieczny', 'User', '31dadsc@dat.com', 0, '$2b$10$Jv7jEjfRyx6chDl.d.Bxe.cMwr1LNVLHIJh0Hg/GNNxIwlYawI5Bi', '2022-01-02', '2022-01-02', 'true', NULL),
+('9f5dddb9-0a97-4810-998e-5fa56467b884', 'Jackowski', 'Jacek', 'gcc22525@cuoly.com', 1, '$2b$10$0xRry9JbtWFqvYXnu/8TM.kcpkTbQxnV7aos8PJgU0DIVViTasRaS', '2022-01-02', '2022/1/29  22:11', 'true', '53565b0482cf405cd8e5e7dec38c595d8480'),
+('daa83026-e0aa-4331-8b64-8c7eee353004', 'Dawid', 'Super', 'edekkredek1910@gmail.com', 0, '$2b$10$JEAFyntSvtBSsv.nayLw2OCH4zyHthoFJ1w0WpqZ8HNecM.blCcHq', '2022/1/28', '2022/1/29  23:5', 'true', '71b89bba4d154ebc8ae04b7a9bbb13b42c7b');
 
 -- --------------------------------------------------------
 
