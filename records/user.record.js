@@ -10,7 +10,8 @@ class UserRecord {
         this.admin = obj.admin;
         this.password = obj.password;
         this.registered = obj.registered;
-        this.last_login = obj.last_login
+        this.last_login = obj.last_login;
+        this.active = obj.active;
     }
 
     static  async loginCheck(email) {
@@ -26,9 +27,10 @@ class UserRecord {
             let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate());
             this.id = uuid();
             this.registered = myDate;
+            this.active = 'false';
 
         }
-        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password, :registered, :last_login, :active,)', {
+        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password, :registered, :last_login, :active)', {
             id: this.id,
             name: this.name,
             surname: this.surname,
@@ -37,7 +39,7 @@ class UserRecord {
             password: hash,
             registered: this.registered,
             last_login: this.registered,
-            active: 'false',
+            active: this.active,
         });
     }
 

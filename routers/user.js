@@ -4,7 +4,9 @@ const {UserRecord} = require("../records/user.record");
 const userMiddleware = require('../middleware/user.middleware');
 const {URLSearchParams} = require('url');
 const bcrypt = require("bcrypt");
+const nodemailer = require('nodemailer');
 const userRouter = Router();
+
 
 userRouter
     .get('/', (req, res) => {
@@ -57,6 +59,26 @@ userRouter.post('/add', async  (req, res) => {
     const newUser = new UserRecord(req.body);
     const hash = await bcrypt.hash(req.body.password, 10);
     await newUser.insert(hash);
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD,
+        },
+    });
+    let mailOptions = {
+        from: `verifymailfromapp@gmail.com`,
+        to: req.body.email,
+        subject: `Welcome, please confirm your e-mail`,
+        html: `test html`,
+    };
+    transporter.sendMail(mailOptions, function (err, info) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('OK, send');
+        };
+    })
     req.flash('successRegister', 'Account was created. Please confirm your e-mail.');
     res.redirect('/user/login');
 

@@ -8,7 +8,6 @@ const session = require('express-session')
 const flash = require('connect-flash');
 const {handlebarsHelpers} = require("./utils/handlebars-helpers");
 const {pool} = require('./utils/db');
-const nodemailer = require('nodemailer');
 // ******* UTILS *******
 const {handleError} = require("./utils/errors");
 // ******* ROUTERS *******
@@ -63,14 +62,6 @@ app.use(session({
 
 // ******* EXPRESS-MYSQL-SESSION END *******
 app.use(flash());
-
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-    },
-});
 
 app.use('/place', placeRouter);
 app.use('/user',userRouter);
