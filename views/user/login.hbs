@@ -7,7 +7,7 @@
                 </div>
             {{/if}}
             {{#if message.succesLogin}}
-                <div class="alert alert-succes" role="alert">
+                <div class="alert alert-success" role="alert">
                     {{message.succesLogin}}
                 </div>
             {{/if}}
@@ -24,6 +24,16 @@
             {{#if message.userNotExist}}
                 <div class="alert alert-danger" role="alert">
                     {{message.userNotExist}}
+                </div>
+            {{/if}}
+            {{#if message.successVerify}}
+                <div class="alert alert-success" role="alert">
+                    {{message.successVerify}}
+                </div>
+            {{/if}}
+            {{#if message.unsuccessfulVerify}}
+                <div class="alert alert-danger" role="alert">
+                    {{message.unsuccessfulVerify}}
                 </div>
             {{/if}}
             <div class="card border-0">

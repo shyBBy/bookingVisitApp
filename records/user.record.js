@@ -69,17 +69,25 @@ class UserRecord {
         return results;
     }
 
-    static async getOneByEmail(email) {
+    static async getOneByEmail(email, activationCode) {
         const date = new Date();
         let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate()+ "  " + (date.getHours())+ ":" + (date.getMinutes()));
         const [results] = await pool.execute('SELECT `password`, `email`, `id`, `admin`, `active` FROM `users` WHERE `email` = :email', {
             email: email,
         });
-        await pool.execute('UPDATE `users` SET `last_login` = :last_login WHERE `email` = :email', {
+        await pool.execute('UPDATE `users` SET `last_login` = :last_login, `activation_code` = :activation_code WHERE `email` = :email', {
             email: email,
             last_login: myDate,
+            activation_code: activationCode,
         });
         return results;
+    }
+    static async getOneByIdAndActivating(id) {
+        this.active = 'true';
+        await pool.execute('UPDATE `users` SET `active` = :active WHERE `id` = :id', {
+            id: id,
+            active: this.active,
+        });
     }
 }
 
