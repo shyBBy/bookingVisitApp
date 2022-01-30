@@ -31,10 +31,16 @@
                     {{message.successVerify}}
                 </div>
             {{/if}}
+            
             {{#if message.unsuccessfulVerify}}
                 <div class="alert alert-danger" role="alert">
                     {{message.unsuccessfulVerify}}
                 </div>
+            {{/if}}       
+            {{#if message.successRegister}}
+                 <div class="alert alert-danger" role="alert">
+                    {{message.successRegister}}
+                 </div>
             {{/if}}
             <div class="card border-0">
                 <div class="card-body p-0">

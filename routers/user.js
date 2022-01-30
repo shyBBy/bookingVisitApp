@@ -25,12 +25,13 @@ userRouter.get('/login', (req, res) => {
             userNotExist: req.flash('userNotExist'),
             successVerify: req.flash('successVerify'),
             unsuccessfulVerify: req.flash('unsuccessfulVerify'),
+            successRegister: req.flash('successRegister'),
         }
     });
 });
 
 userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next) => {
-    //dodac weryfikacje poprawnego ID i obsługe błedu jesli nie znajdzie uzytkownika o takim ID
+  try {
     if (typeof req.url.split('/')[2] === "string") {
         const results = await UserRecord.getOneById(req.url.split('/')[2]);
         const user = results[0]
@@ -44,6 +45,10 @@ userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next
     res.render('user/profile', {
         user,
     });
+  } catch(err) {
+    console.log('users not found')
+  }
+  
 });
 
 
