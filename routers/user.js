@@ -6,7 +6,7 @@ const {URLSearchParams} = require('url');
 const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const handleEmailVerification = require('../services/../services/handleEmailVerification');
+const handleEmailVerification = require('../services/handleEmailVerification');
 const userRouter = Router();
 
 
