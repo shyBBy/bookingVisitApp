@@ -30,7 +30,7 @@ class UserRecord {
             this.active = 'false';
 
         }
-        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password, :registered, :last_login, :active)', {
+        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password, :registered, :last_login, :active, :activation_code)', {
             id: this.id,
             name: this.name,
             surname: this.surname,
@@ -40,6 +40,8 @@ class UserRecord {
             registered: this.registered,
             last_login: this.registered,
             active: this.active,
+            activation_code: 0
+         
         });
     }
 
