@@ -6,7 +6,7 @@ const {URLSearchParams} = require('url');
 const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const handleEmailVerification = require('../services/handleEmailVerification');
+const {UsersService} = require('../services/handleEmailVerification');
 const userRouter = Router();
 
 
@@ -86,7 +86,7 @@ userRouter.post('/login',  async (req, res,) => {
         const check = await bcrypt.compare(req.body.password, results[0].password);
         if (check) {
             if (user.active === 'false') {
-               handleEmailVerification(req.body.email, user.id, activationCode);
+                UsersService.handleEmailVerification(req.body.email, user.id, activationCode);
                 req.flash('inActiveAccount', 'Your account was not activated yet. Please check your e-mail box.');
                 return res.redirect('/user/login');
             }
@@ -103,6 +103,7 @@ userRouter.post('/login',  async (req, res,) => {
             return res.redirect('/user/login');
         }
     } catch(e){
+        console.log(e);
         req.flash('userNotExist', 'The user does not exist');
         return res.redirect('/user/login');
     }

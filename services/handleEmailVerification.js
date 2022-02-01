@@ -1,23 +1,24 @@
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 
+class UsersService {
+    constructor() {
+    }
+    static async handleEmailVerification(userEmail,userId, activationCode){
 
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWORD,
+            },
+        });
 
-const handleEmailVerification = (userEmail,userId, activationCode) => {
-  
-  let transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                        user: process.env.EMAIL_USER,
-                        pass: process.env.EMAIL_PASSWORD,
-                    },
-                });
-
-                let mailOptions = {
-                    from: `verifymailfromapp@gmail.com`,
-                    to: email,
-                    subject: `Welcome, please confirm your e-mail`,
-                    html: `<!DOCTYPE html>
+        let mailOptions = {
+            from: `verifymailfromapp@gmail.com`,
+            to: userEmail,
+            subject: `Welcome, please confirm your e-mail`,
+            html: `<!DOCTYPE html>
 <html>
 
 <head>
@@ -178,7 +179,7 @@ const handleEmailVerification = (userEmail,userId, activationCode) => {
                                 <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
                                     <table border="0" cellspacing="0" cellpadding="0">
                                         <tr>
-                                            <td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="http://146.59.16.216:3000/user/${user.id}/activation/${activationCode}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">jesli odpalasz na VPS to kliknij aby aktywowac konto</a></td>
+                                            <td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="http://146.59.16.216:3000/user/${userId}/activation/${activationCode}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">jesli odpalasz na VPS to kliknij aby aktywowac konto</a></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -204,22 +205,21 @@ const handleEmailVerification = (userEmail,userId, activationCode) => {
 </body>
 
 </html>`,
-                };
-                transporter.sendMail(mailOptions, function (err, info) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log('OK, send');
-                    };
-                })
+        };
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('OK, send');
+            };
+        })
 
-return  
+    }
+}
+
+module.exports = {
+    UsersService,
 }
 
 
-
-module.export = {
-  handleEmailVerification,
-  
-}
   

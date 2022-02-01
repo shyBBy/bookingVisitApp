@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2022 at 11:12 PM
+-- Generation Time: Feb 01, 2022 at 09:12 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -96,6 +96,7 @@ CREATE TABLE `sessiontbl` (
 --
 
 INSERT INTO `sessiontbl` (`session_id`, `expires`, `data`) VALUES
+('QAyCwdgjirY7XZNvLKgSn7zgPa-5P80j', 1643832669, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{}}'),
 ('Qlcdq-YKk59zU3EFW9GiisIrdTZG8uL4', 1643309938, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{\"test\":[\"teeest\",\"teeest\",\"teeest\",\"teeest\",\"teeest\",\"teeest\"],\"successLogin\":[\"Success Login, welcome!\"]},\"user\":{\"id\":\"9f5dddb9-0a97-4810-998e-5fa56467b884\",\"isAdmin\":1,\"isActive\":\"true\"}}'),
 ('TkSpG5rOsIWM_K8pLs7xcKQcxTinWtrq', 1643580321, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{}}'),
 ('b7BbSBSo-YqMvRwBPzTRS7X8LmcPfH-g', 1643474671, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{\"successRegister\":[\"Account was created. Please confirm your e-mail.\"]}}');
@@ -129,7 +130,7 @@ CREATE TABLE `users` (
   `registered` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `last_login` varchar(70) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `active` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activation_code` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `activation_code` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -138,9 +139,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `admin`, `password`, `registered`, `last_login`, `active`, `activation_code`) VALUES
 ('4d5b48c7-2612-4aa2-87ae-058cd4af22ca', 'Super', 'Super', 'super@super.com', 0, '$2b$10$1WVtsOUeGd4hNsDhnipameCcdF5QhRS9GNtrlBKqxZej4P3TQMNWi', '2022-01-08', '2022-01-08', 'true', NULL),
+('6efed7e4-1613-4b8e-bdda-66ed505b5482', 'Ewa', 'Kowalski', 'twarozek955@gmail.com', 0, '$2b$10$3naVlBzUmKyMmJMKzb6BfeJ8p1fUg7PzWwXPfHSQAYgXqpRZahy8K', '2022/2/1', '2022/2/1  21:8', 'false', '5452635e87541f47f8abca380449eb130f36bc660a33174063'),
 ('77f093d5-b43a-4521-99d7-a567d8cd2d86', 'Bezpieczny', 'User', '31dadsc@dat.com', 0, '$2b$10$Jv7jEjfRyx6chDl.d.Bxe.cMwr1LNVLHIJh0Hg/GNNxIwlYawI5Bi', '2022-01-02', '2022-01-02', 'true', NULL),
 ('9f5dddb9-0a97-4810-998e-5fa56467b884', 'Jackowski', 'Jacek', 'gcc22525@cuoly.com', 1, '$2b$10$0xRry9JbtWFqvYXnu/8TM.kcpkTbQxnV7aos8PJgU0DIVViTasRaS', '2022-01-02', '2022/1/29  22:11', 'true', '53565b0482cf405cd8e5e7dec38c595d8480'),
-('daa83026-e0aa-4331-8b64-8c7eee353004', 'Dawid', 'Super', 'edekkredek1910@gmail.com', 0, '$2b$10$JEAFyntSvtBSsv.nayLw2OCH4zyHthoFJ1w0WpqZ8HNecM.blCcHq', '2022/1/28', '2022/1/29  23:5', 'true', '71b89bba4d154ebc8ae04b7a9bbb13b42c7b');
+('daa83026-e0aa-4331-8b64-8c7eee353004', 'Dawid', 'Super', 'edekkredek1910@gmail.com', 0, '$2b$10$JEAFyntSvtBSsv.nayLw2OCH4zyHthoFJ1w0WpqZ8HNecM.blCcHq', '2022/1/28', '2022/2/1  21:10', 'true', '2ab2e338442ac706e61f7cd552341ac6a6cf8b65aeab436b05');
 
 -- --------------------------------------------------------
 
