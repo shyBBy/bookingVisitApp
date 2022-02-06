@@ -21,7 +21,7 @@ class UserRecord {
         return results;
     }
 
-    async insert(hash){
+    async create(hash, activationCode){
         if (typeof this.id === "undefined") {
             const date = new Date();
             let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate());
@@ -40,7 +40,7 @@ class UserRecord {
             registered: this.registered,
             last_login: this.registered,
             active: this.active,
-            activation_code: 0
+            activation_code: activationCode,
          
         });
     }
@@ -67,16 +67,15 @@ class UserRecord {
         return results;
     }
 
-    static async getOneByEmail(email, activationCode) {
+    static async getOneByEmail(email) {
         const date = new Date();
         let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate()+ "  " + (date.getHours())+ ":" + (date.getMinutes()));
         const [results] = await pool.execute('SELECT `password`, `email`, `id`, `admin`, `active` FROM `users` WHERE `email` = :email', {
             email: email,
         });
-        await pool.execute('UPDATE `users` SET `last_login` = :last_login, `activation_code` = :activation_code WHERE `email` = :email', {
+        await pool.execute('UPDATE `users` SET `last_login` = :last_login WHERE `email` = :email', {
             email: email,
             last_login: myDate,
-            activation_code: activationCode,
         });
         return results;
     }

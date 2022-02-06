@@ -68,9 +68,9 @@ userRouter.post('/add', async  (req, res) => {
     }
     const newUser = new UserRecord(req.body);
     const hash = await bcrypt.hash(req.body.password, 10);
-    await newUser.insert(hash);
     const activationCode = crypto.randomBytes(32).toString("hex")
-    const results = await UserRecord.getOneByEmail(req.body.email, activationCode);
+    await newUser.create(hash, activationCode);
+    const results = await UserRecord.getOneByEmail(req.body.email);
     const user = results[0];
     UsersService.handleEmailVerification(req.body.email, user.id, activationCode);
     req.flash('successRegister', 'Account was created. Please confirm your e-mail.');
@@ -83,6 +83,8 @@ userRouter.post('/login',  async (req, res,) => {
         req.flash('emptyField', 'Please insert the requested information.');
         return res.redirect('/user/login');
     }
+    const results = await UserRecord.getOneByEmail(req.body.email);
+    const user = results[0];
     try {
         const check = await bcrypt.compare(req.body.password, results[0].password);
         if (check) {
