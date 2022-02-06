@@ -132,8 +132,11 @@ userRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsA
         usersList,
         user,
         message: {
-          successfullUserRemoved: req.flash('successfullUserRemoved'),
-          unSuccessfullUserRemoved: req.flash('unSuccessfullUserRemoved')
+            successfullUserRemoved: req.flash('successfullUserRemoved'),
+            unSuccessfullUserRemoved: req.flash('unSuccessfullUserRemoved'),
+            successfullUserActivated: req.flash('successfullUserActivated'),
+            unSuccessfullUserActivated: req.flash('unSuccessfullUserActivated'),
+
         },
 
     });
@@ -164,12 +167,12 @@ userRouter.get('/:id/activation/:code', async (req,res,next) => {
 })
 
 
-userRouter.post('/delete/:id', async (req, res, next) => {
+userRouter.get('/remove/:id', async (req, res, next) => {
   const userId = req.url.split('/')[2];
   try {
     if (typeof userId === "string") {
         UserRecord.remove(userId);
-        req.flash('successfullUserRemoved', `User : ${userId} was successful removed from database.`);
+        req.flash('successfullUserRemoved', `User was successful removed from database.`);
         return res.redirect('/user/list');
     }
     
@@ -179,6 +182,23 @@ userRouter.post('/delete/:id', async (req, res, next) => {
   }
   
 })
+
+userRouter.get('/activate/:id', async (req, res, next) => {
+    const userId = req.url.split('/')[2];
+    try {
+        if (typeof userId === "string") {
+            UserRecord.activate(userId);
+            req.flash('successfullUserActivated', `User was successful activated.`);
+            return res.redirect('/user/list');
+        }
+
+    } catch(err) {
+        req.flash('unSuccessfullUserActivated', `User not found, something wrong.`);
+        console.log('user not found')
+    }
+
+})
+
 module.exports = {
     userRouter,
 };

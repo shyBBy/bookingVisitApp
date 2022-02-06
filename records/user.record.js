@@ -86,6 +86,13 @@ class UserRecord {
             active: this.active,
         });
     }
+    static async activate(id) {
+        this.active = 'true';
+        await pool.execute('UPDATE `users` SET `active` = :active WHERE `id` = :id', {
+            id: id,
+            active: this.active,
+        });
+    }
 }
 
 module.exports = {
