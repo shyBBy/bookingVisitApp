@@ -15,7 +15,7 @@
                         class="fas fa-map-marker fa-fw me-3"></i><span>Places</span></a>
                 <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-life-ring fa-fw me-3"></i><span>Support</span></a>
-                {{#if (isAdmin user.admin)}}
+                {{#if (isAdmin isAdminLoggedUser)}}
                     <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                             class="fas fa-life-ring fa-fw me-3"></i><span>Admin</span></a>
                 {{/if}}
@@ -96,19 +96,19 @@
                                         <a href="#">{{this.email}}</a>
                                     </td>
                                     <td style="width: 20%;">
-                                        <a href="#" class="table-link text-warning">
+                                        <a href="/user/profile/{{this.id}}" class="table-link text-warning">
                                             <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                                             </span>
                                         </a>
-                                        <a href="#" class="table-link text-info">
+                                        <a href="/user/delete/{{this.id}}" class="table-link text-info">
                                             <span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                DELETE USER
                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                             </span>
                                         </a>
-                                        <a href="#" class="table-link danger">
+                                        <a href="/user/activation/{{this.id}}" class="table-link danger">
                                             <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>

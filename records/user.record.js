@@ -45,16 +45,12 @@ class UserRecord {
         });
     }
 
-    async delete(){
-        if (!this.id){
+    static async remove(id){
+        if (!id){
             throw new Error('There is no such user')
         }
         await pool.execute('DELETE FROM `users` WHERE `id` = :id', {
-            id: this.id,
-            name: this.name,
-            surname: this.surname,
-            email: this.email,
-            admin: this.admin,
+          id: id,
         });
 
     }

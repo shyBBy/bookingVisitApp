@@ -129,6 +129,10 @@ userRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsA
     res.render('user/list', {
         usersList,
         user,
+        message: {
+          successfullUserRemoved: req.flash('successfullUserRemoved'),
+          unSuccessfullUserRemoved: req.flash('unSuccessfullUserRemoved')
+        },
 
     });
 })
@@ -157,6 +161,22 @@ userRouter.get('/:id/activation/:code', async (req,res,next) => {
     }
 })
 
+
+userRouter.post('/delete/:id', async (req, res, next) => {
+  const userId = req.url.split('/')[2];
+  try {
+    if (typeof userId === "string") {
+        UserRecord.remove(userId);
+        req.flash('successfullUserRemoved', `User : ${userId} was successful removed from database.`);
+        return res.redirect('/user/list');
+    }
+    
+  } catch(err) {
+    req.flash('unSuccessfullUserRemoved', `User not found, something wrong.`);
+    console.log('user not found')
+  }
+  
+})
 module.exports = {
     userRouter,
 };
