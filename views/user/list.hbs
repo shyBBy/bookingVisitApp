@@ -130,28 +130,27 @@
                                             <button type="button" data-toggle="tooltip" title="Activate user" class="btn btn-outline-success"><i class="fas fa-user-check"></i></button>
                                         </a>
                                         <!-- Button trigger modal -->
-                                        <button type="button" onclick="showmodal()" data-toggle="tooltip" title="User options" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal">
+                                        <button type="button" onclick="showmodal()" data-toggle="tooltip" title="User options" class="btn btn-outline-primary" data-bs-toggle="modal{{this.id}}" data-bs-target="#modal{{this.id}}">
                                             <i class="fas fa-user-cog"></i>
                                         </button>
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="modal{{this.id}}" tabindex="-1" aria-labelledby="ModalLabel{{this.id}}" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">User options</h5>
-                                                        <button type="button" onclick="hidemodal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        <h5 class="modal-title" id="ModalLabel{{this.id}}">User options</h5>
+                                                        <button type="button" onclick="hidemodal()" class="btn-close" data-bs-dismiss="modal{{this.id}}" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         bedzie tu mozna zmienic komus nick, e-mail, haslo, range i inne tego typu rzeczy
                                                         <select>
-                                  {{#each ../usersList}}                         <option value="{{this.name}}">{{this.name}}</option>
+                                                   <option value="{{this.name}}">{{this.name}}</option>
                                                             <option value="{{this.id}}">{{this.id}}</option>
-                                                            {{/each}}
                                                         </select>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" onclick="hidemodal()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" onclick="hidemodal()" class="btn btn-secondary" data-bs-dismiss="modal{{this.id}}">Close</button>
                                                         <button type="button" class="btn btn-primary">Save changes</button>
                                                     </div>
                                                 </div>
