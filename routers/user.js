@@ -136,6 +136,7 @@ userRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsA
             unSuccessfullUserRemoved: req.flash('unSuccessfullUserRemoved'),
             successfullUserActivated: req.flash('successfullUserActivated'),
             unSuccessfullUserActivated: req.flash('unSuccessfullUserActivated'),
+            unSuccessfulUserRemovedAsLogedUser: req.flash('unSuccessfulUserRemovedAsLogedUser'),
 
         },
 
@@ -171,6 +172,10 @@ userRouter.get('/remove/:id', async (req, res, next) => {
   const userId = req.url.split('/')[2];
   try {
     if (typeof userId === "string") {
+        if (userId === req.session.user.id) {
+            req.flash('unSuccessfulUserRemovedAsLogedUser', `You cannot delete the user you are logged in. `);
+            return res.redirect('/user/list');
+        }
         UserRecord.remove(userId);
         req.flash('successfullUserRemoved', `User was successful removed from database.`);
         return res.redirect('/user/list');
