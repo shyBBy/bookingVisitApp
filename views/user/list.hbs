@@ -129,19 +129,7 @@
                                         <a style="text-decoration:none" href="/user/activate/{{this.id}}" >
                                             <button type="button" data-toggle="tooltip" title="Activate user" class="btn btn-outline-success"><i class="fas fa-user-check"></i></button>
                                         </a>
-                         <script type="text/javascript">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-    function showmodal()
-    {
-        $("#modal{{this.id}}").modal("show");
-    }
-    function hidemodal()
-    {
-        $("#modal{{this.id}}").modal("hide");
-    }
-</script>               
+                                    
                                         
                                         
                                         <!-- Button trigger modal -->
@@ -183,3 +171,16 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    function showmodal()
+    {
+        $("#modal{{this.id}}").modal("show");
+    }
+    function hidemodal()
+    {
+        $("#modal{{this.id}}").modal("hide");
+    }
+</script>    
