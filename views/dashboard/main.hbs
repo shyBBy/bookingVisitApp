@@ -15,7 +15,7 @@
                         class="fas fa-map-marker fa-fw me-3"></i><span>Places</span></a>
                 <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-life-ring fa-fw me-3"></i><span>Support</span></a>
-                {{#if (isAdmin user.admin)}}
+                {{#if (isAdmin isAdminLoggedUser)}}
                     <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                             class="fas fa-life-ring fa-fw me-3"></i><span>Admin</span></a>
                 {{/if}}

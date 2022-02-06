@@ -6,8 +6,10 @@ const userMiddleware = require("../middleware/user.middleware");
 dashboardRouter.get('/', userMiddleware.checkSession, async(req, res, next) => {
     const results = await UserRecord.getOneById(req.session.user.id);
     const user = results[0]
+    cons isAdminLoggedUser = req.session.user.isAdmin;
     res.render('dashboard/main', {
         user,
+        isAdminLoggedUser,
     });
 });
 
