@@ -72,7 +72,7 @@ userRouter.post('/add', async  (req, res) => {
     await newUser.create(hash, activationCode);
     const results = await UserRecord.getOneByEmail(req.body.email);
     const user = results[0];
-    UsersService.handleEmailVerification(req.body.email, user.id, activationCode);
+    await UsersService.handleEmailVerification(req.body.email, user.id, activationCode);
     req.flash('successRegister', 'Account was created. Please confirm your e-mail.');
     res.redirect('/user/login');
 

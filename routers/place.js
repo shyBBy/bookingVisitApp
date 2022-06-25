@@ -23,6 +23,18 @@ placeRouter.post('/add', async (req, res) => {
     res.redirect('/place/list');
 })
 
+placeRouter.get('/profile', userMiddleware.checkSession, async (req, res) => {
+    const users = await UserRecord.getOneById(req.session.user.id);
+    const user = users[0];
+    const places = await PlaceRecord.getOneById();
+    const place = places[0];
+    //@TODO: Utworzyc metode getOneById w placeRecord, pobrac i wyswietlic dane dane o danym miejscu xD
+    res.render('places/profile', {
+        user,
+        place,
+    })
+});
+
 module.exports = {
     placeRouter,
 };

@@ -77,92 +77,51 @@
             </div>
         {{/if}}
         <section class="mb-4">
-            <div class="card">
-                <div class="card-header text-center py-3">
-                    <h5 class="mb-0 text-center">
-                        <strong>Testowe dane</strong>
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover text-nowrap">
-                            <thead>
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Product Detail Views</th>
-                                <th scope="col">Unique Purchases</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Product Revenue</th>
-                                <th scope="col">Avg. Price</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">Value</th>
-                                <td>18,492</td>
-                                <td>228</td>
-                                <td>350</td>
-                                <td>$4,787.64</td>
-                                <td>$13.68</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Percentage change</th>
-                                <td>
-                      <span class="text-danger">
-                        <i class="fas fa-caret-down me-1"></i><span>-48.8%%</span>
-                      </span>
-                                </td>
-                                <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>14.0%</span>
-                      </span>
-                                </td>
-                                <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>46.4%</span>
-                      </span>
-                                </td>
-                                <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>29.6%</span>
-                      </span>
-                                </td>
-                                <td>
-                      <span class="text-danger">
-                        <i class="fas fa-caret-down me-1"></i><span>-11.5%</span>
-                      </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Absolute change</th>
-                                <td>
-                      <span class="text-danger">
-                        <i class="fas fa-caret-down me-1"></i><span>-17,654</span>
-                      </span>
-                                </td>
-                                <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>28</span>
-                      </span>
-                                </td>
-                                <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>111</span>
-                      </span>
-                                </td>
-                                <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>$1,092.72</span>
-                      </span>
-                                </td>
-                                <td>
-                      <span class="text-danger">
-                        <i class="fas fa-caret-down me-1"></i><span>$-1.78</span>
-                      </span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="main-box no-header clearfix">
+                            <div class="main-box-body clearfix">
+                                <div class="table-responsive">
+                                    <table class="table user-list">
+                                        <thead>
+                                        <tr>
+                                            <th><span>Place's Name</span></th>
+                                            <th><span>Created at</span></th>
+                                            <th class="text-center"><span>Status</span></th>
+                                            <th><span>Assigned to </span></th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td>
+                                                    <a href="/user/profile/{{this.id}}" class="user-link">{{this.name}} {{this.surname}}</a>
+                                                </td>
+                                                <td>{{this.registered}}</td>
+                                                <td class="text-center">
+                                                    <span class="label label-default">{{this.active}}</span>
+                                                </td>
+                                                <td>
+                                                    <a href="#">{{this.email}}</a>
+                                                </td>
+                                                <td style="width: 20%;">
+                                                    <a style="text-decoration:none" href="/user/profile/{{this.id}}" >
+                                                        <button type="button" data-toggle="tooltip" title="Information" class="btn btn-outline-primary"><i class="fas fa-solid fa-info"></i></button>
+                                                    </a>
+                                                    <a style="text-decoration:none" href="/user/remove/{{this.id}}" >
+                                                        <button type="button" data-toggle="tooltip" title="Cancel booking" class="btn btn-outline-danger"><i class="fas fa-solid fa-ban"></i></button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

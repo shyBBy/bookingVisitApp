@@ -79,17 +79,21 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Address</th>
+                                <th scope="col">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             {{#each placesList}}
                                 <tr>
-                                    <th scope="row">{{number}}</th>
                                     <td>{{this.name}}</td>
                                     <td>{{this.address}}</td>
+                                    <td style="width: 20%;">
+                                        <a style="text-decoration:none" href="/place/profile/{{this.id}}" >
+                                            <button type="button" data-toggle="tooltip" title="Book a visit" class="btn btn-outline-primary"><i class="fas fa-calendar-plus"></i></button>
+                                        </a>
+                                    </td>
                                 </tr>
                             {{/each}}
 

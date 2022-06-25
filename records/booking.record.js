@@ -12,7 +12,7 @@ class BookingRecord {
         }
 
 
-        this.id = obj.id;
+        // this.id = obj.id;
         this.title = obj.title;
         this.createdAt = obj.createdAt;
         this.status = obj.status;
@@ -27,17 +27,17 @@ class BookingRecord {
             this.id = uuid();
             this.createdAt = myDate;
             this.status = 'notConfirmed';
-            const createdByuserId = userId;
+            this.createdByUserId = userId;
         
         }
-        await pool.execute('INSERT INTO `todos` VALUES(:id, :title, :createdAt, :status, :assignedToUserId, :assignedToPlaceId, :createdByuserId, :updatedAt)', {
+        await pool.execute('INSERT INTO `bookings` VALUES(:id, :title, :createdAt, :status, :assignedToUserId, :assignedToPlaceId, :createdByuserId, :updatedAt)', {
             id: this.id,
             title: this.title,
             createdAt: this.createdAt,
             status: this.status,
             assignedToUserId: this.assignedToUserId,
             assignedToPlaceId: this.assignedToPlaceId,
-            createdByuserId: userId,
+            createdByUserId: this.createdByUserId,
             updatedAt: this.createdAt,
         });
        
@@ -47,13 +47,20 @@ class BookingRecord {
       const date = new Date();
       let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1) + "/" + (date.getUTCDate());
       this.updatedAt = myDate;
-      await pool.execute('UPDATE `todos` SET `status` = :status `updatedAt` = :updatedAt WHERE `id` = :id', {
+      await pool.execute('UPDATE `bookings` SET `status` = :status `updatedAt` = :updatedAt WHERE `id` = :id', {
         id,
         status,
-        updatedAt,
+        updatedAt: this.updatedAt,
       });
-      return updatedAt;
+      return this.updatedAt;
     };
+
+    static async getAllByUserId(userId) {
+        const [results] = await pool.execute('SELECT * FROM `bookings` WHERE `createdByUserId` = :userId', {
+            userId: userId,
+        });
+        return results;
+    }
   
 }
 
