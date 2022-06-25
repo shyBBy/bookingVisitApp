@@ -10,7 +10,8 @@ class UserRecord {
         this.admin = obj.admin;
         this.password = obj.password;
         this.registered = obj.registered;
-        this.last_login = obj.last_login
+        this.last_login = obj.last_login;
+        this.active = obj.active;
     }
 
     static  async loginCheck(email) {
@@ -20,13 +21,16 @@ class UserRecord {
         return results;
     }
 
-    async insert(hash){
+    async create(hash, activationCode){
         if (typeof this.id === "undefined") {
+            const date = new Date();
+            let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate());
             this.id = uuid();
-            this.registered = new Date();
+            this.registered = myDate;
+            this.active = 'false';
 
         }
-        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password, :registered, :last_login)', {
+        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password, :registered, :last_login, :active, :activation_code)', {
             id: this.id,
             name: this.name,
             surname: this.surname,
@@ -35,21 +39,59 @@ class UserRecord {
             password: hash,
             registered: this.registered,
             last_login: this.registered,
+            active: this.active,
+            activation_code: activationCode,
+         
         });
     }
 
-    async delete(){
-        if (!this.id){
+    static async remove(id){
+        if (!id){
             throw new Error('There is no such user')
         }
         await pool.execute('DELETE FROM `users` WHERE `id` = :id', {
-            id: this.id,
-            name: this.name,
-            surname: this.surname,
-            email: this.email,
-            admin: this.admin,
+          id: id,
         });
 
+    }
+
+    static async listAll() {
+        const [results] = await pool.execute('SELECT * FROM `users`');
+        return results;
+    }
+
+    static async getOneById(id) {
+        const [results] = await pool.execute('SELECT `id`, `name`, `surname`, `email`, `admin`, `registered`, `last_login` FROM `users` WHERE `id` = :id', {
+            id: id,
+        });
+        return results;
+    }
+
+    static async getOneByEmail(email) {
+        const date = new Date();
+        let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate()+ "  " + (date.getHours())+ ":" + (date.getMinutes()));
+        const [results] = await pool.execute('SELECT `password`, `email`, `id`, `admin`, `active` FROM `users` WHERE `email` = :email', {
+            email: email,
+        });
+        await pool.execute('UPDATE `users` SET `last_login` = :last_login WHERE `email` = :email', {
+            email: email,
+            last_login: myDate,
+        });
+        return results;
+    }
+    static async getOneByIdAndActivating(id) {
+        this.active = 'true';
+        await pool.execute('UPDATE `users` SET `active` = :active WHERE `id` = :id', {
+            id: id,
+            active: this.active,
+        });
+    }
+    static async activate(id) {
+        this.active = 'true';
+        await pool.execute('UPDATE `users` SET `active` = :active WHERE `id` = :id', {
+            id: id,
+            active: this.active,
+        });
     }
 }
 

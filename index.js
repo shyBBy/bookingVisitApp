@@ -1,24 +1,29 @@
 require('dotenv').config();
-const cookieSession = require('cookie-session')
 const express = require('express');
 const exphbs = require('express-handlebars');
 const {urlencoded} = require("express");
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
+const session = require('express-session')
+const flash = require('connect-flash');
+const {handlebarsHelpers} = require("./utils/handlebars-helpers");
+const {pool} = require('./utils/db');
 // ******* UTILS *******
 const {handleError} = require("./utils/errors");
 // ******* ROUTERS *******
 const {placeRouter} = require('./routers/place');
 const {userRouter} = require('./routers/user');
 const {dashboardRouter} = require("./routers/dashboard");
+const {bookingRouter} = require("./routers/booking");
 // ******* MIDDLEWARES *******
-const {sessionChecker} = require("./middleware/sessionChecker");
 // ******* EXPRESS CFG *******
 const app = express();
 const hbs = exphbs.create({
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: handlebarsHelpers,
 });
 // ******* APP.USE *******
+
 app.use(express.urlencoded({
     extended: true,
 }));
@@ -26,22 +31,45 @@ app.use(methodOverride('_method'));
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cookieParser());
-app.engine('.hbs', hbs.engine);
+app.engine('.hbs', hbs.engine,);
 app.set('view engine', '.hbs');
-app.use(cookieSession({
-    name: 'session',
-    keys: ['process.env.COOKIE_SESSION_SECRET'],
 
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-}))
+// ******* EXPRESS-MYSQL-SESSION START *******
+
+
+const MySQLStore = require('express-mysql-session')(session);
+const sessionStore = new MySQLStore({
+    expiration: 24 * 60 * 60 * 1000,
+    createDatabaseTable: true,
+    schema: {
+        tableName: 'sessiontbl',
+        columnNames: {
+            session_id: 'session_id',
+            expires: 'expires',
+            data: 'data',
+        }
+    }
+}, pool);
+
+app.use(session({
+    key: 'process.env.EXPRESS_MYSQL_SESSION_KEY',
+    secret: 'process.env.EXPRESS_MYSQL_SESSION_SECRET',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: true
+}));
+
+
+// ******* EXPRESS-MYSQL-SESSION END *******
+app.use(flash());
+
 app.use('/place', placeRouter);
-app.use('/user', userRouter);
+app.use('/user',userRouter);
 app.use('/dashboard', dashboardRouter);
-app.use(handleError);
+app.use('/booking', bookingRouter);
 
 
-app.get('/',sessionChecker, (req, res) => {
+app.get('/', (req, res) => {
     res.redirect('/dashboard')
 });
 

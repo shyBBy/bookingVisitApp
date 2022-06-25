@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2022 at 02:45 PM
+-- Generation Time: Feb 01, 2022 at 09:28 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -45,6 +45,13 @@ CREATE TABLE `bookings` (
   `placeId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `bookedAt`, `userId`, `placeId`) VALUES
+('87ee66c6-8146-11ec-832c-d8cb8ae59a7b', '0000-00-00 00:00:00', '9f5dddb9-0a97-4810-998e-5fa56467b884', '2944a567-64a1-11ec-a96f-d8cb8ae59a7b');
+
 -- --------------------------------------------------------
 
 --
@@ -69,7 +76,27 @@ INSERT INTO `places` (`id`, `name`, `address`) VALUES
 ('a44c8e7a-fe7b-4b55-a45a-fe081985ab85', 'test', '3232'),
 ('b0246b0b-d9e2-4e78-8acd-ef5cd24c69d6', 'Super szpital', 'Kochanowskiego 23'),
 ('b69cbc7e-c4fa-4588-a09d-4491bd7bb30f', 'Testowy szpital', 'Ulica.jana 2'),
-('e343a9f5-64a0-11ec-a96f-d8cb8ae59a7b', 'Wojewódzki Specjalistyczny Szpital im. Mikołaja Pirogowa', 'Wólczańska 191/195, 90-001 Łódź');
+('e343a9f5-64a0-11ec-a96f-d8cb8ae59a7b', 'Wojewódzki Specjalistyczny Szpital im. Mikołaja Pirogowa', 'Wólczańska 191/195, 90-001 Łódź'),
+('e4810731-ca2c-4fdf-973f-b2c154cc3ae5', 'antekZmienNazwe', '231321dsa das dsad saasdd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sessiontbl`
+--
+
+CREATE TABLE `sessiontbl` (
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `expires` int(11) UNSIGNED NOT NULL,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sessiontbl`
+--
+
+INSERT INTO `sessiontbl` (`session_id`, `expires`, `data`) VALUES
+('QAyCwdgjirY7XZNvLKgSn7zgPa-5P80j', 1643833207, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{}}');
 
 -- --------------------------------------------------------
 
@@ -97,17 +124,23 @@ CREATE TABLE `users` (
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin` int(2) NOT NULL DEFAULT 0,
   `password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `registered` datetime NOT NULL,
-  `last_login` datetime DEFAULT NULL
+  `registered` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `last_login` varchar(70) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activation_code` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `email`, `admin`, `password`, `registered`, `last_login`) VALUES
-('77f093d5-b43a-4521-99d7-a567d8cd2d86', 'Bezpieczny', 'User', '31dadsc@dat.com', 0, '$2b$10$Jv7jEjfRyx6chDl.d.Bxe.cMwr1LNVLHIJh0Hg/GNNxIwlYawI5Bi', '2022-01-02 14:30:23', '2022-01-02 14:30:23'),
-('9f5dddb9-0a97-4810-998e-5fa56467b884', 'Jackowski', 'Jacek', 'gcc22525@cuoly.com', 0, '$2b$10$0xRry9JbtWFqvYXnu/8TM.kcpkTbQxnV7aos8PJgU0DIVViTasRaS', '2022-01-02 19:28:50', '2022-01-02 19:28:50');
+INSERT INTO `users` (`id`, `name`, `surname`, `email`, `admin`, `password`, `registered`, `last_login`, `active`, `activation_code`) VALUES
+('4d5b48c7-2612-4aa2-87ae-058cd4af22ca', 'Super', 'Super', 'super@super.com', 0, '$2b$10$1WVtsOUeGd4hNsDhnipameCcdF5QhRS9GNtrlBKqxZej4P3TQMNWi', '2022-01-08', '2022-01-08', 'true', NULL),
+('6efed7e4-1613-4b8e-bdda-66ed505b5482', 'Ewa', 'Kowalski', 'twarozek955@gmail.com', 0, '$2b$10$3naVlBzUmKyMmJMKzb6BfeJ8p1fUg7PzWwXPfHSQAYgXqpRZahy8K', '2022/2/1', '2022/2/1  21:8', 'false', '5452635e87541f47f8abca380449eb130f36bc660a33174063'),
+('77f093d5-b43a-4521-99d7-a567d8cd2d86', 'Bezpieczny', 'User', '31dadsc@dat.com', 0, '$2b$10$Jv7jEjfRyx6chDl.d.Bxe.cMwr1LNVLHIJh0Hg/GNNxIwlYawI5Bi', '2022-01-02', '2022-01-02', 'true', NULL),
+('9f5dddb9-0a97-4810-998e-5fa56467b884', 'Jackowski', 'Jacek', 'gcc22525@cuoly.com', 1, '$2b$10$0xRry9JbtWFqvYXnu/8TM.kcpkTbQxnV7aos8PJgU0DIVViTasRaS', '2022-01-02', '2022/1/29  22:11', 'true', '53565b0482cf405cd8e5e7dec38c595d8480'),
+('a5e9573e-128b-435a-92ec-8ecef392deeb', 'Klaudia', '321', 'goo38907@boofx.com', 0, '$2b$10$wTPOcDYJElwlEmuC0szKkuv4D.tis9T2hmygshp4DxJB.S0578v/6', '2022/2/1', '2022/2/1  21:20', 'false', '296d3166f977f311367c782db2c12ab7670510f98a55ad7bb0'),
+('daa83026-e0aa-4331-8b64-8c7eee353004', 'Dawid', 'Super', 'edekkredek1910@gmail.com', 0, '$2b$10$JEAFyntSvtBSsv.nayLw2OCH4zyHthoFJ1w0WpqZ8HNecM.blCcHq', '2022/1/28', '2022/2/1  21:10', 'true', '2ab2e338442ac706e61f7cd552341ac6a6cf8b65aeab436b05');
 
 -- --------------------------------------------------------
 
@@ -145,6 +178,12 @@ ALTER TABLE `bookings`
 --
 ALTER TABLE `places`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sessiontbl`
+--
+ALTER TABLE `sessiontbl`
+  ADD PRIMARY KEY (`session_id`);
 
 --
 -- Indexes for table `staff`
