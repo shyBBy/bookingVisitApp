@@ -14,10 +14,13 @@ placeRouter
             placesList,
             usersList,
             user,
+            message: {
+                unSuccessfulPlaceId: req.flash('unSuccessfulPlaceId'),
+            }
         });
     });
 
-placeRouter.post('/add', async (req, res) => {
+placeRouter.post('/add', userMiddleware.checkUserIsAdmin,  async (req, res) => {
     const newPlace = new PlaceRecord(req.body);
     await newPlace.insert();
     res.redirect('/place/list');
@@ -28,11 +31,17 @@ placeRouter.get('/profile/:placeId', userMiddleware.checkSession, async (req, re
     const user = users[0];
     const places = await PlaceRecord.getOneById(req.params['placeId']);
     const place = places[0];
-    //@TODO: Utworzyc metode getOneById w placeRecord, pobrac i wyswietlic dane dane o danym miejscu xD
-    res.render('places/profile', {
-        user,
-        place,
-    })
+    console.log(place)
+    if(!place) {
+        req.flash('unSuccessfulPlaceId', `Something wrong, place with this ID: ${req.params['placeId']}  never exist`);
+        res.redirect('/place/list');
+    } else {
+        res.render('places/profile', {
+            user,
+            place,
+        })
+    }
+
 });
 
 module.exports = {

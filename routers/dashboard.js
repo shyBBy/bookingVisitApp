@@ -10,6 +10,9 @@ dashboardRouter.get('/', userMiddleware.checkSession, async(req, res, next) => {
     res.render('dashboard/main', {
         user,
         isAdminLoggedUser,
+        message: {
+            unauthorisedAccess: req.flash('unauthorisedAccess'),
+        }
     });
 });
 

@@ -7,8 +7,6 @@
                 <a href="/dashboard/" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
                     <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
                 </a>
-                <a href="/user/list" class="list-group-item list-group-item-action py-2 ripple"><i
-                        class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
                 <a href="/booking/" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-calendar-day fa-fw me-3"></i><span>Booking</span></a>
                 <a href="/place/list" class="list-group-item list-group-item-action py-2 ripple active"><i
@@ -16,8 +14,13 @@
                 <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-life-ring fa-fw me-3"></i><span>Support</span></a>
                 {{#if (isAdmin user.admin)}}
+                    <div class="nav-link disabled">
+                        <p>ADMIN PANEL</p>
+                    </div>
                     <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                             class="fas fa-life-ring fa-fw me-3"></i><span>Admin</span></a>
+                    <a href="/user/list" class="list-group-item list-group-item-action py-2 ripple"><i
+                            class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
                 {{/if}}
             </div>
         </div>
@@ -67,6 +70,11 @@
 <main style="margin-top: 58px">
     <div class="container pt-4">
         <!--Section: Sales Performance KPIs-->
+        {{#if message.unSuccessfulPlaceId}}
+            <div class="alert alert-warning" role="alert">
+                {{message.unSuccessfulPlaceId}}
+            </div>
+        {{/if}}
         <section class="mb-4">
             <div class="card">
                 <div class="card-header text-center py-3">
@@ -103,6 +111,7 @@
                 </div>
             </div>
         </section>
+    {{#if (isAdmin user.admin)}}
         <section class="mb-4">
             <div class="card">
                 <div class="card-header text-center py-3">
@@ -137,6 +146,7 @@
             </div>
 
         </section>
+    {{/if}}
 
     </div>
 </main>

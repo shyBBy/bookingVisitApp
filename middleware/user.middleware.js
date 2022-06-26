@@ -15,6 +15,15 @@ module.exports = {
             // return res.redirect('/user/login');
         }
         next();
+    },
+    checkUserIsAdmin: async (req, res, next) => {
+        if(req.session.user.isAdmin === 1){
+            next();
+        } else {
+            console.log('You are not admin.')
+            req.flash('unauthorisedAccess', `You are not admin.`);
+            return res.redirect('/dashboard/')
+        }
     }
 };
 

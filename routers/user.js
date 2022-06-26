@@ -123,7 +123,7 @@ userRouter.get('/user/logout', async(req, res) => {
     })
 })
 
-userRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsActive, async (req, res, next) => {
+userRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsActive, userMiddleware.checkUserIsAdmin, async (req, res, next) => {
     const results = await UserRecord.getOneById(req.session.user.id);
     console.log(req.session.user.isActive);
     const user = results[0]
@@ -168,7 +168,7 @@ userRouter.get('/:id/activation/:code', async (req,res,next) => {
 })
 
 
-userRouter.get('/remove/:id', async (req, res, next) => {
+userRouter.get('/remove/:id', userMiddleware.checkUserIsAdmin,  async (req, res, next) => {
   const userId = req.url.split('/')[2];
   try {
     if (typeof userId === "string") {
@@ -188,7 +188,7 @@ userRouter.get('/remove/:id', async (req, res, next) => {
   
 })
 
-userRouter.get('/activate/:id', async (req, res, next) => {
+userRouter.get('/activate/:id', userMiddleware.checkUserIsAdmin,  async (req, res, next) => {
     const userId = req.url.split('/')[2];
     try {
         if (typeof userId === "string") {

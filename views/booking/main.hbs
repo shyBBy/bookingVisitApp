@@ -7,8 +7,6 @@
                 <a href="/dashboard/" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
                     <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
                 </a>
-                <a href="/user/list" class="list-group-item list-group-item-action py-2 ripple"><i
-                        class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
                 <a href="/booking/" class="list-group-item list-group-item-action py-2 ripple active"><i
                         class="fas fa-calendar-day fa-fw me-3"></i><span>Booking</span></a>
                 <a href="/place/list" class="list-group-item list-group-item-action py-2 ripple"><i
@@ -16,8 +14,13 @@
                 <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-life-ring fa-fw me-3"></i><span>Support</span></a>
                 {{#if (isAdmin user.admin)}}
+                    <div class="nav-link disabled">
+                        <p>ADMIN PANEL</p>
+                    </div>
                     <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                             class="fas fa-life-ring fa-fw me-3"></i><span>Admin</span></a>
+                    <a href="/user/list" class="list-group-item list-group-item-action py-2 ripple"><i
+                            class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
                 {{/if}}
             </div>
         </div>
@@ -71,11 +74,6 @@
         <!-- Section: Main chart -->
 
         <!--Section: Sales Performance KPIs-->
-        {{#if message}}
-            <div class="alert alert-primary" role="alert">
-                {{message}}
-            </div>
-        {{/if}}
         <section class="mb-4">
             <div class="container">
                 <div class="row">
