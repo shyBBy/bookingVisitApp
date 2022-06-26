@@ -50,6 +50,12 @@ class PlaceRecord {
 
         return this.id;
     }
+    static async getOneById(placeId){
+        const [results] = await pool.execute('SELECT * FROM `places` WHERE `id` = :placeId,', {
+            placeId,
+        })
+        return results;
+    }
 }
 
 module.exports = {
