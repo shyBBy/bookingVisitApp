@@ -85,6 +85,7 @@ userRouter.post('/login',  async (req, res,) => {
     }
     const results = await UserRecord.getOneByEmail(req.body.email);
     const user = results[0];
+    console.log(user)
     try {
         const check = await bcrypt.compare(req.body.password, results[0].password);
         if (check) {

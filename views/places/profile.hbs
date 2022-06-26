@@ -9,7 +9,7 @@
                 </a>
                 <a href="/booking/" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-calendar-day fa-fw me-3"></i><span>Booking</span></a>
-                <a href="/place/list" class="list-group-item list-group-item-action py-2 ripple"><i
+                <a href="/place/list" class="list-group-item list-group-item-action py-2 ripple active"><i
                         class="fas fa-map-marker fa-fw me-3"></i><span>Places</span></a>
                 <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-life-ring fa-fw me-3"></i><span>Support</span></a>
@@ -74,23 +74,23 @@
             <div class="card">
                 <div class="card-header text-center py-3">
                     <h5 class="mb-0 text-center">
-                        <strong>Your Profile kurwa</strong>
+                        <strong>Place's profile</strong>
                     </h5>
                 </div>
                 <!-- START-->
 
                 <div class="main-body">
 
-                    <!-- /Breadcrumb -->
+                    <!-- MAIN INFORMATION ABOUT HOSPITAL -->
 
                     <div class="row gutters-sm">
                         <div class="col-md-4 mb-3">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                                        <img src="https://seeklogo.com/images/H/hospital-plus-logo-914E10A64D-seeklogo.com.png" alt="Hospital's logo"  width="150">
                                         <div class="mt-3">
-                                            <h4>{{user.name}} {{user.surname}}</h4>
+                                            <h4>{{place.name}}</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@
                                             <h6 class="mb-0">Full Name</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            {{user.name}} {{user.surname}}
+                                            {{place.name}}
                                         </div>
                                     </div>
                                     <hr>
@@ -113,7 +113,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            {{user.email}}
+                                            --
                                         </div>
                                     </div>
                                     <hr>
@@ -131,64 +131,59 @@
                                             <h6 class="mb-0">Address</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            JESZCZE NIE MA
+                                            {{place.address}}
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Registered at</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            {{user.registered}}
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Last login</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            {{user.last_login}}
-                                        </div>
-                                    </div>
-                                    <hr>
+                                {{#if (isAdmin user.admin)}}
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <a class="btn btn-info " target="__blank" href="#">Edit</a>
                                         </div>
                                     </div>
+                                {{/if}}
                                 </div>
                             </div>
 
-                            <div class="row gutters-sm">
-                                <div class="col-sm-6 mb-3">
-                                    <div class="card h-100">
-                                        <div class="card-body">
-                                            <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">My </i> bookings</h6>
-                                            TU BEDZIE LISTA TWOICH WIZYT - JUZ ZAREZERWOWANYCH
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <div class="card h-100">
-                                        <div class="card-body">
-                                            <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">BRAK</i>POMYSLU</h6>
-                                            nie wiem co tu bedzie, czy wgl cos tu wstawie
-                                        </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- KONIEC-->
+    </section>
+        <section class="mb-4">
+            <div class="card">
+
+                <div class="main-body">
+                    <!-- DOCTORS AND BOOKINGS -->
+
+                    <div class="row gutters-sm">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-sm-6 mb-3">
+                                        <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">{{place.name}}'s </i> doctors</h6>
+                                        tu bedzie lista doktorkow pracujacych w danej placowce
                                     </div>
                                 </div>
                             </div>
-
-
-
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="col-sm-6 mb-3">
+                                        <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">BOOK</i>a visit</h6>
+                                        tu bedzie formularz do wizyt
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-            <!-- KONIEC-->
-    </div>
     </section>
 
     </div>
