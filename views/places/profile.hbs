@@ -165,7 +165,7 @@
                                 <div class="card-body">
                                     <div class="col-sm-6 mb-3">
                                         <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">{{place.name}}'s </i> doctors</h6>
-                                        tu bedzie lista doktorkow pracujacych w danej placowce
+                                         tubedzie lista doktorkow pracujacych w danej placowce
                                     </div>
                                 </div>
                             </div>
@@ -175,7 +175,31 @@
                                 <div class="card-body">
                                     <div class="col-sm-6 mb-3">
                                         <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">BOOK</i>a visit</h6>
-                                        tu bedzie formularz do wizyt
+                                        <form action="/place/add" method="POST">
+                                            <!-- 2 column grid layout with text inputs for the first and last names -->
+                                            <div class="row mb-4">
+                                                <div class="col-6">
+                                                    <div class="form-outline">
+                                                        <input type="date" name="date" id="form6Example1" class="form-control" />
+                                                        <label class="form-label" for="form6Example1">Date</label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" name="address" id="form6Example4" class="form-control" />
+                                                        <label class="form-label" for="form6Example4">Address</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option selected>Open this select menu</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select
+                                            <!-- Submit button -->
+                                            <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
