@@ -3,26 +3,24 @@ const {v4: uuid} = require('uuid');
 
 class StaffRecord {
     constructor(obj) {
-        this.id = obj.id;
-        this.name = obj.name;
-        this.surname = obj.surname;
-        this.password = obj.password;
-        this.email = obj.email;
+        this.userId = obj.userId;
+        this.placeId = obj.placeId;
+        this.staffName = obj.name;
+        this.staffSurname = obj.surname;
+        this.staffEmail = obj.email;
+        this.staffPhoneNumber = obj.staffPhoneNumber;
+        this.staffPhoto = obj.staffPhoto;
     }
 
     async create(){
-        if (typeof this.id === "undefined") {
-            this.id = uuid();
-            this.assignedToPlace = [null]
-        }
-        await pool.execute('INSERT INTO `staffs` VALUES(:id, :name, :surname, :password, :email, :assignedToPlace)', {
-            id: this.id,
-            name: this.name,
-            surname: this.surname,
-            password: this.password,
-            email: this.email,
-            assignedToPlace: this.assignedToPlace,
-
+        await pool.execute('INSERT INTO `staff` VALUES(:userId, :placeId, :staffName, :staffSurname, :staffEmail, :staffPhoneNumber, :staffPhoto)', {
+            userId: this.userId,
+            placeId: this.placeId,
+            staffName: this.staffName,
+            staffSurname: this.staffSurname,
+            staffEmail: this.staffEmail,
+            staffPhoneNumber: this.staffPhoneNumber,
+            staffPhoto: this.staffPhoto,
         });
     }
 

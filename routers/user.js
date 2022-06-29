@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const {UsersService} = require('../services/handleEmailVerification');
+const {StaffRecord} = require("../records/staff.record");
 const userRouter = Router();
 
 
@@ -41,7 +42,7 @@ userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next
         return
     }
     const results = await UserRecord.getOneById(req.session.user.id);
-    const user = results[0]
+    const user = results[0];
     res.render('user/profile', {
         user,
     });
@@ -126,7 +127,6 @@ userRouter.get('/user/logout', async(req, res) => {
 
 userRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsActive, userMiddleware.checkUserIsAdmin, async (req, res, next) => {
     const results = await UserRecord.getOneById(req.session.user.id);
-    console.log(req.session.user.isActive);
     const user = results[0]
     const usersList = await UserRecord.listAll();
     res.render('user/list', {

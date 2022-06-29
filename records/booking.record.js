@@ -3,18 +3,10 @@ const {v4: uuid} = require('uuid');
 
 class BookingRecord {
     constructor(obj) {
-        if(obj.title.trim() < 5) { 
-            throw new Error('Todo title should be at least 5 characters.')
-        }
-
-        if (obj.title.length > 150) {
-            throw new Error('Todo title should be')
-        }
-
-
         // this.id = obj.id;
         this.title = obj.title;
         this.createdAt = obj.createdAt;
+        this.bookingDate = obj.bookingDate;
         this.status = obj.status;
         this.assignedToUserId = obj.assignedToUserId;
         this.assignedToPlaceId = obj.assignedToPlaceId;
@@ -30,10 +22,11 @@ class BookingRecord {
             this.createdByUserId = userId;
         
         }
-        await pool.execute('INSERT INTO `bookings` VALUES(:id, :title, :createdAt, :status, :assignedToUserId, :assignedToPlaceId, :createdByuserId, :updatedAt)', {
+        await pool.execute('INSERT INTO `bookings` VALUES(:id, :title, :createdAt, :bookingDate, :status, :assignedToUserId, :assignedToPlaceId, :createdByuserId, :updatedAt)', {
             id: this.id,
             title: this.title,
             createdAt: this.createdAt,
+            bookingDate: this.bookingDate,
             status: this.status,
             assignedToUserId: this.assignedToUserId,
             assignedToPlaceId: this.assignedToPlaceId,

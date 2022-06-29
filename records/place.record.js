@@ -68,7 +68,7 @@ class PlaceRecord {
       if (!placeId){
         throw new Error('Try again');
       }
-      const [results] = await pool.execute('SELECT * FROM `place_staff` WHERE `placeId` = :placeId', {
+      const [results] = await pool.execute('SELECT * FROM `staff` WHERE `placeId` = :placeId', {
         placeId,
       })
       return results 
