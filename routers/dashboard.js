@@ -8,6 +8,7 @@ dashboardRouter.get('/', userMiddleware.checkSession, async(req, res, next) => {
     const user = results[0]
     const isAdminLoggedUser = req.session.user.isAdmin;
     console.log(isAdminLoggedUser)
+    
     res.render('dashboard/main', {
         user,
         isAdminLoggedUser,

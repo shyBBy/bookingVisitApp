@@ -32,6 +32,8 @@ placeRouter.get('/profile/:placeId', userMiddleware.checkSession, async (req, re
     const places = await PlaceRecord.getOneById(req.params['placeId']);
     const place = places[0];
     console.log(place)
+    const assignedStaffs = await PlaceRecord.getAssignedStaffToThisPlace(req.params['placeId']);
+    const assignedStaff = assignedStaffs[0]
     if(!place) {
         req.flash('unSuccessfulPlaceId', `Something wrong, place with this ID: ${req.params['placeId']}  never exist`);
         res.redirect('/place/list');
@@ -39,6 +41,7 @@ placeRouter.get('/profile/:placeId', userMiddleware.checkSession, async (req, re
         res.render('places/profile', {
             user,
             place,
+            assignedStaff,
         })
     }
 
