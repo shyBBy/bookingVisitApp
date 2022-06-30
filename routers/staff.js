@@ -20,18 +20,34 @@ staffRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIs
 
 })
 
-staffRouter.get('/add', userMiddleware.checkSession, userMiddleware.checkUserIsAdmin, async (req, res) => {
-    const results = await UserRecord.getOneById(req.session.user.id);
-    const user = results[0]
+staffRouter.get('/add/:userId/:placeId', userMiddleware.checkSession, userMiddleware.checkUserIsAdmin, async (req, res) => {
+    const resultsLoggedUser = await UserRecord.getOneById(req.session.user.id);
+    const userLogged = resultsLoggedUser[0];
+    const resultsPlace = await PlaceRecord.getOneById(req.params['placeId']);
+    const place = resultsPlace[0];
+    const resultsUser = await UserRecord.getOneById(req.params['userId']);
+    const user = resultsUser[0];
     //@TODO: przechodzimy tu po kliknieciu na opcje w liscie uzytkownikow
     res.render('staff/add', {
-    user,
+        userLogged,
+        place,
+        user,
     })
 })
 
-staffRouter.post('/add', userMiddleware.checkSession, userMiddleware.checkUserIsAdmin, async (req, res) => {
+staffRouter.post('/create/:userId', userMiddleware.checkSession, userMiddleware.checkUserIsAdmin, async (req, res) => {
+
     const newStaff = new StaffRecord(req.body);
-    newStaff.create()
+    console.log(`ID z params: ${req.params['userId']}`)
+    console.log(`placeId: ${req.body.placeId}`)
+    console.log(` staff name: ${req.body.name}`)
+    console.log(`staff surname: ${req.body.surname}`)
+    console.log(`staff email: ${req.body.email}`)
+    console.log(`staff phone ${req.body.staffPhoneNumber}`)
+    console.log(`staff photo ${req.body.staffPhoto}`)
+    console.log(`zwykle id ${req.body.dew}`)
+    //@TODO: blad z dodawaniem. Sprawdzic o co chodzi.
+    await newStaff.create()
 } )
 
 

@@ -168,6 +168,10 @@
                                     <div class="col-sm-6 mb-3">
                                         <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">{{place.name}}'s </i> doctors</h6>
                                          tubedzie lista doktorkow pracujacych w danej placowce
+                                        {{#each assignedStaff}}
+                                            {{this.staffName}}
+                                        {{/each}}
+                                        {{assignedStaff.staffName}}
                                     </div>
                                 </div>
                             </div>

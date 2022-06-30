@@ -8,6 +8,7 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const {UsersService} = require('../services/handleEmailVerification');
 const {StaffRecord} = require("../records/staff.record");
+const {PlaceRecord} = require("../records/place.record");
 const userRouter = Router();
 
 
@@ -36,15 +37,19 @@ userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next
     if (typeof req.url.split('/')[2] === "string") {
         const results = await UserRecord.getOneById(req.url.split('/')[2]);
         const user = results[0]
+        const placesList = await PlaceRecord.listAll();
         res.render('user/profile', {
             user,
+            placesList,
         });
         return
     }
     const results = await UserRecord.getOneById(req.session.user.id);
     const user = results[0];
+      const placesList = await PlaceRecord.listAll();
     res.render('user/profile', {
         user,
+        placesList,
     });
   } catch(err) {
     console.log('users not found')

@@ -181,17 +181,69 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
                     </div>
 
                 </div>
             </div>
             <!-- KONIEC-->
-            </div>
         </section>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Add this user to place as a doctor.</h6>
+            </div>
+            <div class="card-body">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <form action="/staff/create/{{user.id}}" method="POST" class="user">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="p-5">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <input type="text" name="name" value="{{user.name}}" class="form-control form-control-user" id="exampleFirstName" placeholder="{{user.name}}">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="surname" value="{{user.surname}}" class="form-control form-control-user" id="exampleLastName" placeholder="{{user.surname}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" name="email" value="{{user.email}}"  class="form-control form-control-user" id="exampleInputEmail" placeholder="{{user.email}}">
+                                        </div>
+                                        <br>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <input type="number" name="staffPhoneNumber"  class="form-control form-control-user" id="exampleInputPassword" placeholder="Phone number">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="staffPhoto"  class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Paste the link to photo">
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="p-5">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <select class="form-select" aria-label="Default select example" name="placeId">
+                                                <option selected>Choose a place</option>
+                                                {{#each placesList}}
+                                                    <option value="{{this.id}}">{{this.name}}</option>
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
+                        </div>
+                        <hr>
+                    </form>
+                </div>
+            </div>
+        </div>
 
     </div>
 </main>
