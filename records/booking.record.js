@@ -8,17 +8,16 @@ class BookingRecord {
         this.createdAt = obj.createdAt;
         this.bookingDate = obj.bookingDate;
         this.status = obj.status;
-        this.assignedToUserId = obj.assignedToUserId;
-        this.assignedToPlaceId = obj.assignedToPlaceId;
+        this.assignedToUlStaffId = obj.assignedToStaffId;
     }
     
-    async create(userId){
+    async create(userId, placeId){
         if (typeof this.id === "undefined") {
             const date = new Date();
             let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1) + "/" + (date.getUTCDate());
             this.id = uuid();
             this.createdAt = myDate;
-            this.status = 'notConfirmed';
+            this.status = 'pending';
             this.createdByUserId = userId;
         
         }
@@ -28,8 +27,8 @@ class BookingRecord {
             createdAt: this.createdAt,
             bookingDate: this.bookingDate,
             status: this.status,
-            assignedToUserId: this.assignedToUserId,
-            assignedToPlaceId: this.assignedToPlaceId,
+            assignedToUserId: userId,
+            assignedToPlaceId: placeId,
             createdByUserId: this.createdByUserId,
             updatedAt: this.createdAt,
         });

@@ -6,11 +6,16 @@ const {StaffRecord} = require("../records/staff.record");
 const staffRouter = Router();
 
 staffRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsAdmin, async (req, res) => {
-    const results = await UserRecord.getOneById(req.session.user.id);
-    const user = results[0]
+    const logedUserResults = await UserRecord.getOneById(req.session.user.id);
+    const user = logedUserResults[0]
+   const usersList = await UserRecord.listAll();
+   const placesList = await PlaceRecord.listAll();
+    
     //@TODO: Zrobic do konca liste wszystkich doktorow
     res.render('staff/list', {
     user,
+    usersList,
+    placesList,
 })
 
 })

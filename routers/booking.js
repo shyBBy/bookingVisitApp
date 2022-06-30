@@ -24,6 +24,7 @@ bookingRouter.get('/', userMiddleware.checkSession, async (req, res, next) => {
 
 bookingRouter.post('/create', userMiddleware.checkSession, async (req, res) => {
     const newBooking = new BookingRecord(req.body);
+    //@TODO: sprawdzić czym jest req.body i ewentualnie wstawic z req.body placeId do poniższej metody.
     await newBooking.create(req.session.user.id);
     req.flash('successCreatedBooking', `Booking was created, please wait for changing status.`)
     res.redirect('/booking');

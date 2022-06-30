@@ -163,6 +163,31 @@
             </div>
         </div>
     </div>
+    <!-- TUTAJ OBUDOWAC TRZEBA FORM START -->
+    
+                                              <form action="/staff/create" method="POST">
+                                                  <!-- 2 column grid layout with text inputs for the first and last names -->
+                                                  <div class="row mb-4">
+                                                      <div class="col-6">
+                                                          <div class="form-outline">
+                                            <select class="form-select" aria-label="Default select example" name="user">
+                                                      <option selected>Choose a user</option>
+                                                      {{#each usersList}}
+                                      <!-- sprawdzic czy this.userId czy this.id -->                    <option value="{{this.userId}}">{{this.name}} {{this.surname}}</option>
+                                                      {{/each}}
+                                             
+                                                  </select>
+                                                  
+                           <select class="form-select" aria-label="Default select example" name="place">
+                                                                                 <option selected>Choose a place</option>
+                                                                                 {{#each placesList}}
+                                                                 <!-- sprawdzic czy this.userId czy this.id -->                    <option value="{{this.placeId}}">{{this.name}}</option>
+                                                                                 {{/each}}                                           </select>                       
+                                                  <!-- Submit button -->
+                                                  <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
+                                              </form>
+    
+    <!-- KONIEC FORM -->
 </div>
 <script type="text/javascript">
     $(function () {

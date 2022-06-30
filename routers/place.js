@@ -27,13 +27,13 @@ placeRouter.post('/add', userMiddleware.checkUserIsAdmin,  async (req, res) => {
 })
 
 placeRouter.get('/profile/:placeId', userMiddleware.checkSession, async (req, res) => {
-    const users = await UserRecord.getOneById(req.session.user.id);
-    const user = users[0];
-    const places = await PlaceRecord.getOneById(req.params['placeId']);
-    const place = places[0];
+    const userResponse = await UserRecord.getOneById(req.session.user.id);
+    const user = userResponse[0];
+    const placeReaponse = await PlaceRecord.getOneById(req.params['placeId']);
+    const place = placeResponse[0];
     console.log(place)
-    const assignedStaffs = await PlaceRecord.getAssignedStaffToThisPlace(req.params['placeId']);
-    const assignedStaff = assignedStaffs[0]
+    const assignedStaffResponse = await PlaceRecord.getAssignedStaffToThisPlace(req.params['placeId']);
+    const assignedStaff = assignedStaffResponse[0]
     if(!place) {
         req.flash('unSuccessfulPlaceId', `Something wrong, place with this ID: ${req.params['placeId']}  never exist`);
         res.redirect('/place/list');
