@@ -64,16 +64,6 @@ class PlaceRecord {
             return e
         }
     }
-    static async getAssignedStaffToThisPlace(placeId){
-      if (!placeId){
-        throw new Error('Try again');
-      }
-      // const [results] = await pool.execute('SELECT * FROM `staff` WHERE `placeId` = :placeId', {
-      //   placeId,
-      // })
-        const [results] = await pool.execute('SELECT * FROM `staff`');
-        return results
-    }
 }
 
 module.exports = {

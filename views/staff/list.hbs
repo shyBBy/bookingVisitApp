@@ -68,7 +68,8 @@
 </header>
 <!--Main Navigation-->
 <!--Main layout-->
-<div class="container bootstrap snippets bootdey" style="padding-top: 50px; padding-left: 10px">
+<div class="container pt-4">
+    <div class="container bootstrap snippets bootdey" style="padding-top: 50px; padding-left: 10px">
     {{#if message.successfullUserRemoved}}
         <div class="alert alert-success" role="alert">
             {{message.successfullUserRemoved}}
@@ -103,56 +104,18 @@
                             <thead>
                             <tr>
                                 <th><span>User</span></th>
-                                <th><span>Created</span></th>
-                                <th>Actions</th>
+                                <th><span>Assigned to place</span></th>
                             </tr>
                             </thead>
                             <tbody>
-                            {{#each staffsList}}
+                            {{#each staffList}}
                                 <tr>
                                     <td>
-                                        <img src={{this.staffPhoto}} alt="">
+                                        <img src="data:image/png;base64,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"alt="">
                                         <a href="/user/profile/{{this.userId}}" class="user-link">{{this.staffName}} {{this.staffSurname}}</a>
                                     </td>
-                                    <td>{{this.registered}}</td>
-                                    <td style="width: 20%;">
-                                        <a style="text-decoration:none" href="/user/profile/{{this.userId}}" >
-                                            <button type="button" data-toggle="tooltip" title="Show user's profile." class="btn btn-outline-primary"><i class="fas fa-user"></i></button>
-                                        </a>
-                                        <a style="text-decoration:none" href="/user/activate/{{this.id}}" >
-                                            <button type="button" data-toggle="tooltip" title="Activate user" class="btn btn-outline-success"><i class="fas fa-user-check"></i></button>
-                                        </a>
+                                    <td><a href="/place/profile/{{this.placeId}}" class="user-link">{{this.placeId}}</a></td>
 
-
-
-                                        <!-- Button trigger modal -->
-                                        <button type="button" onclick="showmodal()" data-toggle="tooltip" title="User options" class="btn btn-outline-primary" data-bs-toggle="modal{{this.id}}" data-bs-target="#modal{{this.id}}">
-                                            <i class="fas fa-user-cog"></i>
-                                        </button>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="modal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">User options</h5>
-                                                        <button type="button" onclick="hidemodal()" class="btn-close" data-bs-dismiss="modal{{this.id}}" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        bedzie tu mozna zmienic komus nick, e-mail, haslo, range i inne tego typu rzeczy
-                                                        <select>
-                                                            <option value="{{this.name}}">{{this.name}}</option>
-                                                            <option value="{{this.id}}">{{this.id}}</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" onclick="hidemodal()" class="btn btn-secondary" data-bs-dismiss="modal{{this.id}}">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
                                 </tr>
                             {{/each}}
 
@@ -163,31 +126,8 @@
             </div>
         </div>
     </div>
-    <!-- TUTAJ OBUDOWAC TRZEBA FORM START -->
-    
-                                              <form action="/staff/create" method="POST">
-                                                  <!-- 2 column grid layout with text inputs for the first and last names -->
-                                                  <div class="row mb-4">
-                                                      <div class="col-6">
-                                                          <div class="form-outline">
-                                            <select class="form-select" aria-label="Default select example" name="user">
-                                                      <option selected>Choose a user</option>
-                                                      {{#each usersList}}
-                                      <!-- sprawdzic czy this.userId czy this.id -->                    <option value="{{this.userId}}">{{this.name}} {{this.surname}}</option>
-                                                      {{/each}}
-                                             
-                                                  </select>
-                                                  
-                           <select class="form-select" aria-label="Default select example" name="place">
-                                                                                 <option selected>Choose a place</option>
-                                                                                 {{#each placesList}}
-                                                                 <!-- sprawdzic czy this.userId czy this.id -->                    <option value="{{this.placeId}}">{{this.name}}</option>
-                                                                                 {{/each}}                                           </select>                       
-                                                  <!-- Submit button -->
-                                                  <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
-                                              </form>
-    
-    <!-- KONIEC FORM -->
+
+</div>
 </div>
 <script type="text/javascript">
     $(function () {

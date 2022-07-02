@@ -155,67 +155,67 @@
             </div>
             <!-- KONIEC-->
     </section>
-        <section class="mb-4">
-            <div class="card">
-
-                <div class="main-body">
-                    <!-- DOCTORS AND BOOKINGS -->
-
-                    <div class="row gutters-sm">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-sm-6 mb-3">
-                                        <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">{{place.name}}'s </i> doctors</h6>
-                                         tubedzie lista doktorkow pracujacych w danej placowce
-                                        {{#each assignedStaff}}
-                                            {{this.staffName}}
-                                        {{/each}}
-                                        {{assignedStaff.staffName}}
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Book a visit in this place</h6>
+            </div>
+            <div class="card-body">
+                <div class="card-body p-0">
+                    <p>Please, complete the missing information.</p>
+                    <!-- Nested Row within Card Body -->
+                    <form action="/booking/create/{{place.id}}" method="POST" class="user">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="p-5">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <input type="text" name="userName" value="{{user.name}}" class="form-control form-control-user" id="exampleFirstName" placeholder="{{user.name}}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" name="userSurname" value="{{user.surname}}" class="form-control form-control-user" id="exampleLastName" placeholder="{{user.surname}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" name="userEmail" value="{{user.email}}"  class="form-control form-control-user" id="exampleInputEmail" placeholder="{{user.email}}">
+                                    </div>
+                                    <br>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <input type="number" name="userPhoneNumber"  class="form-control form-control-user" id="exampleInputPassword" placeholder="Phone number">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" name="describe"  class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Please add more information, describe your problem.">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <div class="col-sm-6 mb-3">
-                                        <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">BOOK</i>a visit</h6>
-                                        <form action="/booking/create" method="POST">
-                                            <!-- 2 column grid layout with text inputs for the first and last names -->
-                                            <div class="row mb-4">
-                                                <div class="col-6">
-                                                    <div class="form-outline">
-                                                        <input type="date" name="date" id="form6Example1" class="form-control" />
-                                                        <label class="form-label" for="form6Example1">Date</label>
-                                                    </div>
-                                                    <div class="form-outline mb-4">
-                                                        <input type="text" name="address" id="form6Example4" class="form-control" />
-                                                        <label class="form-label" for="form6Example4">Address</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
+                            <div class="col-lg-5">
+                                <div class="p-5">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
                                             <select class="form-select" aria-label="Default select example" name="assignedToStaffId">
                                                 <option selected>Choose a doctor</option>
-                                                {{#each assignedStaff}}
+                                                {{#each staffList}}
                                                     <option value="{{this.userId}}">{{this.staffName}} {{this.staffSurname}}</option>
                                                 {{/each}}
-                                       
                                             </select>
-                                            <!-- Submit button -->
-                                            <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
-                                        </form>
+                                        </div>
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <input type="date" name="date"  class="form-control form-control-user" id="exampleInputPassword" placeholder="Date">
+                                        </div>
                                     </div>
                                 </div>
+                                <p>{{staffList.staffName}} {{staffList.staffSurname}}</p>
                             </div>
                         </div>
-                    </div>
-
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-block mb-4">Book a visit</button>
+                        </div>
+                        <hr>
+                    </form>
                 </div>
             </div>
-    </section>
+        </div>
 
     </div>
 </main>

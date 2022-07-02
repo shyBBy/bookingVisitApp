@@ -74,10 +74,27 @@
         <!-- Section: Main chart -->
 
         <!-- Section: Main chart -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">How to book a visit</h6>
+            </div>
+            <div class="card-body">
+                <p>To book an appointment, go to the <b>"places"</b> tab, and then select the hospital you are interested in.</p>
+                <p class="mb-0">You will be able to make an appointment in the hospital profile using the form.</p>
+            </div>
+        </div>
 
         <!--Section: Sales Performance KPIs-->
         <section class="mb-4">
             <div class="container">
+                {{#if message.successCreatedBooking}}
+                    <div class="card bg-success text-white shadow">
+                        <div class="card-body">
+                            Success
+                            <div class="text-white-50 small">{{message.successCreatedBooking}}</div>
+                        </div>
+                    </div>
+                {{/if}}
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="main-box no-header clearfix">
@@ -87,35 +104,31 @@
                                         <thead>
                                         <tr>
                                             <th><span>Place's Name</span></th>
-                                            <th><span>Created at</span></th>
-                                            <th class="text-center"><span>Status</span></th>
-                                            <th><span>Assigned to </span></th>
+                                            <th><span>Information</span></th>
+                                            <th><span>Status</span></th>
                                             <th>Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-
-                                            <tr>
-                                                <td>
-                                                    <a href="/user/profile/{{this.id}}" class="user-link">{{this.name}} {{this.surname}}</a>
-                                                </td>
-                                                <td>{{this.registered}}</td>
-                                                <td class="text-center">
-                                                    <span class="label label-default">{{this.active}}</span>
-                                                </td>
-                                                <td>
-                                                    <a href="#">{{this.email}}</a>
-                                                </td>
-                                                <td style="width: 20%;">
-                                                    <a style="text-decoration:none" href="/user/profile/{{this.id}}" >
-                                                        <button type="button" data-toggle="tooltip" title="Information" class="btn btn-outline-primary"><i class="fas fa-solid fa-info"></i></button>
-                                                    </a>
-                                                    <a style="text-decoration:none" href="/user/remove/{{this.id}}" >
-                                                        <button type="button" data-toggle="tooltip" title="Cancel booking" class="btn btn-outline-danger"><i class="fas fa-solid fa-ban"></i></button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-
+                                            {{#each bookingList}}
+                                                <tr>
+                                                    <td>
+                                                        <span class="label label-default">{{this.placeName}}</span>
+                                                    </td>
+                                                    <td><span class="label label-default">{{this.describe}}</span></td>
+                                                    <td class="text-center">
+                                                        <span class="label label-default">{{this.status}}</span>
+                                                    </td>
+                                                    <td style="width: 20%;">
+                                                        <a style="text-decoration:none" href="/user/profile/{{this.id}}" >
+                                                            <button type="button" data-toggle="tooltip" title="Information" class="btn btn-outline-primary"><i class="fas fa-solid fa-info"></i></button>
+                                                        </a>
+                                                        <a style="text-decoration:none" href="/user/remove/{{this.id}}" >
+                                                            <button type="button" data-toggle="tooltip" title="Cancel booking" class="btn btn-outline-danger"><i class="fas fa-solid fa-ban"></i></button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {{/each}}
 
                                         </tbody>
                                     </table>
@@ -130,4 +143,18 @@
     </div>
 
 </main>
+
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    function showmodal()
+    {
+        $("#modal{{this.id}}").modal("show");
+    }
+    function hidemodal()
+    {
+        $("#modal{{this.id}}").modal("hide");
+    }
+</script>
 

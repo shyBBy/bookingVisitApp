@@ -3,34 +3,50 @@ const {v4: uuid} = require('uuid');
 
 class BookingRecord {
     constructor(obj) {
-        // this.id = obj.id;
-        this.title = obj.title;
+        this.id = obj.id;
+        this.userName = obj.userName;
+        this.userSurname = obj.userSurname;
+        this.userPhoneNumber = obj.userPhoneNumber;
+        this.userEmail = obj.userEmail;
+        this.describe = obj.describe;
         this.createdAt = obj.createdAt;
-        this.bookingDate = obj.bookingDate;
-        this.status = obj.status;
-        this.assignedToUlStaffId = obj.assignedToStaffId;
+        this.bookingDate = obj.date;
+        this.assignedToStaffId = obj.assignedToStaffId;
+        this.placeName = obj.placeName;
     }
     
-    async create(userId, placeId){
+    async create(userId, placeId, placeName){
         if (typeof this.id === "undefined") {
             const date = new Date();
-            let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1) + "/" + (date.getUTCDate());
+            let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate()+ "  " + (date.getHours())+ ":" + (date.getMinutes()));
             this.id = uuid();
             this.createdAt = myDate;
             this.status = 'pending';
             this.createdByUserId = userId;
         
         }
-        await pool.execute('INSERT INTO `bookings` VALUES(:id, :title, :createdAt, :bookingDate, :status, :assignedToUserId, :assignedToPlaceId, :createdByuserId, :updatedAt)', {
+        // console.log(this)
+        // console.log(`----------`)
+        // console.log(`userID: ${userId}`)
+        // console.log(`----------`)
+        // console.log(`placeId: ${placeId}`)
+        // console.log(`----------`)
+
+        await pool.execute('INSERT INTO `bookings` VALUES(:id, :createdAt, :bookingDate, :status, :assignedToStaffId, :assignedToPlaceId, :updatedAt, :createdByUserId, :describe, :userPhoneNumber, :userName, :userSurname, :userEmail, :placeName)', {
             id: this.id,
-            title: this.title,
             createdAt: this.createdAt,
             bookingDate: this.bookingDate,
             status: this.status,
-            assignedToUserId: userId,
+            assignedToStaffId: this.assignedToStaffId,
             assignedToPlaceId: placeId,
-            createdByUserId: this.createdByUserId,
             updatedAt: this.createdAt,
+            createdByUserId: this.createdByUserId,
+            describe: this.describe,
+            userPhoneNumber: this.userPhoneNumber,
+            userName: this.userName,
+            userSurname: this.userSurname,
+            userEmail: this.userEmail,
+            placeName,
         });
        
     }

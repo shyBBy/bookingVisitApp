@@ -2,6 +2,7 @@ const {Router} = require('express');
 const {PlaceRecord} = require("../records/place.record");
 const {UserRecord} = require("../records/user.record");
 const userMiddleware = require("../middleware/user.middleware");
+const {StaffRecord} = require("../records/staff.record");
 const placeRouter = Router();
 
 placeRouter
@@ -31,10 +32,9 @@ placeRouter.get('/profile/:placeId', userMiddleware.checkSession, async (req, re
     const user = userResponse[0];
     const placeResponse = await PlaceRecord.getOneById(req.params['placeId']);
     const place = placeResponse[0];
-    console.log(place)
-    const assignedStaffResponse = await PlaceRecord.getAssignedStaffToThisPlace(req.params['placeId']);
-    const assignedStaff = assignedStaffResponse[0]
-    console.log(assignedStaff)
+    const staffList = await StaffRecord.getAllStaffFromPlaceId(req.params['placeId']);
+    // console.log(`--------------`)
+    // console.log(staffList)
     if(!place) {
         req.flash('unSuccessfulPlaceId', `Something wrong, place with this ID: ${req.params['placeId']}  never exist`);
         res.redirect('/place/list');
@@ -42,7 +42,7 @@ placeRouter.get('/profile/:placeId', userMiddleware.checkSession, async (req, re
         res.render('places/profile', {
             user,
             place,
-            assignedStaff,
+            staffList,
         })
     }
 

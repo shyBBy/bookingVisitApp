@@ -4,17 +4,17 @@ const bookingRouter = Router();
 const userMiddleware = require("../middleware/user.middleware");
 const {BookingRecord} = require("../records/booking.record");
 const {UserRecord} = require("../records/user.record");
+const {PlaceRecord} = require("../records/place.record");
 
 bookingRouter.get('/', userMiddleware.checkSession, async (req, res, next) => {
-    const bookingResults = await BookingRecord.getAllByUserId(req.session.user.id);
-    const booking = bookingResults[0]
+    const bookingList = await BookingRecord.getAllByUserId(req.session.user.id);
     const userResults = await UserRecord.getOneById(req.session.user.id);
     const user = userResults[0]
     const usersList = await UserRecord.listAll();
     res.render('booking/main', {
         usersList,
         user,
-        booking,
+        bookingList,
         message: {
             successCreatedBooking: req.flash('successCreatedBooking'),
         }
@@ -22,10 +22,11 @@ bookingRouter.get('/', userMiddleware.checkSession, async (req, res, next) => {
 })
 
 
-bookingRouter.post('/create', userMiddleware.checkSession, async (req, res) => {
+bookingRouter.post('/create/:placeId', userMiddleware.checkSession, async (req, res) => {
+    const placeResponse = await PlaceRecord.getOneById(req.params['placeId']);
+    const place = placeResponse[0];
     const newBooking = new BookingRecord(req.body);
-    //@TODO: sprawdzić czym jest req.body i ewentualnie wstawic z req.body placeId do poniższej metody.
-    await newBooking.create(req.session.user.id);
+    await newBooking.create(req.session.user.id, req.params['placeId'], place.name);
     req.flash('successCreatedBooking', `Booking was created, please wait for changing status.`)
     res.redirect('/booking');
 });
