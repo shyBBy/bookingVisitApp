@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2022 at 07:40 PM
+-- Generation Time: Jul 02, 2022 at 06:04 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -41,12 +41,27 @@ CREATE TABLE `admins` (
 CREATE TABLE `bookings` (
   `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT uuid(),
   `createdAt` datetime DEFAULT NULL,
+  `bookingDate` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `assignedToUserId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `assignedToStaffId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `assignedToPlaceId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `updatedAt` datetime DEFAULT NULL,
-  `createdByUserId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `createdByUserId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `describe` varchar(400) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `userPhoneNumber` int(9) DEFAULT NULL,
+  `userName` varchar(70) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `userSurname` varchar(70) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `userEmail` varchar(70) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `placeName` varchar(90) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `createdAt`, `bookingDate`, `status`, `assignedToStaffId`, `assignedToPlaceId`, `updatedAt`, `createdByUserId`, `describe`, `userPhoneNumber`, `userName`, `userSurname`, `userEmail`, `placeName`) VALUES
+('69637cc8-1e81-451a-a5ac-a169ddba6282', '2022-07-02 12:39:00', '2022-07-25', 'active', '4d5b48c7-2612-4aa2-87ae-058cd4af22ca', '12a55db3-64a1-11ec-a96f-d8cb8ae59a7b', '2022-07-02 12:39:00', 'daa83026-e0aa-4331-8b64-8c7eee353004', 'Dupa mnie boli', 777666555, 'Dawid', 'Super', 'edekkredek1910@gmail.com', 'Szpital MSWiA'),
+('e0fd5598-2430-481c-82fb-ff64fa8d228c', '2022-07-02 12:38:00', '2022-07-28', 'pending', '4d5b48c7-2612-4aa2-87ae-058cd4af22ca', '12a55db3-64a1-11ec-a96f-d8cb8ae59a7b', '2022-07-02 12:38:00', 'daa83026-e0aa-4331-8b64-8c7eee353004', 'Bardzo boli mnie głowa', 565785443, 'Dawid', 'Super', 'edekkredek1910@gmail.com', 'Szpital MSWiA');
 
 -- --------------------------------------------------------
 
@@ -92,7 +107,7 @@ CREATE TABLE `sessiontbl` (
 --
 
 INSERT INTO `sessiontbl` (`session_id`, `expires`, `data`) VALUES
-('_MbOgi1sLUatgifuSh27q7u2V9KmKfLr', 1656270314, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{\"successLogin\":[\"Success Login, welcome!\"]},\"user\":{\"id\":\"daa83026-e0aa-4331-8b64-8c7eee353004\",\"isAdmin\":0,\"isActive\":\"true\"}}');
+('CWi9ryIWJz-IHtJT-K7wnJQaPwZLjZJY', 1656847317, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{\"successLogin\":[\"Success Login, welcome!\"]},\"user\":{\"id\":\"daa83026-e0aa-4331-8b64-8c7eee353004\",\"isAdmin\":1,\"isActive\":\"true\"}}');
 
 -- --------------------------------------------------------
 
@@ -102,10 +117,22 @@ INSERT INTO `sessiontbl` (`session_id`, `expires`, `data`) VALUES
 
 CREATE TABLE `staff` (
   `id` int(11) NOT NULL,
-  `userId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `placeId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `specialization` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `userId` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `placeId` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `staffName` varchar(72) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `staffSurname` varchar(72) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `staffEmail` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `staffPhoneNumber` int(9) DEFAULT 0,
+  `staffPhoto` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`id`, `userId`, `placeId`, `staffName`, `staffSurname`, `staffEmail`, `staffPhoneNumber`, `staffPhoto`) VALUES
+(3, '4d5b48c7-2612-4aa2-87ae-058cd4af22ca', '12a55db3-64a1-11ec-a96f-d8cb8ae59a7b', 'Super', 'Super', 'super@super.com', 456456456, 'brak'),
+(4, '77f093d5-b43a-4521-99d7-a567d8cd2d86', '12a55db3-64a1-11ec-a96f-d8cb8ae59a7b', 'Bezpieczny', 'User', '31dadsc@dat.com', 233233233, '');
 
 -- --------------------------------------------------------
 
@@ -136,7 +163,7 @@ INSERT INTO `users` (`id`, `name`, `surname`, `email`, `admin`, `password`, `reg
 ('77f093d5-b43a-4521-99d7-a567d8cd2d86', 'Bezpieczny', 'User', '31dadsc@dat.com', 0, '$2b$10$Jv7jEjfRyx6chDl.d.Bxe.cMwr1LNVLHIJh0Hg/GNNxIwlYawI5Bi', '2022-01-02', '2022-01-02', 'true', NULL),
 ('9f5dddb9-0a97-4810-998e-5fa56467b884', 'Jackowski', 'Jacek', 'gcc22525@cuoly.com', 1, '$2b$10$0xRry9JbtWFqvYXnu/8TM.kcpkTbQxnV7aos8PJgU0DIVViTasRaS', '2022-01-02', '2022/1/29  22:11', 'true', '53565b0482cf405cd8e5e7dec38c595d8480'),
 ('a5e9573e-128b-435a-92ec-8ecef392deeb', 'Klaudia', '321', 'goo38907@boofx.com', 0, '$2b$10$wTPOcDYJElwlEmuC0szKkuv4D.tis9T2hmygshp4DxJB.S0578v/6', '2022/2/1', '2022/2/1  21:20', 'true', '296d3166f977f311367c782db2c12ab7670510f98a55ad7bb0'),
-('daa83026-e0aa-4331-8b64-8c7eee353004', 'Dawid', 'Super', 'edekkredek1910@gmail.com', 0, '$2b$10$JEAFyntSvtBSsv.nayLw2OCH4zyHthoFJ1w0WpqZ8HNecM.blCcHq', '2022/1/28', '2022/6/25  20:16', 'true', '2ab2e338442ac706e61f7cd552341ac6a6cf8b65aeab436b05');
+('daa83026-e0aa-4331-8b64-8c7eee353004', 'Dawid', 'Super', 'edekkredek1910@gmail.com', 1, '$2b$10$JEAFyntSvtBSsv.nayLw2OCH4zyHthoFJ1w0WpqZ8HNecM.blCcHq', '2022/1/28', '2022/7/2  12:27', 'true', '2ab2e338442ac706e61f7cd552341ac6a6cf8b65aeab436b05');
 
 --
 -- Indexes for dumped tables
@@ -171,9 +198,7 @@ ALTER TABLE `sessiontbl`
 -- Indexes for table `staff`
 --
 ALTER TABLE `staff`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_staff_users` (`userId`),
-  ADD KEY `FK_staff_places` (`placeId`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -195,7 +220,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -206,13 +231,6 @@ ALTER TABLE `staff`
 --
 ALTER TABLE `admins`
   ADD CONSTRAINT `FK_admins_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `staff`
---
-ALTER TABLE `staff`
-  ADD CONSTRAINT `FK_staff_places` FOREIGN KEY (`placeId`) REFERENCES `places` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_staff_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
