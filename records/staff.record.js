@@ -14,11 +14,11 @@ class StaffRecord {
     }
 
      async create(){
-        try{
+        
             if (typeof this.id === "undefined") {
                 this.id = uuid();
             }
-            await pool.execute('INSERT INTO `staff` VALUES(:id, :userId, :placeId, :staffName, :staffSurname, :staffEmail, :staffPhoneNumber, :staffPhoto)', {
+           try{ await pool.execute('INSERT INTO `staff` VALUES(:id, :userId, :placeId, :staffName, :staffSurname, :staffEmail, :staffPhoneNumber, :staffPhoto)', {
                 id: this.id,
                 userId: this.userId,
                 placeId: this.placeId,
