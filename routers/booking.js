@@ -31,6 +31,17 @@ bookingRouter.post('/create/:placeId', userMiddleware.checkSession, async (req, 
     res.redirect('/booking');
 });
 
+bookingRouter.get('/profile/:bookingId'), userMiddleware.checkSession, async (req,res) =>{
+  const userResponse = await UserRecord.getOneById(req.session.user.id);
+    const user = userResponse[0];
+    const bookingResponse = await BookingRecord.getOneById(req.params['bookingId']);
+    const booking = bookingResponse[0];
+    res.render('booking/profile', {
+      booking,
+      user,
+    })
+}
+
 module.exports = {
     bookingRouter,
 };

@@ -69,6 +69,13 @@ class BookingRecord {
         });
         return results;
     }
+    
+    static async getOneById(bookingId){
+      const [results] = await pool.execute('SELECT * FROM `bookings` WHERE `id` = :bookingId', {
+        bookingId,
+      });
+      return results;
+    }
   
 }
 
