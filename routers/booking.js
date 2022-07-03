@@ -31,6 +31,10 @@ bookingRouter.post('/create/:placeId', userMiddleware.checkSession, async (req, 
     res.redirect('/booking');
 });
 
+bookingRouter.post('/status/:bookingId', userMiddleware.checkSession, async (req,res, next) => {
+  //@TODO: Dokończyć endpoint zmiany statusu
+})
+
 bookingRouter.get('/profile/:bookingId', userMiddleware.checkSession, async (req, res, next) => {
     const userResponse = await UserRecord.getOneById(req.session.user.id);
     const user = userResponse[0];

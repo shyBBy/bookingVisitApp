@@ -7,4 +7,5 @@ class NotificationRecord {
     this.title = obj.title;
     //@TODO: dokończyć 
   }
+  
 }
