@@ -10,18 +10,21 @@ class StaffRecord {
         this.staffEmail = obj.email;
         this.staffPhoneNumber = obj.staffPhoneNumber;
         this.staffPhoto = obj.staffPhoto;
+        this.title = obj.title;
     }
 
      async create(userId){
-        console.log(this)
             if (typeof this.id === "undefined") {
                 this.id = null;
             }
-         console.log(`------------------------------------------------`)
-         console.log(this)
-         console.log(`------------------------------------------------`)
-         console.log(userId)
-            await pool.execute('INSERT INTO `staff` VALUES(:id, :userId, :placeId, :staffName, :staffSurname, :staffEmail, :staffPhoneNumber, :staffPhoto)', {
+            const [placeName] = await pool.execute('SELECT `name` FROM `places` WHERE `id` = :placeId', {
+                placeId: this.placeId
+            });
+         // console.log(`------------------------------------------------`)
+         // console.log(this)
+         // console.log(`------------------------------------------------`)
+         // console.log(userId)
+            await pool.execute('INSERT INTO `staff` VALUES(:id, :userId, :placeId, :staffName, :staffSurname, :staffEmail, :staffPhoneNumber, :staffPhoto, :assignedToPlaceName, :title)', {
                 id: this.id,
                 userId,
                 placeId: this.placeId,
@@ -30,6 +33,8 @@ class StaffRecord {
                 staffEmail: this.staffEmail,
                 staffPhoneNumber: this.staffPhoneNumber,
                 staffPhoto: this.staffPhoto,
+                assignedToPlaceName: placeName[0].name,
+                title: this.title,
             });
     }
 
