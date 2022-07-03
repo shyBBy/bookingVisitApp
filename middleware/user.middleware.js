@@ -17,14 +17,23 @@ module.exports = {
         next();
     },
     checkUserIsAdmin: async (req, res, next) => {
-        if(req.session.user.isAdmin === 1){
+        if(req.session.user.role === 'admin'){
             next();
         } else {
             console.log('You are not admin.')
             req.flash('unauthorisedAccess', `You are not admin.`);
             return res.redirect('/dashboard/')
         }
-    }
+    },
+    checkUserIsStaff: async (req, res, next) => {
+        if(req.session.user.role === 'staff'){
+            next();
+        } else {
+            console.log('You are not in a staffs(doctors) group.');
+            req.flash('unauthorisedAccess', `You are not a staff.`);
+            return res.redirect('/dashboard/')
+        }
+    },
 };
 
 

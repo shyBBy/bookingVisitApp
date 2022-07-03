@@ -1,39 +1,39 @@
 <!--Main Navigation-->
-    <!-- Sidebar -->
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white" style="margin-top: 38px">
-        <div class="position-sticky">
-            <div class="list-group list-group-flush mx-3 mt-4">
-                <a href="/dashboard/" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
-                    <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
-                </a>
-                <a href="/booking/" class="list-group-item list-group-item-action py-2 ripple active"><i
-                        class="fas fa-calendar-day fa-fw me-3"></i><span>Booking</span></a>
-                <a href="/place/list" class="list-group-item list-group-item-action py-2 ripple"><i
-                        class="fas fa-map-marker fa-fw me-3"></i><span>Places</span></a>
+<!-- Sidebar -->
+<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white" style="margin-top: 38px">
+    <div class="position-sticky">
+        <div class="list-group list-group-flush mx-3 mt-4">
+            <a href="/dashboard/" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
+            </a>
+            <a href="/booking/" class="list-group-item list-group-item-action py-2 ripple"><i
+                    class="fas fa-calendar-day fa-fw me-3"></i><span>Booking</span></a>
+            <a href="/place/list" class="list-group-item list-group-item-action py-2 ripple"><i
+                    class="fas fa-map-marker fa-fw me-3"></i><span>Places</span></a>
+            <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+                    class="fas fa-life-ring fa-fw me-3"></i><span>Support</span></a>
+            {{#if (isStaff user.role)}}
+                <div class="nav-link disabled">
+                    <p>STAFF PANEL</p>
+                </div>
+                <a href="/booking/{{user.id}}/booking/list" class="list-group-item list-group-item-action py-2 ripple active"><i
+                        class="fas fa-users fa-fw me-3"></i><span>Bookings</span></a>
+            {{/if}}
+            {{#if (isAdmin user.role)}}
+                <div class="nav-link disabled">
+                    <p>ADMIN PANEL</p>
+                </div>
                 <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                        class="fas fa-life-ring fa-fw me-3"></i><span>Support</span></a>
-                {{#if (isStaff user.role)}}
-                    <div class="nav-link disabled">
-                        <p>STAFF PANEL</p>
-                    </div>
-                    <a href="/user/list" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-users fa-fw me-3"></i><span>Bookings</span></a>
-                {{/if}}
-                {{#if (isAdmin user.role)}}
-                    <div class="nav-link disabled">
-                        <p>ADMIN PANEL</p>
-                    </div>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-life-ring fa-fw me-3"></i><span>Admin</span></a>
-                    <a href="/user/list" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
-                    <a href="/staff/list" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-users fa-fw me-3"></i><span>Staffs</span></a>
-                {{/if}}
-            </div>
+                        class="fas fa-life-ring fa-fw me-3"></i><span>Admin</span></a>
+                <a href="/user/list" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
+                <a href="/staff/list" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-users fa-fw me-3"></i><span>Staffs</span></a>
+            {{/if}}
         </div>
-    </nav>
-    <!-- Sidebar -->
+    </div>
+</nav>
+<!-- Sidebar -->
 <div id="content-wrapper" class="d-flex flex-column">
     <div id="content">
         <!-- Navbar -->
@@ -76,11 +76,10 @@
                 <div>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">How to book a visit</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">This is Staff Panel</h6>
                         </div>
                         <div class="card-body">
-                            <p>To book an appointment, go to the <b>"places"</b> tab, and then select the hospital you are interested in.</p>
-                            <p class="mb-0">You will be able to make an appointment in the hospital profile using the form.</p>
+                            <p>Lorem ipsum lorem ipsum Lorem ipsum lorem ipsumLorem ipsum lorem ipsum Lorem ipsum lorem ipsumLorem ipsum lorem ipsumLorem ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum</p>
                         </div>
                     </div>
 

@@ -36,6 +36,10 @@ class StaffRecord {
                 assignedToPlaceName: placeName[0].name,
                 title: this.title,
             });
+            await pool.execute('UPDATE `users` SET `role` = :role WHERE `id` = :userId', {
+             role: 'staff',
+             id: userId,
+            });
     }
 
     static async listAll(){

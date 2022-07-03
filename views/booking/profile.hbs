@@ -1,0 +1,156 @@
+<!--Main Navigation-->
+<!-- Sidebar -->
+<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white" style="margin-top: 38px">
+    <div class="position-sticky">
+        <div class="list-group list-group-flush mx-3 mt-4">
+            <a href="/dashboard/" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
+            </a>
+            <a href="/booking/" class="list-group-item list-group-item-action py-2 ripple active"><i
+                    class="fas fa-calendar-day fa-fw me-3"></i><span>Booking</span></a>
+            <a href="/place/list" class="list-group-item list-group-item-action py-2 ripple"><i
+                    class="fas fa-map-marker fa-fw me-3"></i><span>Places</span></a>
+            <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+                    class="fas fa-life-ring fa-fw me-3"></i><span>Support</span></a>
+            {{#if (isAdmin user.role)}}
+                <div class="nav-link disabled">
+                    <p>ADMIN PANEL</p>
+                </div>
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-life-ring fa-fw me-3"></i><span>Admin</span></a>
+                <a href="/user/list" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
+                <a href="/staff/list" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-users fa-fw me-3"></i><span>Staffs</span></a>
+            {{/if}}
+        </div>
+    </div>
+</nav>
+<!-- Sidebar -->
+<div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+        <!-- Navbar -->
+        <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+            <!-- Container wrapper -->
+            <div class="container-fluid">
+                <!-- Toggle button -->
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
+                        aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Brand -->
+                <a class="navbar-brand" href="/user/{{user.id}}">
+                    {{user.name}} {{user.surname}}
+                </a>
+                <!-- Right links -->
+                <ul class="navbar-nav ms-auto d-flex flex-row">
+                    <!-- Notification dropdown -->
+
+                    <!-- Avatar -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#"
+                           id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" class="rounded-circle" height="22"
+                                 alt="" loading="lazy" />
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/user/profile/{{user.id}}">My profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="/user/user/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Navbar -->
+        <div class="container-fluid">
+            <main style="margin-top: 58px">
+                <div>
+                    <section class="mb-4">
+                        <div class="card">
+                            <div class="card-header text-center py-3">
+                                <h5 class="mb-0 text-center">
+                                    <strong>Place's profile</strong>
+                                </h5>
+                            </div>
+                            <!-- START-->
+
+                            <div class="main-body">
+
+                                <!-- MAIN INFORMATION ABOUT HOSPITAL -->
+
+                                <div class="row gutters-sm">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-column align-items-center text-center">
+                                                    <img src="https://seeklogo.com/images/H/hospital-plus-logo-914E10A64D-seeklogo.com.png" alt="Hospital's logo"  width="150">
+                                                    <div class="mt-3">
+                                                        <h4>{{place.name}}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Full Name</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        {{place.name}}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Email</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        --
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Phone</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        JESZCZE NIE MA
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Address</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        {{place.address}}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                {{#if (isAdmin user.role)}}
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <a class="btn btn-info " target="__blank" href="#">Edit</a>
+                                                        </div>
+                                                    </div>
+                                                {{/if}}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- KONIEC-->
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+

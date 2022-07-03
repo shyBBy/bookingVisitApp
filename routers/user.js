@@ -101,7 +101,7 @@ userRouter.post('/login',  async (req, res,) => {
             }
             req.session.user = {
                 id: user.id,
-                isAdmin: user.admin,
+                role: user.role,
                 isActive: user.active,
             }
             req.flash('successLogin', 'Success Login, welcome!');

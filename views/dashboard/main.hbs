@@ -12,7 +12,14 @@
                         class="fas fa-map-marker fa-fw me-3"></i><span>Places</span></a>
                 <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-life-ring fa-fw me-3"></i><span>Support</span></a>
-                {{#if (isAdmin user.admin)}}
+                {{#if (isStaff user.role)}}
+                    <div class="nav-link disabled">
+                        <p>STAFF PANEL</p>
+                    </div>
+                    <a href="/booking/{{user.id}}/booking/list" class="list-group-item list-group-item-action py-2 ripple"><i
+                            class="fas fa-users fa-fw me-3"></i><span>Bookings</span></a>
+                {{/if}}
+                {{#if (isAdmin user.role)}}
                     <div class="nav-link disabled">
                         <p>ADMIN PANEL</p>
                     </div>

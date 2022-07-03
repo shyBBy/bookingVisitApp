@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2022 at 06:04 PM
+-- Generation Time: Jul 03, 2022 at 05:21 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -107,7 +107,7 @@ CREATE TABLE `sessiontbl` (
 --
 
 INSERT INTO `sessiontbl` (`session_id`, `expires`, `data`) VALUES
-('CWi9ryIWJz-IHtJT-K7wnJQaPwZLjZJY', 1656847317, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{\"successLogin\":[\"Success Login, welcome!\"]},\"user\":{\"id\":\"daa83026-e0aa-4331-8b64-8c7eee353004\",\"isAdmin\":1,\"isActive\":\"true\"}}');
+('fDtDaDeQXoGBUkgYU1SG36R4ehJMyse_', 1656948050, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{\"successLogin\":[\"Success Login, welcome!\"]},\"user\":{\"id\":\"daa83026-e0aa-4331-8b64-8c7eee353004\",\"role\":\"staff\",\"isActive\":\"true\"}}');
 
 -- --------------------------------------------------------
 
@@ -123,16 +123,19 @@ CREATE TABLE `staff` (
   `staffSurname` varchar(72) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `staffEmail` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT '0',
   `staffPhoneNumber` int(9) DEFAULT 0,
-  `staffPhoto` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '0'
+  `staffPhoto` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `assignedToPlaceName` varchar(90) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`id`, `userId`, `placeId`, `staffName`, `staffSurname`, `staffEmail`, `staffPhoneNumber`, `staffPhoto`) VALUES
-(3, '4d5b48c7-2612-4aa2-87ae-058cd4af22ca', '12a55db3-64a1-11ec-a96f-d8cb8ae59a7b', 'Super', 'Super', 'super@super.com', 456456456, 'brak'),
-(4, '77f093d5-b43a-4521-99d7-a567d8cd2d86', '12a55db3-64a1-11ec-a96f-d8cb8ae59a7b', 'Bezpieczny', 'User', '31dadsc@dat.com', 233233233, '');
+INSERT INTO `staff` (`id`, `userId`, `placeId`, `staffName`, `staffSurname`, `staffEmail`, `staffPhoneNumber`, `staffPhoto`, `assignedToPlaceName`, `title`) VALUES
+(3, '4d5b48c7-2612-4aa2-87ae-058cd4af22ca', '12a55db3-64a1-11ec-a96f-d8cb8ae59a7b', 'Super', 'Super', 'super@super.com', 456456456, 'brak', 'Szpital MSWiA', 'Cardiologists'),
+(4, '77f093d5-b43a-4521-99d7-a567d8cd2d86', '12a55db3-64a1-11ec-a96f-d8cb8ae59a7b', 'Bezpieczny', 'User', '31dadsc@dat.com', 233233233, '', 'Szpital MSWiA', 'Geriatricians'),
+(5, 'a5e9573e-128b-435a-92ec-8ecef392deeb', '06b35d35-64a1-11ec-a96f-d8cb8ae59a7b', 'Klaudia', '321', 'goo38907@boofx.com', 454345345, '', 'Medeor Szpital Wielospecjalistyczny w Łodzi', 'Renal physicians');
 
 -- --------------------------------------------------------
 
@@ -145,7 +148,7 @@ CREATE TABLE `users` (
   `name` varchar(72) COLLATE utf8mb4_unicode_ci NOT NULL,
   `surname` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `admin` int(2) NOT NULL DEFAULT 0,
+  `role` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `registered` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `last_login` varchar(70) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -157,13 +160,13 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `email`, `admin`, `password`, `registered`, `last_login`, `active`, `activation_code`) VALUES
-('4d5b48c7-2612-4aa2-87ae-058cd4af22ca', 'Super', 'Super', 'super@super.com', 0, '$2b$10$1WVtsOUeGd4hNsDhnipameCcdF5QhRS9GNtrlBKqxZej4P3TQMNWi', '2022-01-08', '2022-01-08', 'true', NULL),
-('6efed7e4-1613-4b8e-bdda-66ed505b5482', 'Ewa', 'Kowalski', 'twarozek955@gmail.com', 0, '$2b$10$3naVlBzUmKyMmJMKzb6BfeJ8p1fUg7PzWwXPfHSQAYgXqpRZahy8K', '2022/2/1', '2022/2/1  21:8', 'true', '5452635e87541f47f8abca380449eb130f36bc660a33174063'),
-('77f093d5-b43a-4521-99d7-a567d8cd2d86', 'Bezpieczny', 'User', '31dadsc@dat.com', 0, '$2b$10$Jv7jEjfRyx6chDl.d.Bxe.cMwr1LNVLHIJh0Hg/GNNxIwlYawI5Bi', '2022-01-02', '2022-01-02', 'true', NULL),
-('9f5dddb9-0a97-4810-998e-5fa56467b884', 'Jackowski', 'Jacek', 'gcc22525@cuoly.com', 1, '$2b$10$0xRry9JbtWFqvYXnu/8TM.kcpkTbQxnV7aos8PJgU0DIVViTasRaS', '2022-01-02', '2022/1/29  22:11', 'true', '53565b0482cf405cd8e5e7dec38c595d8480'),
-('a5e9573e-128b-435a-92ec-8ecef392deeb', 'Klaudia', '321', 'goo38907@boofx.com', 0, '$2b$10$wTPOcDYJElwlEmuC0szKkuv4D.tis9T2hmygshp4DxJB.S0578v/6', '2022/2/1', '2022/2/1  21:20', 'true', '296d3166f977f311367c782db2c12ab7670510f98a55ad7bb0'),
-('daa83026-e0aa-4331-8b64-8c7eee353004', 'Dawid', 'Super', 'edekkredek1910@gmail.com', 1, '$2b$10$JEAFyntSvtBSsv.nayLw2OCH4zyHthoFJ1w0WpqZ8HNecM.blCcHq', '2022/1/28', '2022/7/2  12:27', 'true', '2ab2e338442ac706e61f7cd552341ac6a6cf8b65aeab436b05');
+INSERT INTO `users` (`id`, `name`, `surname`, `email`, `role`, `password`, `registered`, `last_login`, `active`, `activation_code`) VALUES
+('4d5b48c7-2612-4aa2-87ae-058cd4af22ca', 'Super', 'Super', 'super@super.com', 'staff', '$2b$10$1WVtsOUeGd4hNsDhnipameCcdF5QhRS9GNtrlBKqxZej4P3TQMNWi', '2022-01-08', '2022-01-08', 'true', NULL),
+('6efed7e4-1613-4b8e-bdda-66ed505b5482', 'Ewa', 'Kowalski', 'twarozek955@gmail.com', 'staff', '$2b$10$3naVlBzUmKyMmJMKzb6BfeJ8p1fUg7PzWwXPfHSQAYgXqpRZahy8K', '2022/2/1', '2022/2/1  21:8', 'true', '5452635e87541f47f8abca380449eb130f36bc660a33174063'),
+('77f093d5-b43a-4521-99d7-a567d8cd2d86', 'Bezpieczny', 'User', '31dadsc@dat.com', 'staff', '$2b$10$Jv7jEjfRyx6chDl.d.Bxe.cMwr1LNVLHIJh0Hg/GNNxIwlYawI5Bi', '2022-01-02', '2022-01-02', 'true', NULL),
+('9f5dddb9-0a97-4810-998e-5fa56467b884', 'Jackowski', 'Jacek', 'gcc22525@cuoly.com', 'admin', '$2b$10$0xRry9JbtWFqvYXnu/8TM.kcpkTbQxnV7aos8PJgU0DIVViTasRaS', '2022-01-02', '2022/1/29  22:11', 'true', '53565b0482cf405cd8e5e7dec38c595d8480'),
+('a5e9573e-128b-435a-92ec-8ecef392deeb', 'Klaudia', '321', 'goo38907@boofx.com', 'user', '$2b$10$wTPOcDYJElwlEmuC0szKkuv4D.tis9T2hmygshp4DxJB.S0578v/6', '2022/2/1', '2022/2/1  21:20', 'true', '296d3166f977f311367c782db2c12ab7670510f98a55ad7bb0'),
+('daa83026-e0aa-4331-8b64-8c7eee353004', 'Dawid', 'Super', 'edekkredek1910@gmail.com', 'staff', '$2b$10$JEAFyntSvtBSsv.nayLw2OCH4zyHthoFJ1w0WpqZ8HNecM.blCcHq', '2022/1/28', '2022/7/3  17:3', 'true', '2ab2e338442ac706e61f7cd552341ac6a6cf8b65aeab436b05');
 
 --
 -- Indexes for dumped tables
@@ -220,7 +223,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
