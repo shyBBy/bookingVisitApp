@@ -49,11 +49,13 @@ bookingRouter.get('/profile/:bookingId', userMiddleware.checkSession, async (req
 bookingRouter.get('/:userId/booking/list', userMiddleware.checkSession, userMiddleware.checkUserIsStaff, async (req, res, next) => {
     const userResponse = await UserRecord.getOneById(req.session.user.id);
     const user = userResponse[0];
-    const bookingResponse = await BookingRecord.getAllAssignedToUserId(req.params['userId']);
-    const booking = bookingResponse[0];
+    const bookingList = await BookingRecord.getAllAssignedToUserId(req.params['userId']);
+    // console.log(bookingResponse)
+    // console.log(`--------------------`)
+    // console.log(bookingList)
     res.render('staff/booking/list', {
         user,
-        booking,
+        bookingList,
     })
 })
 

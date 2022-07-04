@@ -190,6 +190,7 @@
                             </div>
                             <!-- KONIEC-->
                         </section>
+                        {{#if (isAdmin user.role)}}
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Add this user to place as a doctor.</h6>
@@ -264,6 +265,7 @@
                                 </div>
                             </div>
                         </div>
+                        {{/if}}
 
                     </div>
                 </main>
