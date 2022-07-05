@@ -127,6 +127,9 @@
                                                                 {{#if (isEnded this.status)}}
                                                                     <span class="badge badge-light rounded-pill d-inline">Ended</span>
                                                                 {{/if}}
+                                                                {{#if (isCanceled this.status)}}
+                                                                    <span class="badge badge-dark rounded-pill d-inline">Canceled</span>
+                                                                {{/if}}
                                                             </td>
                                                             <td style="width: 20%;">
                                                                 <a style="text-decoration:none" href="/booking/profile/{{this.id}}" >
