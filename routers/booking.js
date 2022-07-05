@@ -17,6 +17,8 @@ bookingRouter.get('/', userMiddleware.checkSession, async (req, res, next) => {
         bookingList,
         message: {
             successCreatedBooking: req.flash('successCreatedBooking'),
+            successfulChangingStatus: req.flash('successfulChangingStatus'),
+            unSuccessfulChangingStatus: req.flash('unSuccessfulChangingStatus'),
         }
     });
 })
@@ -31,7 +33,20 @@ bookingRouter.post('/create/:placeId', userMiddleware.checkSession, async (req, 
     res.redirect('/booking');
 });
 
-bookingRouter.post('/status/:bookingId', userMiddleware.checkSession, async (req,res, next) => {
+bookingRouter.get('/cancel/:bookingId', userMiddleware.checkSession, async (req,res, next) => {
+    try {
+        const booking = await BookingRecord.getOneById(req.params['bookingId']);
+        const tets = await BookingRecord.getOneByIdAndChangeStatus(req.params['bookingId'],'canceled')
+        req.flash('successfulChangingStatus', 'Status was changed.')
+        return res.redirect('/booking');
+} catch(e) {
+    req.flash('unSuccesfulChangingStatus', 'Something is wrong, try again later. Propably this id is incorrect.')
+}
+  //@TODO: Dokończyć endpoint zmiany statusu
+})
+
+bookingRouter.get('/status/:bookingId', userMiddleware.checkSession, async (req,res, next) => {
+    const tets = await BookingRecord.getOneByIdAndChangeStatus(req.params['bookingId'],  )
   //@TODO: Dokończyć endpoint zmiany statusu
 })
 

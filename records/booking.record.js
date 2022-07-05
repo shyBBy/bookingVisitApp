@@ -52,15 +52,19 @@ class BookingRecord {
     }
     
     static async getOneByIdAndChangeStatus(id, status) {
-      const date = new Date();
-      let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1) + "/" + (date.getUTCDate());
-      this.updatedAt = myDate;
-      await pool.execute('UPDATE `bookings` SET `status` = :status `updatedAt` = :updatedAt WHERE `id` = :id', {
-        id,
-        status,
-        updatedAt: this.updatedAt,
-      });
-      return this.updatedAt;
+        if(status === 'active' || status === 'ended' || status === 'pending' || status === 'canceled') {
+            const date = new Date();
+            let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1) + "/" + (date.getUTCDate());
+            this.updatedAt = myDate;
+            await pool.execute('UPDATE `bookings` SET `status` = :status, `updatedAt` = :updatedAt WHERE `id` = :id', {
+                id,
+                status,
+                updatedAt: this.updatedAt,
+            });
+        } else {
+            console.log('Incorrect status');
+        }
+      
     };
 
     static async getAllByUserId(userId) {

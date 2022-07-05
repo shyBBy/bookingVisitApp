@@ -24,6 +24,16 @@ const handlebarsHelpers = {
             return true
         }
     },
+    isCanceled: (status) => {
+        if(status === 'canceled'){
+            return true
+        }
+    },
+    // isCanceled: (status) => {
+    //     if(status === 'canceled'){
+    //         return true
+    //     }
+    // },
 
     // handleUrlUserId: (userId) => {
     //     const qs = new URLSearchParams({
