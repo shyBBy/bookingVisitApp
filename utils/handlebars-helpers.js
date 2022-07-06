@@ -29,7 +29,7 @@ const handlebarsHelpers = {
             return true
         }
     },
-    // isCanceled: (status) => {
+    // isNotActiveEndedCanceled: (status) => {
     //     if(status === 'canceled'){
     //         return true
     //     }

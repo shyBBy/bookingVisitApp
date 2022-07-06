@@ -87,6 +87,18 @@ class BookingRecord {
       });
       return results;
     }
+
+    static async getOneByIdAndChangeDate(bookingId, bookingDate){
+        const date = new Date();
+        let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1) + "/" + (date.getUTCDate());
+        let updatedAt = myDate;
+        await pool.execute('UPDATE `bookings` SET `bookingDate` = :date, `updatedAt` = :updatedAt WHERE `id` = :bookingId', {
+            bookingId,
+            date: bookingDate,
+            updatedAt,
+        
+        })
+    }
   
 }
 

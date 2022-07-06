@@ -19,6 +19,7 @@ bookingRouter.get('/', userMiddleware.checkSession, async (req, res, next) => {
             successCreatedBooking: req.flash('successCreatedBooking'),
             successfulChangingStatus: req.flash('successfulChangingStatus'),
             unSuccessfulChangingStatus: req.flash('unSuccessfulChangingStatus'),
+            successfulChangingDate: req.flash('successfulChangingDate'),
         }
     });
 })
@@ -72,6 +73,16 @@ bookingRouter.get('/:userId/booking/list', userMiddleware.checkSession, userMidd
         user,
         bookingList,
     })
+})
+
+bookingRouter.post('/changeDate/:bookingId', userMiddleware.checkSession, userMiddleware.checkUserIsStaff, async (req, res, next) => {
+    try {
+        await BookingRecord.getOneByIdAndChangeDate(req.params['bookingId'], req.body.date);
+        req.flash('successfulChangingDate', 'Date was changed.')
+        return res.redirect(`/booking/profile/${req.params['bookingId']}`);
+} catch(e) {
+    req.flash('unSuccesfulChangingStatus', 'Something is wrong, try again later. Propably this id is incorrect.')
+}
 })
 
 module.exports = {
