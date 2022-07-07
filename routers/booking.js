@@ -59,6 +59,13 @@ bookingRouter.get('/profile/:bookingId', userMiddleware.checkSession, async (req
     res.render('booking/profile', {
         booking,
         user,
+        message: {
+            successCreatedBooking: req.flash('successCreatedBooking'),
+            successfulChangingStatus: req.flash('successfulChangingStatus'),
+            unSuccessfulChangingStatus: req.flash('unSuccessfulChangingStatus'),
+            successfulChangingDate: req.flash('successfulChangingDate'),
+            unSuccesfulChangingDate: req.flash('unSuccesfulChangingDate'),
+        }
     });
 })
 
@@ -76,9 +83,19 @@ bookingRouter.get('/:userId/booking/list', userMiddleware.checkSession, userMidd
 })
 
 bookingRouter.post('/changeDate/:bookingId', userMiddleware.checkSession, userMiddleware.checkUserIsStaff, async (req, res, next) => {
+        const date = new Date();
+        let myDate = (date.getUTCFullYear()) + "-" + "0" + (date.getMonth() + 1) + "-" + "0" + (date.getUTCDate());
+        let currentDate = myDate;
+
+        if(req.body.date <= currentDate) {
+            req.flash('unSuccesfulChangingDate', `You can not change the date to something older than today. `)
+        
+            return res.redirect(`/booking/profile/${req.params['bookingId']}`);  
+        }
+
     try {
         await BookingRecord.getOneByIdAndChangeDate(req.params['bookingId'], req.body.date);
-        req.flash('successfulChangingDate', 'Date was changed.')
+        req.flash('successfulChangingDate', 'Date was changed to')
         return res.redirect(`/booking/profile/${req.params['bookingId']}`);
 } catch(e) {
     req.flash('unSuccesfulChangingStatus', 'Something is wrong, try again later. Propably this id is incorrect.')
