@@ -34,8 +34,8 @@ userRouter.get('/login', (req, res) => {
 
 userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next) => {
   try {
-    if (typeof req.url.split('/')[2] === "string") {
-        const results = await UserRecord.getOneById(req.url.split('/')[2]);
+    if (req.params['id']) {
+        const results = await UserRecord.getOneById(req.params['id']);
         const user = results[0]
         const placesList = await PlaceRecord.listAll();
         res.render('user/profile', {
@@ -81,7 +81,6 @@ userRouter.post('/add', async  (req, res) => {
     await UsersService.handleEmailVerification(req.body.email, user.id, activationCode);
     req.flash('successRegister', 'Account was created. Please confirm your e-mail.');
     res.redirect('/user/login');
-
 });
 
 userRouter.post('/login',  async (req, res,) => {
@@ -143,18 +142,15 @@ userRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsA
             successfullUserActivated: req.flash('successfullUserActivated'),
             unSuccessfullUserActivated: req.flash('unSuccessfullUserActivated'),
             unSuccessfulUserRemovedAsLogedUser: req.flash('unSuccessfulUserRemovedAsLogedUser'),
-
         },
-
     });
 })
 
 userRouter.get('/:id/activation/:code', async (req,res,next) => {
-    if (typeof req.url.split('/')[1] === "string") {
         try {
-            const results = await UserRecord.getOneById(req.url.split('/')[1]);
+            const results = await UserRecord.getOneById(req.params['id']);
             const user = results[0]
-            if ( user.id === req.url.split('/')[1] || user.activation_code === req.url.split('/')[3]) {
+            if ( user.id === req.params['id'] || user.activation_code === req.params['code']) {
                 UserRecord.getOneByIdAndActivating(user.id)
                 req.flash('successVerify', 'Account was activated, please log in.');
                 return res.redirect('/user/login')
@@ -166,26 +162,19 @@ userRouter.get('/:id/activation/:code', async (req,res,next) => {
             console.log('nie ma takiego uzytkownika')
             req.flash('unsuccessfulVerify', 'Something wrong, account is still unactive, please check your e-mail box.');
             return res.redirect('/user/login')
-
         }
-
-
-    }
 })
 
 
 userRouter.get('/remove/:id', userMiddleware.checkUserIsAdmin,  async (req, res, next) => {
-  const userId = req.url.split('/')[2];
   try {
-    if (typeof userId === "string") {
-        if (userId === req.session.user.id) {
+        if (req.params['id'] === req.session.user.id) {
             req.flash('unSuccessfulUserRemovedAsLogedUser', `You cannot delete the user you are logged in. `);
             return res.redirect('/user/list');
         }
-        UserRecord.remove(userId);
+        UserRecord.remove(req.params['id']);
         req.flash('successfullUserRemoved', `User was successful removed from database.`);
         return res.redirect('/user/list');
-    }
     
   } catch(err) {
     req.flash('unSuccessfullUserRemoved', `User not found, something wrong.`);
@@ -195,13 +184,10 @@ userRouter.get('/remove/:id', userMiddleware.checkUserIsAdmin,  async (req, res,
 })
 
 userRouter.get('/activate/:id', userMiddleware.checkUserIsAdmin,  async (req, res, next) => {
-    const userId = req.url.split('/')[2];
     try {
-        if (typeof userId === "string") {
-            UserRecord.activate(userId);
+            UserRecord.activate(req.params['id']);
             req.flash('successfullUserActivated', `User was successful activated.`);
             return res.redirect('/user/list');
-        }
 
     } catch(err) {
         req.flash('unSuccessfullUserActivated', `User not found, something wrong.`);
