@@ -165,6 +165,7 @@ class UsersService {
                 <br>
                 <br>
                 <br>
+       
                 <tr>
                     <td bgcolor="#ffffff" align="left">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -172,22 +173,7 @@ class UsersService {
                                 <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
                                     <table border="0" cellspacing="0" cellpadding="0">
                                         <tr>
-                                            <td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="http://localhost:3000/user/${userId}/activation/${activationCode}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">jesli odpalasz LOKALNIE to kliknij aby aktywowac konto</a></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td bgcolor="#ffffff" align="left">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                            <tr>
-                                <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
-                                    <table border="0" cellspacing="0" cellpadding="0">
-                                        <tr>
-                                            <td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="http://146.59.16.216:3000/user/${userId}/activation/${activationCode}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">jesli odpalasz na VPS to kliknij aby aktywowac konto</a></td>
+                                            <td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="https://dawidolczak.networkmanager.pl/user/${userId}/activation/${activationCode}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">CONFIRM</a></td>
                                         </tr>
                                     </table>
                                 </td>
