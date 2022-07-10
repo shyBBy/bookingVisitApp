@@ -7,6 +7,8 @@ const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const {UsersService} = require('../services/handleEmailVerification');
+const {StaffRecord} = require("../records/staff.record");
+const {PlaceRecord} = require("../records/place.record");
 const userRouter = Router();
 
 
@@ -32,18 +34,22 @@ userRouter.get('/login', (req, res) => {
 
 userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next) => {
   try {
-    if (typeof req.url.split('/')[2] === "string") {
-        const results = await UserRecord.getOneById(req.url.split('/')[2]);
+    if (req.params['id']) {
+        const results = await UserRecord.getOneById(req.params['id']);
         const user = results[0]
+        const placesList = await PlaceRecord.listAll();
         res.render('user/profile', {
             user,
+            placesList,
         });
         return
     }
     const results = await UserRecord.getOneById(req.session.user.id);
-    const user = results[0]
+    const user = results[0];
+      const placesList = await PlaceRecord.listAll();
     res.render('user/profile', {
         user,
+        placesList,
     });
   } catch(err) {
     console.log('users not found')
@@ -72,10 +78,9 @@ userRouter.post('/add', async  (req, res) => {
     await newUser.create(hash, activationCode);
     const results = await UserRecord.getOneByEmail(req.body.email);
     const user = results[0];
-    UsersService.handleEmailVerification(req.body.email, user.id, activationCode);
+    await UsersService.handleEmailVerification(req.body.email, user.id, activationCode);
     req.flash('successRegister', 'Account was created. Please confirm your e-mail.');
     res.redirect('/user/login');
-
 });
 
 userRouter.post('/login',  async (req, res,) => {
@@ -85,6 +90,7 @@ userRouter.post('/login',  async (req, res,) => {
     }
     const results = await UserRecord.getOneByEmail(req.body.email);
     const user = results[0];
+    console.log(user)
     try {
         const check = await bcrypt.compare(req.body.password, results[0].password);
         if (check) {
@@ -94,7 +100,7 @@ userRouter.post('/login',  async (req, res,) => {
             }
             req.session.user = {
                 id: user.id,
-                isAdmin: user.admin,
+                role: user.role,
                 isActive: user.active,
             }
             req.flash('successLogin', 'Success Login, welcome!');
@@ -123,9 +129,8 @@ userRouter.get('/user/logout', async(req, res) => {
     })
 })
 
-userRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsActive, async (req, res, next) => {
+userRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsActive, userMiddleware.checkUserIsAdmin, async (req, res, next) => {
     const results = await UserRecord.getOneById(req.session.user.id);
-    console.log(req.session.user.isActive);
     const user = results[0]
     const usersList = await UserRecord.listAll();
     res.render('user/list', {
@@ -137,18 +142,15 @@ userRouter.get('/list', userMiddleware.checkSession, userMiddleware.checkUserIsA
             successfullUserActivated: req.flash('successfullUserActivated'),
             unSuccessfullUserActivated: req.flash('unSuccessfullUserActivated'),
             unSuccessfulUserRemovedAsLogedUser: req.flash('unSuccessfulUserRemovedAsLogedUser'),
-
         },
-
     });
 })
 
 userRouter.get('/:id/activation/:code', async (req,res,next) => {
-    if (typeof req.url.split('/')[1] === "string") {
         try {
-            const results = await UserRecord.getOneById(req.url.split('/')[1]);
+            const results = await UserRecord.getOneById(req.params['id']);
             const user = results[0]
-            if ( user.id === req.url.split('/')[1] || user.activation_code === req.url.split('/')[3]) {
+            if ( user.id === req.params['id'] || user.activation_code === req.params['code']) {
                 UserRecord.getOneByIdAndActivating(user.id)
                 req.flash('successVerify', 'Account was activated, please log in.');
                 return res.redirect('/user/login')
@@ -160,26 +162,19 @@ userRouter.get('/:id/activation/:code', async (req,res,next) => {
             console.log('nie ma takiego uzytkownika')
             req.flash('unsuccessfulVerify', 'Something wrong, account is still unactive, please check your e-mail box.');
             return res.redirect('/user/login')
-
         }
-
-
-    }
 })
 
 
-userRouter.get('/remove/:id', async (req, res, next) => {
-  const userId = req.url.split('/')[2];
+userRouter.get('/remove/:id', userMiddleware.checkUserIsAdmin,  async (req, res, next) => {
   try {
-    if (typeof userId === "string") {
-        if (userId === req.session.user.id) {
+        if (req.params['id'] === req.session.user.id) {
             req.flash('unSuccessfulUserRemovedAsLogedUser', `You cannot delete the user you are logged in. `);
             return res.redirect('/user/list');
         }
-        UserRecord.remove(userId);
+        UserRecord.remove(req.params['id']);
         req.flash('successfullUserRemoved', `User was successful removed from database.`);
         return res.redirect('/user/list');
-    }
     
   } catch(err) {
     req.flash('unSuccessfullUserRemoved', `User not found, something wrong.`);
@@ -188,14 +183,11 @@ userRouter.get('/remove/:id', async (req, res, next) => {
   
 })
 
-userRouter.get('/activate/:id', async (req, res, next) => {
-    const userId = req.url.split('/')[2];
+userRouter.get('/activate/:id', userMiddleware.checkUserIsAdmin,  async (req, res, next) => {
     try {
-        if (typeof userId === "string") {
-            UserRecord.activate(userId);
+            UserRecord.activate(req.params['id']);
             req.flash('successfullUserActivated', `User was successful activated.`);
             return res.redirect('/user/list');
-        }
 
     } catch(err) {
         req.flash('unSuccessfullUserActivated', `User not found, something wrong.`);

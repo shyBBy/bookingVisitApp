@@ -15,6 +15,7 @@ const {placeRouter} = require('./routers/place');
 const {userRouter} = require('./routers/user');
 const {dashboardRouter} = require("./routers/dashboard");
 const {bookingRouter} = require("./routers/booking");
+const {staffRouter} = require("./routers/staff");
 // ******* MIDDLEWARES *******
 // ******* EXPRESS CFG *******
 const app = express();
@@ -67,6 +68,7 @@ app.use('/place', placeRouter);
 app.use('/user',userRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/booking', bookingRouter);
+app.use('/staff', staffRouter);
 
 
 app.get('/', (req, res) => {

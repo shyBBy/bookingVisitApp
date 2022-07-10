@@ -3,57 +3,102 @@ const {v4: uuid} = require('uuid');
 
 class BookingRecord {
     constructor(obj) {
-        if(obj.title.trim() < 5) { 
-            throw new Error('Todo title should be at least 5 characters.')
-        }
-
-        if (obj.title.length > 150) {
-            throw new Error('Todo title should be')
-        }
-
-
         this.id = obj.id;
-        this.title = obj.title;
+        this.userName = obj.userName;
+        this.userSurname = obj.userSurname;
+        this.userPhoneNumber = obj.userPhoneNumber;
+        this.userEmail = obj.userEmail;
+        this.describe = obj.describe;
         this.createdAt = obj.createdAt;
-        this.status = obj.status;
-        this.assignedToUserId = obj.assignedToUserId;
-        this.assignedToPlaceId = obj.assignedToPlaceId;
+        this.bookingDate = obj.date;
+        this.assignedToStaffId = obj.assignedToStaffId;
+        this.placeName = obj.placeName;
     }
     
-    async create(userId){
+    async create(userId, placeId, placeName){
         if (typeof this.id === "undefined") {
             const date = new Date();
-            let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1) + "/" + (date.getUTCDate());
+            let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate()+ "  " + (date.getHours())+ ":" + (date.getMinutes()));
             this.id = uuid();
             this.createdAt = myDate;
-            this.status = 'notConfirmed';
-            const createdByuserId = userId;
+            this.status = 'pending';
+            this.createdByUserId = userId;
         
         }
-        await pool.execute('INSERT INTO `todos` VALUES(:id, :title, :createdAt, :status, :assignedToUserId, :assignedToPlaceId, :createdByuserId, :updatedAt)', {
+        // console.log(this)
+        // console.log(`----------`)
+        // console.log(`userID: ${userId}`)
+        // console.log(`----------`)
+        // console.log(`placeId: ${placeId}`)
+        // console.log(`----------`)
+
+        await pool.execute('INSERT INTO `bookings` VALUES(:id, :createdAt, :bookingDate, :status, :assignedToStaffId, :assignedToPlaceId, :updatedAt, :createdByUserId, :describe, :userPhoneNumber, :userName, :userSurname, :userEmail, :placeName)', {
             id: this.id,
-            title: this.title,
             createdAt: this.createdAt,
+            bookingDate: this.bookingDate,
             status: this.status,
-            assignedToUserId: this.assignedToUserId,
-            assignedToPlaceId: this.assignedToPlaceId,
-            createdByuserId: userId,
+            assignedToStaffId: this.assignedToStaffId,
+            assignedToPlaceId: placeId,
             updatedAt: this.createdAt,
+            createdByUserId: this.createdByUserId,
+            describe: this.describe,
+            userPhoneNumber: this.userPhoneNumber,
+            userName: this.userName,
+            userSurname: this.userSurname,
+            userEmail: this.userEmail,
+            placeName,
         });
        
     }
     
     static async getOneByIdAndChangeStatus(id, status) {
-      const date = new Date();
-      let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1) + "/" + (date.getUTCDate());
-      this.updatedAt = myDate;
-      await pool.execute('UPDATE `todos` SET `status` = :status `updatedAt` = :updatedAt WHERE `id` = :id', {
-        id,
-        status,
-        updatedAt,
-      });
-      return updatedAt;
+        if(status === 'active' || status === 'ended' || status === 'pending' || status === 'canceled') {
+            const date = new Date();
+            let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1) + "/" + (date.getUTCDate());
+            this.updatedAt = myDate;
+            await pool.execute('UPDATE `bookings` SET `status` = :status, `updatedAt` = :updatedAt WHERE `id` = :id', {
+                id,
+                status,
+                updatedAt: this.updatedAt,
+            });
+        } else {
+            console.log('Incorrect status');
+        }
+      
     };
+
+    static async getAllByUserId(userId) {
+        const [results] = await pool.execute('SELECT * FROM `bookings` WHERE `createdByUserId` = :userId', {
+            userId: userId,
+        });
+        return results;
+    }
+
+    static async getAllAssignedToUserId(userId){
+        const [results] = await pool.execute('SELECT * FROM `bookings` WHERE `assignedToStaffId` = :userId', {
+            userId: userId,
+        });
+        return results;
+    }
+    
+    static async getOneById(bookingId){
+      const [results] = await pool.execute('SELECT * FROM `bookings` WHERE `id` = :bookingId', {
+        bookingId,
+      });
+      return results;
+    }
+
+    static async getOneByIdAndChangeDate(bookingId, bookingDate){
+        const date = new Date();
+        let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1) + "/" + (date.getUTCDate());
+        let updatedAt = myDate;
+        await pool.execute('UPDATE `bookings` SET `bookingDate` = :date, `updatedAt` = :updatedAt WHERE `id` = :bookingId', {
+            bookingId,
+            date: bookingDate,
+            updatedAt,
+        
+        })
+    }
   
 }
 

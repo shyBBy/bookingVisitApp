@@ -7,7 +7,7 @@ class UserRecord {
         this.name = obj.name;
         this.surname = obj.surname;
         this.email = obj.email;
-        this.admin = obj.admin;
+        this.role = obj.role;
         this.password = obj.password;
         this.registered = obj.registered;
         this.last_login = obj.last_login;
@@ -30,17 +30,18 @@ class UserRecord {
             this.active = 'false';
 
         }
-        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :admin, :password, :registered, :last_login, :active, :activation_code)', {
+        await pool.execute('INSERT INTO `users` VALUES(:id, :name, :surname, :email, :role, :password, :registered, :last_login, :active, :activation_code, :assignedTo)', {
             id: this.id,
             name: this.name,
             surname: this.surname,
             email: this.email,
-            admin: 0,
+            role: 'user',
             password: hash,
             registered: this.registered,
             last_login: this.registered,
             active: this.active,
             activation_code: activationCode,
+            assignedTo: null,
          
         });
     }
@@ -61,7 +62,7 @@ class UserRecord {
     }
 
     static async getOneById(id) {
-        const [results] = await pool.execute('SELECT `id`, `name`, `surname`, `email`, `admin`, `registered`, `last_login` FROM `users` WHERE `id` = :id', {
+        const [results] = await pool.execute('SELECT `id`, `name`, `surname`, `email`, `role`, `registered`, `last_login` FROM `users` WHERE `id` = :id', {
             id: id,
         });
         return results;
@@ -70,7 +71,7 @@ class UserRecord {
     static async getOneByEmail(email) {
         const date = new Date();
         let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate()+ "  " + (date.getHours())+ ":" + (date.getMinutes()));
-        const [results] = await pool.execute('SELECT `password`, `email`, `id`, `admin`, `active` FROM `users` WHERE `email` = :email', {
+        const [results] = await pool.execute('SELECT `password`, `email`, `id`, `role`, `active` FROM `users` WHERE `email` = :email', {
             email: email,
         });
         await pool.execute('UPDATE `users` SET `last_login` = :last_login WHERE `email` = :email', {

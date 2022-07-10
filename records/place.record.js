@@ -50,6 +50,20 @@ class PlaceRecord {
 
         return this.id;
     }
+
+    static async getOneById(placeId){
+        if (!placeId){
+            throw new Error('Wrong ID')
+        }
+        try {
+            const [results] = await pool.execute('SELECT * FROM `places` WHERE `id` = :placeId', {
+                placeId,
+            })
+            return results;
+        } catch (e) {
+            return e
+        }
+    }
 }
 
 module.exports = {
