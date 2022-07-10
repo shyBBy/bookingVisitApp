@@ -6,16 +6,24 @@ class UsersService {
     }
     static async handleEmailVerification(userEmail,userId, activationCode){
 
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
+        // let transporter = nodemailer.createTransport({
+        //     service: 'hotmail',
+        //     auth: {
+        //         user: process.env.EMAIL_USER,
+        //         pass: process.env.EMAIL_PASSWORD,
+        //     },
+        // });
+        const transporter = nodemailer.createTransport({
+            host: 'smtp-mail.outlook.com',
+            port: 587,
             auth: {
                 user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASSWORD,
-            },
-        });
+                pass: process.env.EMAIL_PASSWORD
+            }
+        })
 
         let mailOptions = {
-            from: `verifymailfromapp@gmail.com`,
+            from: process.env.EMAIL_USER,
             to: userEmail,
             subject: `Welcome, please confirm your e-mail`,
             html: `<!DOCTYPE html>
