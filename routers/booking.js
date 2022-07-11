@@ -20,6 +20,7 @@ bookingRouter.get('/', userMiddleware.checkSession, async (req, res, next) => {
             successfulChangingStatus: req.flash('successfulChangingStatus'),
             unSuccessfulChangingStatus: req.flash('unSuccessfulChangingStatus'),
             successfulChangingDate: req.flash('successfulChangingDate'),
+            warningChooseADoctor: req.flash('warningChooseADoctor'),
         }
     });
 })
@@ -28,6 +29,10 @@ bookingRouter.get('/', userMiddleware.checkSession, async (req, res, next) => {
 bookingRouter.post('/create/:placeId', userMiddleware.checkSession, async (req, res) => {
     const placeResponse = await PlaceRecord.getOneById(req.params['placeId']);
     const place = placeResponse[0];
+    if (req.body.date === '' || req.body.userPhoneNumber === '' || req.body.describe === '' || req.body.assignedToStaffId === 'Choose a doctor'){
+        req.flash('emptyField', 'Please insert the requested information.');
+        return res.redirect(`/place/profile/${req.params['placeId']}`);
+    }
     const newBooking = new BookingRecord(req.body);
     await newBooking.create(req.session.user.id, req.params['placeId'], place.name);
     req.flash('successCreatedBooking', `Booking was created, please wait for changing status.`)

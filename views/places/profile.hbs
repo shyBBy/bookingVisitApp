@@ -157,6 +157,14 @@
                       </div>
                       <!-- KONIEC-->
                   </section>
+                  {{#if message.emptyField}}
+                      <div class="card bg-warning text-white shadow">
+                          <div class="card-body">
+                              Warning
+                              <div class="text-white small">{{message.emptyField}}</div>
+                          </div>
+                      </div>
+                  {{/if}}
                   <div class="card shadow mb-4">
                       <div class="card-header py-3">
                           <h6 class="m-0 font-weight-bold text-primary">Book a visit in this place</h6>
