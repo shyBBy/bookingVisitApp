@@ -29,6 +29,11 @@ const handlebarsHelpers = {
             return true
         }
     },
+    // isCheckedUserIsLoggedUser: (idFromUrl, idFromSession) => {
+    //     if(idFromUrl === idFromSession){
+    //         return true
+    //     }
+    // }
     // isNotActiveEndedCanceled: (status) => {
     //     if(status === 'canceled'){
     //         return true

@@ -45,6 +45,7 @@ placeRouter.get('/profile/:placeId', userMiddleware.checkSession, async (req, re
             staffList,
             message: {
                 emptyField: req.flash('emptyField'),
+                unSuccessfulPickingDate: req.flash('unSuccessfulPickingDate'),
             }
         })
     }

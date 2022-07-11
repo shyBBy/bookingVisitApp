@@ -48,9 +48,10 @@ class StaffRecord {
     }
 
     static async getAllStaffFromPlaceId(placeId){
-        const [results] = await pool.execute('SELECT * FROM `staff` WHERE :placeId = :placeId', {
+        const [results] = await pool.execute('SELECT * FROM `staff` WHERE `placeId` = :placeId', {
             placeId,
         })
+        console.log(results)
         return results
     }
 
