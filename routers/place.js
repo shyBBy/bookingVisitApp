@@ -43,6 +43,9 @@ placeRouter.get('/profile/:placeId', userMiddleware.checkSession, async (req, re
             user,
             place,
             staffList,
+            message: {
+                emptyField: req.flash('emptyField'),
+            }
         })
     }
 

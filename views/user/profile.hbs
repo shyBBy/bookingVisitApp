@@ -12,14 +12,14 @@
                         class="fas fa-map-marker fa-fw me-3"></i><span>Places</span></a>
                 <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-life-ring fa-fw me-3"></i><span>Support</span></a>
-                {{#if (isStaff user.role)}}
+                {{#if (isStaff loggedUser.role)}}
                     <div class="nav-link disabled">
                         <p>STAFF PANEL</p>
                     </div>
                     <a href="/booking/{{user.id}}/booking/list" class="list-group-item list-group-item-action py-2 ripple"><i
                             class="fas fa-users fa-fw me-3"></i><span>Bookings</span></a>
                 {{/if}}
-                {{#if (isAdmin user.role)}}
+                {{#if (isAdmin loggedUser.role)}}
                     <div class="nav-link disabled">
                         <p>ADMIN PANEL</p>
                     </div>
@@ -47,8 +47,8 @@
                     </button>
 
                     <!-- Brand -->
-                    <a class="navbar-brand" href="/user/{{user.id}}">
-                        {{user.name}} {{user.surname}}
+                    <a class="navbar-brand" href="/user/{{loggedUser.id}}">
+                        {{loggedUser.name}} {{loggedUser.surname}}
                     </a>
                     <!-- Right links -->
                     <ul class="navbar-nav ms-auto d-flex flex-row">
@@ -62,7 +62,7 @@
                                      alt="" loading="lazy" />
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="/user/profile/{{user.id}}">My profile</a></li>
+                                <li><a class="dropdown-item" href="/user/profile/{{loggedUser.id}}">My profile</a></li>
                                 <li><a class="dropdown-item" href="#">Settings</a></li>
                                 <li><a class="dropdown-item" href="/user/user/logout">Logout</a></li>
                             </ul>
@@ -188,9 +188,16 @@
 
                                 </div>
                             </div>
-                            <!-- KONIEC-->
                         </section>
-                        {{#if (isAdmin user.role)}}
+                        {{#if message.emptyField}}
+                            <div class="card bg-warning text-white shadow">
+                                <div class="card-body">
+                                    Warning
+                                    <div class="text-white small">{{message.emptyField}}</div>
+                                </div>
+                            </div>
+                        {{/if}}
+                        {{#if (isAdmin loggedUser.role)}}
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Add this user to place as a doctor.</h6>

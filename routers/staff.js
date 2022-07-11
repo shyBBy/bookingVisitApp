@@ -33,6 +33,10 @@ staffRouter.get('/add/:userId/:placeId', userMiddleware.checkSession, userMiddle
 })
 
 staffRouter.post('/create/:userId', userMiddleware.checkSession, userMiddleware.checkUserIsAdmin, async (req, res) => {
+    if (req.body.title === 'Select title' || req.body.staffPhoneNumber === '' || req.body.staffPhoto === '' || req.body.placeId === 'Choose a place'){
+        req.flash('emptyField', 'Please insert the requested information.');
+        return res.redirect(`/user/profile/${req.params['userId']}`);
+    }
     const newStaff = new StaffRecord(req.body);
     await newStaff.create(req.params['userId'])
     res.redirect('/staff/list');

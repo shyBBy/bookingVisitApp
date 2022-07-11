@@ -34,23 +34,33 @@ userRouter.get('/login', (req, res) => {
 
 userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next) => {
   try {
-    if (req.params['id']) {
-        const results = await UserRecord.getOneById(req.params['id']);
-        const user = results[0]
-        const placesList = await PlaceRecord.listAll();
-        res.render('user/profile', {
-            user,
-            placesList,
+      // WIDOK ZALOGOWANEGO UZYTKOWNIKA
+      if (req.params['id'] === req.session.user.id){
+          const results = await UserRecord.getOneById(req.session.user.id);
+          const user = results[0];
+          const placesList = await PlaceRecord.listAll();
+          res.render('user/profile', {
+              user,
+              placesList,
+              messages: {
+                  emptyField: req.flash('emptyField'),
+              }
+          });
+      } else {
+          const loggedUserResult = await UserRecord.getOneById(req.session.user.id);
+          const loggedUser = loggedUserResult[0];
+          const results = await UserRecord.getOneById(req.params['id']);
+          const user = results[0]
+          const placesList = await PlaceRecord.listAll();
+          res.render('user/profile', {
+              user,
+              loggedUser,
+              placesList,
+              messages: {
+                emptyField: req.flash('emptyField'),
+            }
         });
-        return
     }
-    const results = await UserRecord.getOneById(req.session.user.id);
-    const user = results[0];
-      const placesList = await PlaceRecord.listAll();
-    res.render('user/profile', {
-        user,
-        placesList,
-    });
   } catch(err) {
     console.log('users not found')
   }

@@ -22,7 +22,7 @@ dashboardRouter.get('/', userMiddleware.checkSession, async(req, res, next) => {
         } else if(userBookingList[i].status === 'enden'){
             endedBookings.push('ended');
         } 
-      };
+      }
 
     const pendingsBookingsCount = pendingsBookings.length
     const activesBookingsCount = activesBookings.length
@@ -31,6 +31,7 @@ dashboardRouter.get('/', userMiddleware.checkSession, async(req, res, next) => {
     const results = await UserRecord.getOneById(req.session.user.id);
     const user = results[0]
     const isAdminLoggedUser = req.session.user.isAdmin;
+    console.log(pendingsBookingsCount)
     // console.log(isAdminLoggedUser)
     res.render('dashboard/main', {
         user,
