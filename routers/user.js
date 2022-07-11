@@ -120,6 +120,7 @@ userRouter.post('/login',  async (req, res,) => {
                 id: user.id,
                 role: user.role,
                 isActive: user.active,
+                root: user.root,
             }
             req.flash('successLogin', 'Success Login, welcome!');
             res.redirect('/dashboard');

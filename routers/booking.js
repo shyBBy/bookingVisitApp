@@ -50,7 +50,7 @@ bookingRouter.get('/cancel/:bookingId', userMiddleware.checkSession, async (req,
     try {
         const booking = await BookingRecord.getOneById(req.params['bookingId']);
         const tets = await BookingRecord.getOneByIdAndChangeStatus(req.params['bookingId'],'canceled')
-        req.flash('successfulChangingStatus', 'Status was changed.')
+        req.flash('successfulChangingStatus', 'Status was changed to "Canceled".')
         return res.redirect('/booking');
 } catch(e) {
     req.flash('unSuccessfulChangingStatus', 'Something is wrong, try again later. Propably this id is incorrect.')
