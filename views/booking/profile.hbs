@@ -10,8 +10,6 @@
                     class="fas fa-calendar-day fa-fw me-3"></i><span>Booking</span></a>
             <a href="/place/list" class="list-group-item list-group-item-action py-2 ripple"><i
                     class="fas fa-map-marker fa-fw me-3"></i><span>Places</span></a>
-            <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                    class="fas fa-life-ring fa-fw me-3"></i><span>Support</span></a>
             {{#if (isStaff user.role)}}
                 <div class="nav-link disabled">
                     <p>STAFF PANEL</p>
@@ -23,8 +21,7 @@
                 <div class="nav-link disabled">
                     <p>ADMIN PANEL</p>
                 </div>
-                <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                        class="fas fa-life-ring fa-fw me-3"></i><span>Admin</span></a>
+
                 <a href="/user/list" class="list-group-item list-group-item-action py-2 ripple"><i
                         class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
                 <a href="/staff/list" class="list-group-item list-group-item-action py-2 ripple"><i
@@ -63,7 +60,6 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="/user/profile/{{user.id}}">My profile</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="/user/user/logout">Logout</a></li>
                         </ul>
                     </li>
@@ -90,19 +86,19 @@
                                     </div>
                                 </div>
                             {{/if}}
-                             {{#if message.unSuccesfulChangingStatus}}
+                             {{#if message.unSuccessfulChangingStatus}}
                                 <div class="card bg-warning text-white shadow">
                                     <div class="card-body">
                                         Warning
-                                        <div class="text-white-50 small">{{message.unSuccesfulChangingStatus}}</div>
+                                        <div class="text-white-50 small">{{message.unSuccessfulChangingStatus}}</div>
                                     </div>
                                 </div>
                             {{/if}}
-                             {{#if message.unSuccesfulChangingDate}}
+                             {{#if message.unSuccessfulChangingDate}}
                                 <div class="card bg-warning text-white shadow">
                                     <div class="card-body">
                                         Error
-                                        <div class="text-white-50 small">{{message.unSuccesfulChangingDate}}</div>
+                                        <div class="text-white-50 small">{{message.unSuccessfulChangingDate}}</div>
                                     </div>
                                 </div>
                             {{/if}}

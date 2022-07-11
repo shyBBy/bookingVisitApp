@@ -33,28 +33,36 @@ userRouter.get('/login', (req, res) => {
 });
 
 userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next) => {
-  try {
+    try {
       // WIDOK ZALOGOWANEGO UZYTKOWNIKA
       if (req.params['id'] === req.session.user.id){
+          const loggedUserResult = await UserRecord.getOneById(req.session.user.id);
+          const loggedUser = loggedUserResult[0];
           const results = await UserRecord.getOneById(req.session.user.id);
           const user = results[0];
           const placesList = await PlaceRecord.listAll();
+          let isLoggedUser = true
           res.render('user/profile', {
               user,
+              isLoggedUser,
+              loggedUser,
               placesList,
               messages: {
                   emptyField: req.flash('emptyField'),
               }
           });
       } else {
+          // WIDOK UZYTKOWNIKA Z LISTY
           const loggedUserResult = await UserRecord.getOneById(req.session.user.id);
           const loggedUser = loggedUserResult[0];
           const results = await UserRecord.getOneById(req.params['id']);
           const user = results[0]
           const placesList = await PlaceRecord.listAll();
+          let isNotLoggedUser = true
           res.render('user/profile', {
               user,
               loggedUser,
+              isNotLoggedUser,
               placesList,
               messages: {
                 emptyField: req.flash('emptyField'),

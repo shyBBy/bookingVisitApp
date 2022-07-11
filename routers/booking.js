@@ -33,6 +33,13 @@ bookingRouter.post('/create/:placeId', userMiddleware.checkSession, async (req, 
         req.flash('emptyField', 'Please insert the requested information.');
         return res.redirect(`/place/profile/${req.params['placeId']}`);
     }
+    const date = new Date();
+    let myDate = (date.getUTCFullYear()) + "-" + "0" + (date.getMonth() + 1) + "-" + "0" + (date.getUTCDate());
+    let currentDate = myDate;
+    if(req.body.date <= currentDate) {
+        req.flash('unSuccessfulPickingDate', `You can not pick the date to something older than today. `)
+        return res.redirect(`/booking/profile/${req.params['bookingId']}`);
+    }
     const newBooking = new BookingRecord(req.body);
     await newBooking.create(req.session.user.id, req.params['placeId'], place.name);
     req.flash('successCreatedBooking', `Booking was created, please wait for changing status.`)
@@ -46,7 +53,7 @@ bookingRouter.get('/cancel/:bookingId', userMiddleware.checkSession, async (req,
         req.flash('successfulChangingStatus', 'Status was changed.')
         return res.redirect('/booking');
 } catch(e) {
-    req.flash('unSuccesfulChangingStatus', 'Something is wrong, try again later. Propably this id is incorrect.')
+    req.flash('unSuccessfulChangingStatus', 'Something is wrong, try again later. Propably this id is incorrect.')
 }
   //@TODO: Dokończyć endpoint zmiany statusu
 })
@@ -69,7 +76,7 @@ bookingRouter.get('/profile/:bookingId', userMiddleware.checkSession, async (req
             successfulChangingStatus: req.flash('successfulChangingStatus'),
             unSuccessfulChangingStatus: req.flash('unSuccessfulChangingStatus'),
             successfulChangingDate: req.flash('successfulChangingDate'),
-            unSuccesfulChangingDate: req.flash('unSuccesfulChangingDate'),
+            unSuccessfulChangingDate: req.flash('unSuccessfulChangingDate'),
         }
     });
 })
@@ -91,10 +98,8 @@ bookingRouter.post('/changeDate/:bookingId', userMiddleware.checkSession, userMi
         const date = new Date();
         let myDate = (date.getUTCFullYear()) + "-" + "0" + (date.getMonth() + 1) + "-" + "0" + (date.getUTCDate());
         let currentDate = myDate;
-
         if(req.body.date <= currentDate) {
-            req.flash('unSuccesfulChangingDate', `You can not change the date to something older than today. `)
-        
+            req.flash('unSuccessfulChangingDate', `You can not change the date to something older than today. `)
             return res.redirect(`/booking/profile/${req.params['bookingId']}`);  
         }
 
@@ -103,7 +108,7 @@ bookingRouter.post('/changeDate/:bookingId', userMiddleware.checkSession, userMi
         req.flash('successfulChangingDate', 'Date was changed to')
         return res.redirect(`/booking/profile/${req.params['bookingId']}`);
 } catch(e) {
-    req.flash('unSuccesfulChangingStatus', 'Something is wrong, try again later. Propably this id is incorrect.')
+    req.flash('unSuccessfulChangingStatus', 'Something is wrong, try again later. Propably this id is incorrect.')
 }
 })
 
