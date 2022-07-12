@@ -71,11 +71,7 @@
               <div>
                   <section class="mb-4">
                       <div class="card">
-                          <div class="card-header text-center py-3">
-                              <h5 class="mb-0 text-center">
-                                  <strong>Place's profile</strong>
-                              </h5>
-                          </div>
+
                           <!-- START-->
 
                           <div class="main-body">
@@ -100,7 +96,7 @@
                                           <div class="card-body">
                                               <div class="row">
                                                   <div class="col-sm-3">
-                                                      <h6 class="mb-0">Full Name</h6>
+                                                      <h6 class="mb-0">Full Name:</h6>
                                                   </div>
                                                   <div class="col-sm-9 text-secondary">
                                                       {{place.name}}
@@ -109,38 +105,29 @@
                                               <hr>
                                               <div class="row">
                                                   <div class="col-sm-3">
-                                                      <h6 class="mb-0">Email</h6>
-                                                  </div>
-                                                  <div class="col-sm-9 text-secondary">
-                                                      --
-                                                  </div>
-                                              </div>
-                                              <hr>
-                                              <div class="row">
-                                                  <div class="col-sm-3">
-                                                      <h6 class="mb-0">Phone</h6>
-                                                  </div>
-                                                  <div class="col-sm-9 text-secondary">
-                                                      JESZCZE NIE MA
-                                                  </div>
-                                              </div>
-                                              <hr>
-                                              <div class="row">
-                                                  <div class="col-sm-3">
-                                                      <h6 class="mb-0">Address</h6>
+                                                      <h6 class="mb-0">Address:</h6>
                                                   </div>
                                                   <div class="col-sm-9 text-secondary">
                                                       {{place.address}}
                                                   </div>
                                               </div>
                                               <hr>
-                                              {{#if (isAdmin user.role)}}
-                                                  <div class="row">
-                                                      <div class="col-sm-12">
-                                                          <a class="btn btn-info " target="__blank" href="#">Edit</a>
-                                                      </div>
+                                              <div class="row">
+                                                  <div class="col-sm-3">
+                                                      <h6 class="mb-0">Staff:</h6>
                                                   </div>
-                                              {{/if}}
+                                                  <div class="col-sm-9 text-secondary">
+                                                      {{staffCount}} persons
+                                                  </div>
+                                              </div>
+
+<!--                                              {{#if (isAdmin user.role)}}-->
+<!--                                                  <div class="row">-->
+<!--                                                      <div class="col-sm-12">-->
+<!--                                                          <a class="btn btn-info " target="__blank" href="#">Edit</a>-->
+<!--                                                      </div>-->
+<!--                                                  </div>-->
+<!--                                              {{/if}}-->
                                           </div>
                                       </div>
 

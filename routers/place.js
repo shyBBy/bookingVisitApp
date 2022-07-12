@@ -33,6 +33,7 @@ placeRouter.get('/profile/:placeId', userMiddleware.checkSession, async (req, re
     const placeResponse = await PlaceRecord.getOneById(req.params['placeId']);
     const place = placeResponse[0];
     const staffList = await StaffRecord.getAllStaffFromPlaceId(req.params['placeId']);
+    const staffCount = staffList.length
     // console.log(`--------------`)
     // console.log(staffList)
     if(!place) {
@@ -43,6 +44,7 @@ placeRouter.get('/profile/:placeId', userMiddleware.checkSession, async (req, re
             user,
             place,
             staffList,
+            staffCount,
             message: {
                 emptyField: req.flash('emptyField'),
                 unSuccessfulPickingDate: req.flash('unSuccessfulPickingDate'),

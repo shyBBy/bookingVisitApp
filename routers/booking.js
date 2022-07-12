@@ -5,6 +5,7 @@ const userMiddleware = require("../middleware/user.middleware");
 const {BookingRecord} = require("../records/booking.record");
 const {UserRecord} = require("../records/user.record");
 const {PlaceRecord} = require("../records/place.record");
+const {StaffRecord} = require("../records/staff.record");
 
 bookingRouter.get('/', userMiddleware.checkSession, async (req, res, next) => {
     const bookingList = await BookingRecord.getAllByUserId(req.session.user.id);
@@ -68,9 +69,12 @@ bookingRouter.get('/profile/:bookingId', userMiddleware.checkSession, async (req
     const user = userResponse[0];
     const bookingResponse = await BookingRecord.getOneById(req.params['bookingId']);
     const booking = bookingResponse[0];
+    const staffResponse = await UserRecord.getOneById(booking.assignedToStaffId)
+    const staff = staffResponse[0];
     res.render('booking/profile', {
         booking,
         user,
+        staff,
         message: {
             successCreatedBooking: req.flash('successCreatedBooking'),
             successfulChangingStatus: req.flash('successfulChangingStatus'),

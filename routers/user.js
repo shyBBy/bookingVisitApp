@@ -47,8 +47,8 @@ userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next
               isLoggedUser,
               loggedUser,
               placesList,
-              messages: {
-                  emptyField: req.flash('emptyField'),
+              message: {
+                  emptyFields: req.flash('emptyFields'),
               }
           });
       } else {
@@ -64,8 +64,8 @@ userRouter.get('/profile/:id',userMiddleware.checkSession, async (req, res, next
               loggedUser,
               isNotLoggedUser,
               placesList,
-              messages: {
-                emptyField: req.flash('emptyField'),
+              message: {
+                emptyFields: req.flash('emptyFields'),
             }
         });
     }
