@@ -1,5 +1,23 @@
 # bookingVisitApp 
 
+# info dla MegaK
+
+1. Nalezy podać e-mail, na który będziecie mogli się zalogować aby kliknąć w link aktywacyjny.
+
+2. Dane do testowych kont (oprocz użytkownika bo to sami możecie zrobić)
+
+**Doktor:**
+
+login: testowy@doktor.pl
+
+haslo: testowydoktor
+
+**Admin:**
+
+login: testowy@admin.pl
+
+haslo: testowyadmin 
+
 # About it 
 It's........
 
