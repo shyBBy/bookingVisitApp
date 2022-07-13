@@ -14,9 +14,20 @@ haslo: testowydoktor
 
 **Admin:**
 
+
 login: testowy@admin.pl
 
 haslo: testowyadmin 
+
+
+Planuje przepisać całą aplikacje z expressa na NestJS wraz z TS oraz handlebarsy na reacta i również w TS.
+hRzeczy, które znajdą się w aplikacji podczas przepisywania:
+1. System powiadomień o zmianie statusu zgłoszenia 
+2. Możliwość korespondencji dot. danej wizyty na linii pacjent-lekarz.
+3. Możliwość uzupełnienia profilu (avatar, dane kontaktowe itp).
+4. Wykorzystanie passportJS oraz JWT.
+5. Większa ilość informacji o placówkach.
+6. I rzeczy, które jeszcze mi przyjdą na myśl w późniejszym czasie.
 
 # About it 
 It's........
